@@ -8,8 +8,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/Wei-Shaw/sub2api/ent/paymentorder"
-	"github.com/Wei-Shaw/sub2api/ent/predicate"
+	"github.com/OsborneWang/subforai/ent/paymentorder"
+	"github.com/OsborneWang/subforai/ent/predicate"
 )
 
 // PaymentOrderDelete is the builder for deleting a PaymentOrder entity.

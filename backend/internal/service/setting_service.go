@@ -16,8 +16,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/Wei-Shaw/sub2api/internal/config"
-	infraerrors "github.com/Wei-Shaw/sub2api/internal/pkg/errors"
+	"github.com/OsborneWang/subforai/internal/config"
+	infraerrors "github.com/OsborneWang/subforai/internal/pkg/errors"
 	"github.com/imroc/req/v3"
 	"golang.org/x/sync/singleflight"
 )

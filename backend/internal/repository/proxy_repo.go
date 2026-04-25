@@ -6,11 +6,11 @@ import (
 	"sort"
 	"strings"
 
-	dbent "github.com/Wei-Shaw/sub2api/ent"
-	"github.com/Wei-Shaw/sub2api/ent/proxy"
-	"github.com/Wei-Shaw/sub2api/internal/service"
+	dbent "github.com/OsborneWang/subforai/ent"
+	"github.com/OsborneWang/subforai/ent/proxy"
+	"github.com/OsborneWang/subforai/internal/service"
 
-	"github.com/Wei-Shaw/sub2api/internal/pkg/pagination"
+	"github.com/OsborneWang/subforai/internal/pkg/pagination"
 
 	entsql "entgo.io/ent/dialect/sql"
 )

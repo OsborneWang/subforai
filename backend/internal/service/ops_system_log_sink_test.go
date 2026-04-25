@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Wei-Shaw/sub2api/internal/pkg/logger"
+	"github.com/OsborneWang/subforai/internal/pkg/logger"
 )
 
 func TestOpsSystemLogSink_ShouldIndex(t *testing.T) {

@@ -5,10 +5,10 @@ import (
 	"strconv"
 	"strings"
 
-	infraerrors "github.com/Wei-Shaw/sub2api/internal/pkg/errors"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/response"
-	middleware2 "github.com/Wei-Shaw/sub2api/internal/server/middleware"
-	"github.com/Wei-Shaw/sub2api/internal/service"
+	infraerrors "github.com/OsborneWang/subforai/internal/pkg/errors"
+	"github.com/OsborneWang/subforai/internal/pkg/response"
+	middleware2 "github.com/OsborneWang/subforai/internal/server/middleware"
+	"github.com/OsborneWang/subforai/internal/service"
 
 	"github.com/gin-gonic/gin"
 )

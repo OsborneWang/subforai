@@ -8,12 +8,12 @@ import (
 	"sort"
 	"strings"
 
-	dbent "github.com/Wei-Shaw/sub2api/ent"
-	"github.com/Wei-Shaw/sub2api/ent/apikey"
-	"github.com/Wei-Shaw/sub2api/ent/group"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/logger"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/pagination"
-	"github.com/Wei-Shaw/sub2api/internal/service"
+	dbent "github.com/OsborneWang/subforai/ent"
+	"github.com/OsborneWang/subforai/ent/apikey"
+	"github.com/OsborneWang/subforai/ent/group"
+	"github.com/OsborneWang/subforai/internal/pkg/logger"
+	"github.com/OsborneWang/subforai/internal/pkg/pagination"
+	"github.com/OsborneWang/subforai/internal/service"
 	"github.com/lib/pq"
 
 	entsql "entgo.io/ent/dialect/sql"

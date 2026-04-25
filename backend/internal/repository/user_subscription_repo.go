@@ -4,11 +4,11 @@ import (
 	"context"
 	"time"
 
-	dbent "github.com/Wei-Shaw/sub2api/ent"
-	"github.com/Wei-Shaw/sub2api/ent/group"
-	"github.com/Wei-Shaw/sub2api/ent/usersubscription"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/pagination"
-	"github.com/Wei-Shaw/sub2api/internal/service"
+	dbent "github.com/OsborneWang/subforai/ent"
+	"github.com/OsborneWang/subforai/ent/group"
+	"github.com/OsborneWang/subforai/ent/usersubscription"
+	"github.com/OsborneWang/subforai/internal/pkg/pagination"
+	"github.com/OsborneWang/subforai/internal/service"
 )
 
 type userSubscriptionRepository struct {

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Wei-Shaw/sub2api/internal/pkg/response"
-	"github.com/Wei-Shaw/sub2api/internal/service"
+	"github.com/OsborneWang/subforai/internal/pkg/response"
+	"github.com/OsborneWang/subforai/internal/service"
 
 	"github.com/gin-gonic/gin"
 )

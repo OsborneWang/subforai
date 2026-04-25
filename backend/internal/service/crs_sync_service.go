@@ -12,9 +12,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Wei-Shaw/sub2api/internal/config"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/httpclient"
-	"github.com/Wei-Shaw/sub2api/internal/util/urlvalidator"
+	"github.com/OsborneWang/subforai/internal/config"
+	"github.com/OsborneWang/subforai/internal/pkg/httpclient"
+	"github.com/OsborneWang/subforai/internal/util/urlvalidator"
 )
 
 type CRSSyncService struct {

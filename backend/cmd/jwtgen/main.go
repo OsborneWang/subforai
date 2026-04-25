@@ -7,10 +7,10 @@ import (
 	"log"
 	"time"
 
-	_ "github.com/Wei-Shaw/sub2api/ent/runtime"
-	"github.com/Wei-Shaw/sub2api/internal/config"
-	"github.com/Wei-Shaw/sub2api/internal/repository"
-	"github.com/Wei-Shaw/sub2api/internal/service"
+	_ "github.com/OsborneWang/subforai/ent/runtime"
+	"github.com/OsborneWang/subforai/internal/config"
+	"github.com/OsborneWang/subforai/internal/repository"
+	"github.com/OsborneWang/subforai/internal/service"
 )
 
 func main() {

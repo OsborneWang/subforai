@@ -1,0 +1,9 @@
+# Override for running the current local source code while preserving the
+# existing local deployment data directories defined in docker-compose.local.yml.
+
+services:
+  sub2api:
+    image: subforai-local:latest
+    build:
+      context: ..
+      dockerfile: Dockerfile

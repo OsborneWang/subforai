@@ -8,8 +8,6 @@
 [![Redis](https://img.shields.io/badge/Redis-7+-DC382D.svg)](https://redis.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
 
-<a href="https://trendshift.io/repositories/21823" target="_blank"><img src="https://trendshift.io/api/badge/repositories/21823" alt="Wei-Shaw%2Fsub2api | Trendshift" width="250" height="55"/></a>
-
 **AI API Gateway Platform for Subscription Quota Distribution**
 
 English | [中文](README_CN.md) | [日本語](README_JA.md)
@@ -137,240 +135,81 @@ Nginx drops headers containing underscores by default (e.g. `session_id`), which
 
 ## Deployment
 
-### Method 1: Script Installation (Recommended)
+### Method 1: Docker Compose from Local Source (Recommended)
 
-One-click installation script that downloads pre-built binaries from GitHub Releases.
-
-#### Prerequisites
-
-- Linux server (amd64 or arm64)
-- PostgreSQL 15+ (installed and running)
-- Redis 7+ (installed and running)
-- Root privileges
-
-#### Installation Steps
-
-```bash
-curl -sSL https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/deploy/install.sh | sudo bash
-```
-
-The script will:
-1. Detect your system architecture
-2. Download the latest release
-3. Install binary to `/opt/sub2api`
-4. Create systemd service
-5. Configure system user and permissions
-
-#### Post-Installation
-
-```bash
-# 1. Start the service
-sudo systemctl start sub2api
-
-# 2. Enable auto-start on boot
-sudo systemctl enable sub2api
-
-# 3. Open Setup Wizard in browser
-# http://YOUR_SERVER_IP:8080
-```
-
-The Setup Wizard will guide you through:
-- Database configuration
-- Redis configuration
-- Admin account creation
-
-#### Upgrade
-
-You can upgrade directly from the **Admin Dashboard** by clicking the **Check for Updates** button in the top-left corner.
-
-The web interface will:
-- Check for new versions automatically
-- Download and apply updates with one click
-- Support rollback if needed
-
-#### Useful Commands
-
-```bash
-# Check status
-sudo systemctl status sub2api
-
-# View logs
-sudo journalctl -u sub2api -f
-
-# Restart service
-sudo systemctl restart sub2api
-
-# Uninstall
-curl -sSL https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/deploy/install.sh | sudo bash -s -- uninstall -y
-```
-
----
-
-### Method 2: Docker Compose (Recommended)
-
-Deploy with Docker Compose, including PostgreSQL and Redis containers.
+This repository now maintains a single Docker deployment path: build the app image from the current local source code and keep runtime data under `deploy/data`, `deploy/postgres_data`, and `deploy/redis_data`.
 
 #### Prerequisites
 
 - Docker 20.10+
 - Docker Compose v2+
 
-#### Quick Start (One-Click Deployment)
-
-Use the automated deployment script for easy setup:
+#### Quick Start
 
 ```bash
-# Create deployment directory
-mkdir -p sub2api-deploy && cd sub2api-deploy
-
-# Download and run deployment preparation script
-curl -sSL https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/deploy/docker-deploy.sh | bash
-
-# Start services
-docker compose up -d
-
-# View logs
-docker compose logs -f sub2api
-```
-
-**What the script does:**
-- Downloads `docker-compose.local.yml` (saved as `docker-compose.yml`) and `.env.example`
-- Generates secure credentials (JWT_SECRET, TOTP_ENCRYPTION_KEY, POSTGRES_PASSWORD)
-- Creates `.env` file with auto-generated secrets
-- Creates data directories (uses local directories for easy backup/migration)
-- Displays generated credentials for your reference
-
-#### Manual Deployment
-
-If you prefer manual setup:
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/Wei-Shaw/sub2api.git
-cd sub2api/deploy
-
-# 2. Copy environment configuration
+git clone https://github.com/OsborneWang/subforai.git
+cd subforai/deploy
 cp .env.example .env
-
-# 3. Edit configuration (generate secure passwords)
 nano .env
-```
-
-**Required configuration in `.env`:**
-
-```bash
-# PostgreSQL password (REQUIRED)
-POSTGRES_PASSWORD=your_secure_password_here
-
-# JWT Secret (RECOMMENDED - keeps users logged in after restart)
-JWT_SECRET=your_jwt_secret_here
-
-# TOTP Encryption Key (RECOMMENDED - preserves 2FA after restart)
-TOTP_ENCRYPTION_KEY=your_totp_key_here
-
-# Optional: Admin account
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=your_admin_password
-
-# Optional: Custom port
-SERVER_PORT=8080
-```
-
-**Generate secure secrets:**
-```bash
-# Generate JWT_SECRET
-openssl rand -hex 32
-
-# Generate TOTP_ENCRYPTION_KEY
-openssl rand -hex 32
-
-# Generate POSTGRES_PASSWORD
-openssl rand -hex 32
-```
-
-```bash
-# 4. Create data directories (for local version)
 mkdir -p data postgres_data redis_data
-
-# 5. Start all services
-# Option A: Local directory version (recommended - easy migration)
-docker compose -f docker-compose.local.yml up -d
-
-# Option B: Named volumes version (simple setup)
-docker compose up -d
-
-# 6. Check status
-docker compose -f docker-compose.local.yml ps
-
-# 7. View logs
-docker compose -f docker-compose.local.yml logs -f sub2api
+./appctl.sh up
 ```
 
-#### Deployment Versions
+This workflow uses:
 
-| Version | Data Storage | Migration | Best For |
-|---------|-------------|-----------|----------|
-| **docker-compose.local.yml** | Local directories | ✅ Easy (tar entire directory) | Production, frequent backups |
-| **docker-compose.yml** | Named volumes | ⚠️ Requires docker commands | Simple setup |
+- `deploy/docker-compose.local.yml`
+- `deploy/docker-compose.local-build.yml`
+- `deploy/appctl.sh`
 
-**Recommendation:** Use `docker-compose.local.yml` (deployed by script) for easier data management.
+`appctl.sh` builds the application image from the local repository, starts PostgreSQL and Redis with persistent local directories, and keeps the stack manageable with standard `docker compose` operations.
 
-#### Access
-
-Open `http://YOUR_SERVER_IP:8080` in your browser.
-
-If admin password was auto-generated, find it in logs:
-```bash
-docker compose -f docker-compose.local.yml logs sub2api | grep "admin password"
-```
-
-#### Upgrade
+#### Daily Operations
 
 ```bash
-# Pull latest image and recreate container
-docker compose -f docker-compose.local.yml pull
-docker compose -f docker-compose.local.yml up -d
+# Rebuild and restart from current local code
+./appctl.sh deploy
+
+# Backup first, then rebuild and restart
+./appctl.sh upgrade
+
+# View app logs
+./appctl.sh logs
+
+# Show container status
+./appctl.sh ps
+
+# Stop services without deleting data
+./appctl.sh stop
+
+# Sync to origin/main, clean legacy files, then redeploy
+./appctl.sh pull-deploy
 ```
 
-#### Easy Migration (Local Directory Version)
-
-When using `docker-compose.local.yml`, migrate to a new server easily:
+#### Backup and Migration
 
 ```bash
-# On source server
-docker compose -f docker-compose.local.yml down
-cd ..
-tar czf sub2api-complete.tar.gz sub2api-deploy/
-
-# Transfer to new server
-scp sub2api-complete.tar.gz user@new-server:/path/
-
-# On new server
-tar xzf sub2api-complete.tar.gz
-cd sub2api-deploy/
-docker compose -f docker-compose.local.yml up -d
+# Create a timestamped backup under deploy/backups/
+./appctl.sh backup
 ```
 
-#### Useful Commands
+To move the service to a new server, copy the repository or at minimum the following paths:
 
-```bash
-# Stop all services
-docker compose -f docker-compose.local.yml down
+- `deploy/.env`
+- `deploy/data`
+- `deploy/postgres_data`
+- `deploy/redis_data`
 
-# Restart
-docker compose -f docker-compose.local.yml restart
+Then run `./appctl.sh up` on the destination server.
 
-# View all logs
-docker compose -f docker-compose.local.yml logs -f
+#### Important Notes
 
-# Remove all data (caution!)
-docker compose -f docker-compose.local.yml down
-rm -rf data/ postgres_data/ redis_data/
-```
+- Do not run `docker compose down -v` unless you intentionally want to destroy data.
+- Application upgrades may apply forward database migrations. Back up first if the upgrade is important.
+- The detailed operations runbook lives in `deploy/LOCAL_BUILD_OPERATIONS.md`.
 
 ---
 
-### Method 3: Build from Source
+### Method 2: Build from Source
 
 Build and run from source code for development or customization.
 
@@ -385,7 +224,7 @@ Build and run from source code for development or customization.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Wei-Shaw/sub2api.git
+git clone https://github.com/OsborneWang/subforai.git
 cd sub2api
 
 # 2. Install pnpm (if not already installed)
@@ -593,10 +432,12 @@ sub2api/
 │       └── components/       # Reusable components
 │
 └── deploy/                   # Deployment files
-    ├── docker-compose.yml    # Docker Compose configuration
-    ├── .env.example          # Environment variables for Docker Compose
-    ├── config.example.yaml   # Full config file for binary deployment
-    └── install.sh            # One-click installation script
+    ├── appctl.sh             # Unified operations entrypoint
+    ├── docker-compose.local.yml
+    ├── docker-compose.local-build.yml
+    ├── LOCAL_BUILD_OPERATIONS.md
+    ├── .env.example
+    └── config.example.yaml
 ```
 
 ## Disclaimer
@@ -611,11 +452,11 @@ sub2api/
 
 ## Star History
 
-<a href="https://star-history.com/#Wei-Shaw/sub2api&Date">
+<a href="https://star-history.com/#OsborneWang/subforai&Date">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Wei-Shaw/sub2api&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Wei-Shaw/sub2api&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Wei-Shaw/sub2api&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=OsborneWang/subforai&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=OsborneWang/subforai&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=OsborneWang/subforai&type=Date" />
  </picture>
 </a>
 

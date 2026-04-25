@@ -7,10 +7,10 @@ import (
 	"strconv"
 	"strings"
 
-	dbent "github.com/Wei-Shaw/sub2api/ent"
-	"github.com/Wei-Shaw/sub2api/ent/paymentproviderinstance"
-	"github.com/Wei-Shaw/sub2api/internal/payment"
-	infraerrors "github.com/Wei-Shaw/sub2api/internal/pkg/errors"
+	dbent "github.com/OsborneWang/subforai/ent"
+	"github.com/OsborneWang/subforai/ent/paymentproviderinstance"
+	"github.com/OsborneWang/subforai/internal/payment"
+	infraerrors "github.com/OsborneWang/subforai/internal/pkg/errors"
 )
 
 const (

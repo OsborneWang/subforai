@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	dbent "github.com/Wei-Shaw/sub2api/ent"
-	"github.com/Wei-Shaw/sub2api/ent/authidentity"
-	infraerrors "github.com/Wei-Shaw/sub2api/internal/pkg/errors"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/logger"
+	dbent "github.com/OsborneWang/subforai/ent"
+	"github.com/OsborneWang/subforai/ent/authidentity"
+	infraerrors "github.com/OsborneWang/subforai/internal/pkg/errors"
+	"github.com/OsborneWang/subforai/internal/pkg/logger"
 )
 
 // BindEmailIdentity verifies and binds a local email/password identity to the

@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	dbent "github.com/Wei-Shaw/sub2api/ent"
-	"github.com/Wei-Shaw/sub2api/ent/group"
-	"github.com/Wei-Shaw/sub2api/internal/service"
+	dbent "github.com/OsborneWang/subforai/ent"
+	"github.com/OsborneWang/subforai/ent/group"
+	"github.com/OsborneWang/subforai/internal/service"
 )
 
 func ensureSimpleModeDefaultGroups(ctx context.Context, client *dbent.Client) error {

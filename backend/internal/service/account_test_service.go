@@ -17,11 +17,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Wei-Shaw/sub2api/internal/config"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/claude"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/geminicli"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/openai"
-	"github.com/Wei-Shaw/sub2api/internal/util/urlvalidator"
+	"github.com/OsborneWang/subforai/internal/config"
+	"github.com/OsborneWang/subforai/internal/pkg/claude"
+	"github.com/OsborneWang/subforai/internal/pkg/geminicli"
+	"github.com/OsborneWang/subforai/internal/pkg/openai"
+	"github.com/OsborneWang/subforai/internal/util/urlvalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )

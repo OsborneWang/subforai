@@ -4,11 +4,11 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/Wei-Shaw/sub2api/internal/handler/dto"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/pagination"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/response"
-	middleware2 "github.com/Wei-Shaw/sub2api/internal/server/middleware"
-	"github.com/Wei-Shaw/sub2api/internal/service"
+	"github.com/OsborneWang/subforai/internal/handler/dto"
+	"github.com/OsborneWang/subforai/internal/pkg/pagination"
+	"github.com/OsborneWang/subforai/internal/pkg/response"
+	middleware2 "github.com/OsborneWang/subforai/internal/server/middleware"
+	"github.com/OsborneWang/subforai/internal/service"
 
 	"github.com/gin-gonic/gin"
 )

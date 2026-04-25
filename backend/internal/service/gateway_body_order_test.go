@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Wei-Shaw/sub2api/internal/pkg/claude"
+	"github.com/OsborneWang/subforai/internal/pkg/claude"
 	"github.com/stretchr/testify/require"
 )
 

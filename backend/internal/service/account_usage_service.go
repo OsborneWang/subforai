@@ -13,12 +13,12 @@ import (
 	"sync"
 	"time"
 
-	httppool "github.com/Wei-Shaw/sub2api/internal/pkg/httpclient"
-	openaipkg "github.com/Wei-Shaw/sub2api/internal/pkg/openai"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/pagination"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/timezone"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/tlsfingerprint"
-	"github.com/Wei-Shaw/sub2api/internal/pkg/usagestats"
+	httppool "github.com/OsborneWang/subforai/internal/pkg/httpclient"
+	openaipkg "github.com/OsborneWang/subforai/internal/pkg/openai"
+	"github.com/OsborneWang/subforai/internal/pkg/pagination"
+	"github.com/OsborneWang/subforai/internal/pkg/timezone"
+	"github.com/OsborneWang/subforai/internal/pkg/tlsfingerprint"
+	"github.com/OsborneWang/subforai/internal/pkg/usagestats"
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/sync/singleflight"
 )

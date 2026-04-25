@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Wei-Shaw/sub2api/ent"
-	"github.com/Wei-Shaw/sub2api/ent/securitysecret"
-	"github.com/Wei-Shaw/sub2api/internal/config"
+	"github.com/OsborneWang/subforai/ent"
+	"github.com/OsborneWang/subforai/ent/securitysecret"
+	"github.com/OsborneWang/subforai/internal/config"
 )
 
 const (

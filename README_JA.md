@@ -8,8 +8,6 @@
 [![Redis](https://img.shields.io/badge/Redis-7+-DC382D.svg)](https://redis.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
 
-<a href="https://trendshift.io/repositories/21823" target="_blank"><img src="https://trendshift.io/api/badge/repositories/21823" alt="Wei-Shaw%2Fsub2api | Trendshift" width="250" height="55"/></a>
-
 **サブスクリプションクォータ配分のための AI API ゲートウェイプラットフォーム**
 
 [English](README.md) | [中文](README_CN.md) | 日本語
@@ -136,240 +134,81 @@ Nginx はデフォルトでアンダースコアを含むヘッダー（例: `se
 
 ## デプロイ
 
-### 方法1: スクリプトによるインストール（推奨）
+### 方法1: ローカルソースを使う Docker Compose（推奨）
 
-GitHub Releases からビルド済みバイナリをダウンロードするワンクリックインストールスクリプトです。
-
-#### 前提条件
-
-- Linux サーバー（amd64 または arm64）
-- PostgreSQL 15+（インストール済みかつ稼働中）
-- Redis 7+（インストール済みかつ稼働中）
-- root 権限
-
-#### インストール手順
-
-```bash
-curl -sSL https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/deploy/install.sh | sudo bash
-```
-
-スクリプトは以下を実行します:
-1. システムアーキテクチャの検出
-2. 最新リリースのダウンロード
-3. バイナリを `/opt/sub2api` にインストール
-4. systemd サービスの作成
-5. システムユーザーと権限の設定
-
-#### インストール後の作業
-
-```bash
-# 1. サービスを起動
-sudo systemctl start sub2api
-
-# 2. 起動時の自動起動を有効化
-sudo systemctl enable sub2api
-
-# 3. ブラウザでセットアップウィザードを開く
-# http://YOUR_SERVER_IP:8080
-```
-
-セットアップウィザードでは以下の設定を行います:
-- データベース設定
-- Redis 設定
-- 管理者アカウントの作成
-
-#### アップグレード
-
-**管理ダッシュボード**の左上にある**アップデートを確認**ボタンをクリックすることで、ダッシュボードから直接アップグレードできます。
-
-Web インターフェースでは以下が可能です:
-- 新しいバージョンの自動確認
-- ワンクリックでのアップデートのダウンロードと適用
-- 必要に応じたロールバック
-
-#### よく使うコマンド
-
-```bash
-# ステータスを確認
-sudo systemctl status sub2api
-
-# ログを表示
-sudo journalctl -u sub2api -f
-
-# サービスを再起動
-sudo systemctl restart sub2api
-
-# アンインストール
-curl -sSL https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/deploy/install.sh | sudo bash -s -- uninstall -y
-```
-
----
-
-### 方法2: Docker Compose（推奨）
-
-PostgreSQL と Redis のコンテナを含む Docker Compose でデプロイします。
+このリポジトリでは、現在 1 つの Docker デプロイ方式だけを保守しています。アプリイメージはローカルソースコードからビルドし、実行時データは `deploy/data`、`deploy/postgres_data`、`deploy/redis_data` に保持します。
 
 #### 前提条件
 
 - Docker 20.10+
 - Docker Compose v2+
 
-#### クイックスタート（ワンクリックデプロイ）
-
-自動デプロイスクリプトを使用して簡単にセットアップできます:
+#### クイックスタート
 
 ```bash
-# デプロイ用ディレクトリを作成
-mkdir -p sub2api-deploy && cd sub2api-deploy
-
-# デプロイ準備スクリプトをダウンロードして実行
-curl -sSL https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/deploy/docker-deploy.sh | bash
-
-# サービスを起動
-docker compose up -d
-
-# ログを表示
-docker compose logs -f sub2api
-```
-
-**スクリプトの動作内容:**
-- `docker-compose.local.yml`（`docker-compose.yml` として保存）と `.env.example` をダウンロード
-- セキュアな認証情報（JWT_SECRET、TOTP_ENCRYPTION_KEY、POSTGRES_PASSWORD）を自動生成
-- 自動生成されたシークレットで `.env` ファイルを作成
-- データディレクトリを作成（バックアップ・移行が容易なローカルディレクトリを使用）
-- 生成された認証情報を参照用に表示
-
-#### 手動デプロイ
-
-手動でセットアップする場合:
-
-```bash
-# 1. リポジトリをクローン
-git clone https://github.com/Wei-Shaw/sub2api.git
-cd sub2api/deploy
-
-# 2. 環境設定ファイルをコピー
+git clone https://github.com/OsborneWang/subforai.git
+cd subforai/deploy
 cp .env.example .env
-
-# 3. 設定を編集（セキュアなパスワードを生成）
 nano .env
-```
-
-**`.env` の必須設定:**
-
-```bash
-# PostgreSQL パスワード（必須）
-POSTGRES_PASSWORD=your_secure_password_here
-
-# JWT シークレット（推奨 - 再起動後もユーザーのログイン状態を保持）
-JWT_SECRET=your_jwt_secret_here
-
-# TOTP 暗号化キー（推奨 - 再起動後も二要素認証を維持）
-TOTP_ENCRYPTION_KEY=your_totp_key_here
-
-# オプション: 管理者アカウント
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=your_admin_password
-
-# オプション: カスタムポート
-SERVER_PORT=8080
-```
-
-**セキュアなシークレットの生成方法:**
-```bash
-# JWT_SECRET を生成
-openssl rand -hex 32
-
-# TOTP_ENCRYPTION_KEY を生成
-openssl rand -hex 32
-
-# POSTGRES_PASSWORD を生成
-openssl rand -hex 32
-```
-
-```bash
-# 4. データディレクトリを作成（ローカルバージョンの場合）
 mkdir -p data postgres_data redis_data
-
-# 5. すべてのサービスを起動
-# オプション A: ローカルディレクトリバージョン（推奨 - 移行が容易）
-docker compose -f docker-compose.local.yml up -d
-
-# オプション B: 名前付きボリュームバージョン（シンプルなセットアップ）
-docker compose up -d
-
-# 6. ステータスを確認
-docker compose -f docker-compose.local.yml ps
-
-# 7. ログを表示
-docker compose -f docker-compose.local.yml logs -f sub2api
+./appctl.sh up
 ```
 
-#### デプロイバージョン
+この運用フローで使用する主なファイル:
 
-| バージョン | データストレージ | 移行 | 推奨用途 |
-|---------|-------------|-----------|----------|
-| **docker-compose.local.yml** | ローカルディレクトリ | ✅ 容易（ディレクトリ全体を tar） | 本番環境、頻繁なバックアップ |
-| **docker-compose.yml** | 名前付きボリューム | ⚠️ docker コマンドが必要 | シンプルなセットアップ |
+- `deploy/docker-compose.local.yml`
+- `deploy/docker-compose.local-build.yml`
+- `deploy/appctl.sh`
 
-**推奨:** データ管理が容易な `docker-compose.local.yml`（スクリプトによるデプロイ）を使用してください。
+`appctl.sh` は、現在のローカルリポジトリからアプリイメージをビルドし、PostgreSQL と Redis を永続化ディレクトリ付きで起動します。
 
-#### アクセス
-
-ブラウザで `http://YOUR_SERVER_IP:8080` を開いてください。
-
-管理者パスワードが自動生成された場合は、ログで確認できます:
-```bash
-docker compose -f docker-compose.local.yml logs sub2api | grep "admin password"
-```
-
-#### アップグレード
+#### 日常運用
 
 ```bash
-# 最新イメージをプルしてコンテナを再作成
-docker compose -f docker-compose.local.yml pull
-docker compose -f docker-compose.local.yml up -d
+# 現在のローカルコードで再ビルドして再起動
+./appctl.sh deploy
+
+# 先にバックアップしてから再ビルド・再起動
+./appctl.sh upgrade
+
+# アプリログを見る
+./appctl.sh logs
+
+# コンテナ状態を見る
+./appctl.sh ps
+
+# データを消さずに停止
+./appctl.sh stop
+
+# origin/main に同期し、古いファイルを掃除してから再デプロイ
+./appctl.sh pull-deploy
 ```
 
-#### 簡単な移行（ローカルディレクトリバージョン）
-
-`docker-compose.local.yml` を使用している場合、新しいサーバーへの移行が簡単です:
+#### バックアップと移行
 
 ```bash
-# 移行元サーバーにて
-docker compose -f docker-compose.local.yml down
-cd ..
-tar czf sub2api-complete.tar.gz sub2api-deploy/
-
-# 新しいサーバーに転送
-scp sub2api-complete.tar.gz user@new-server:/path/
-
-# 移行先サーバーにて
-tar xzf sub2api-complete.tar.gz
-cd sub2api-deploy/
-docker compose -f docker-compose.local.yml up -d
+# deploy/backups/ にタイムスタンプ付きバックアップを作成
+./appctl.sh backup
 ```
 
-#### よく使うコマンド
+新しいサーバーへ移行する場合は、最低でも次をコピーしてください:
 
-```bash
-# すべてのサービスを停止
-docker compose -f docker-compose.local.yml down
+- `deploy/.env`
+- `deploy/data`
+- `deploy/postgres_data`
+- `deploy/redis_data`
 
-# 再起動
-docker compose -f docker-compose.local.yml restart
+移行先で `./appctl.sh up` を実行すれば再起動できます。
 
-# すべてのログを表示
-docker compose -f docker-compose.local.yml logs -f
+#### 注意事項
 
-# すべてのデータを削除（注意！）
-docker compose -f docker-compose.local.yml down
-rm -rf data/ postgres_data/ redis_data/
-```
+- データを消したくない限り `docker compose down -v` は実行しないでください。
+- アップグレード時に前方互換のデータベース migration が走る可能性があります。重要な変更前は先にバックアップしてください。
+- 詳細な運用手順は `deploy/LOCAL_BUILD_OPERATIONS.md` を参照してください。
 
 ---
 
-### 方法3: ソースからビルド
+### 方法2: ソースからビルド
 
 開発やカスタマイズのためにソースコードからビルドして実行します。
 
@@ -384,7 +223,7 @@ rm -rf data/ postgres_data/ redis_data/
 
 ```bash
 # 1. リポジトリをクローン
-git clone https://github.com/Wei-Shaw/sub2api.git
+git clone https://github.com/OsborneWang/subforai.git
 cd sub2api
 
 # 2. pnpm をインストール（未インストールの場合）
@@ -592,10 +431,12 @@ sub2api/
 │       └── components/       # 再利用可能なコンポーネント
 │
 └── deploy/                   # デプロイファイル
-    ├── docker-compose.yml    # Docker Compose 設定
-    ├── .env.example          # Docker Compose 用環境変数
-    ├── config.example.yaml   # バイナリデプロイ用フル設定ファイル
-    └── install.sh            # ワンクリックインストールスクリプト
+    ├── appctl.sh             # 統一運用エントリ
+    ├── docker-compose.local.yml
+    ├── docker-compose.local-build.yml
+    ├── LOCAL_BUILD_OPERATIONS.md
+    ├── .env.example
+    └── config.example.yaml
 ```
 
 ## 免責事項
@@ -610,11 +451,11 @@ sub2api/
 
 ## スター履歴
 
-<a href="https://star-history.com/#Wei-Shaw/sub2api&Date">
+<a href="https://star-history.com/#OsborneWang/subforai&Date">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Wei-Shaw/sub2api&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Wei-Shaw/sub2api&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Wei-Shaw/sub2api&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=OsborneWang/subforai&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=OsborneWang/subforai&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=OsborneWang/subforai&type=Date" />
  </picture>
 </a>
 

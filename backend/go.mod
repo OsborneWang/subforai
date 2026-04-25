@@ -1,4 +1,4 @@
-module github.com/Wei-Shaw/sub2api
+module github.com/OsborneWang/subforai
 
 go 1.26.2
 

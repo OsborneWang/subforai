@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"github.com/Wei-Shaw/sub2api/internal/pkg/antigravity"
+	"github.com/OsborneWang/subforai/internal/pkg/antigravity"
 )
 
 func TestShortHash(t *testing.T) {

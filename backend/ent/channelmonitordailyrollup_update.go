@@ -11,9 +11,9 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/Wei-Shaw/sub2api/ent/channelmonitor"
-	"github.com/Wei-Shaw/sub2api/ent/channelmonitordailyrollup"
-	"github.com/Wei-Shaw/sub2api/ent/predicate"
+	"github.com/OsborneWang/subforai/ent/channelmonitor"
+	"github.com/OsborneWang/subforai/ent/channelmonitordailyrollup"
+	"github.com/OsborneWang/subforai/ent/predicate"
 )
 
 // ChannelMonitorDailyRollupUpdate is the builder for updating ChannelMonitorDailyRollup entities.
