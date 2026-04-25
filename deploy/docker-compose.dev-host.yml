@@ -1,0 +1,12 @@
+# Local source-development override.
+# Expose PostgreSQL and Redis to the host so the backend can run from source
+# while still reusing deploy/.env and the same Docker-managed data directories.
+
+services:
+  postgres:
+    ports:
+      - "127.0.0.1:${DATABASE_PORT:-5432}:5432"
+
+  redis:
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"

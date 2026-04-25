@@ -1,4 +1,4 @@
-.PHONY: build build-backend build-frontend build-datamanagementd test test-backend test-frontend test-frontend-critical test-datamanagementd secret-scan
+.PHONY: build build-backend build-frontend build-datamanagementd test test-backend test-frontend test-frontend-critical test-datamanagementd secret-scan dev-deps-up dev-deps-down dev-deps-logs dev-env-print dev-backend dev-frontend release-check
 
 FRONTEND_CRITICAL_VITEST := \
 	src/views/auth/__tests__/LinuxDoCallbackView.spec.ts \
@@ -42,3 +42,25 @@ test-datamanagementd:
 
 secret-scan:
 	@python3 tools/secret_scan.py
+
+dev-deps-up:
+	@docker compose -f deploy/docker-compose.local.yml -f deploy/docker-compose.dev-host.yml up -d postgres redis
+
+dev-deps-down:
+	@docker compose -f deploy/docker-compose.local.yml -f deploy/docker-compose.dev-host.yml stop postgres redis
+
+dev-deps-logs:
+	@docker compose -f deploy/docker-compose.local.yml -f deploy/docker-compose.dev-host.yml logs -f postgres redis
+
+dev-env-print:
+	@tools/dev-source-env.sh print
+
+dev-backend:
+	@tools/dev-source-env.sh backend
+
+dev-frontend:
+	@pnpm --dir frontend dev
+
+release-check:
+	@$(MAKE) test
+	@$(MAKE) build

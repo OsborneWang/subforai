@@ -2,6 +2,12 @@
 
 > 本文档记录项目环境配置、常见坑点和注意事项，供 Claude Code 和团队成员参考。
 
+配套运行方式总览见 `docs/ENVIRONMENTS_CN.md`，其中单独整理了：
+
+- 本地开发环境
+- 发布前确认流程
+- 线上生产环境与 `appctl.sh` 运维流程
+
 ## 一、项目基本信息
 
 | 项目 | 说明 |
@@ -13,6 +19,43 @@
 | **包管理** | 后端: go modules, 前端: **pnpm**（不是 npm） |
 
 ## 二、本地环境配置
+
+### 推荐的本地源码开发方式
+
+如果你线上使用 `deploy/appctl.sh`，本地建议不要直接用整套应用容器做日常改代码，而是：
+
+```bash
+# 1. 仅启动 Docker 版 PostgreSQL / Redis（端口映射到宿主机）
+make dev-deps-up
+
+# 2. 查看当前源码模式会使用的环境变量
+make dev-env-print
+
+# 3. 启动后端源码（复用 deploy/.env，并自动补齐 DATABASE_* 映射）
+make dev-backend
+
+# 4. 另开一个终端启动前端源码
+make dev-frontend
+```
+
+这套方式与线上 `deploy/appctl.sh` 的关系：
+
+- 仍然复用 `deploy/.env`
+- 仍然复用 `deploy/data`、`deploy/postgres_data`、`deploy/redis_data`
+- 仅把 `postgres` / `redis` 暴露到宿主机，便于后端源码直连
+- 日常开发走源码热更新；上线前再用 `deploy/appctl.sh deploy` 做接近线上验证
+
+对应文件：
+
+- `deploy/docker-compose.dev-host.yml`
+- `tools/dev-source-env.sh`
+- 根目录 `Makefile` 中的 `dev-*` 目标
+
+如果你不走 `make`，也可以直接这样启动后端源码：
+
+```bash
+tools/dev-source-env.sh backend
+```
 
 ### PostgreSQL 16 (Windows 服务)
 

@@ -1,5 +1,7 @@
 # Local Build Operations
 
+如果你想同时查看“本地开发环境”和“线上生产环境”的统一说明，请参考 `docs/ENVIRONMENTS_CN.md`。
+
 这份文档对应当前服务器上的这套部署方式：
 
 - 代码目录：`/srv/subforai`

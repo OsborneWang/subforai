@@ -205,12 +205,15 @@ mkdir -p data postgres_data redis_data
 - 不要执行 `docker compose down -v`，除非你明确要销毁数据。
 - 应用升级时可能会执行前向数据库迁移，重要升级前先备份。
 - 更完整的运维说明见 `deploy/LOCAL_BUILD_OPERATIONS.md`。
+- 本地开发环境与线上生产环境的配合方式见 `docs/ENVIRONMENTS_CN.md`。
 
 ---
 
 ### 方式二：源码编译
 
 从源码编译安装，适合开发或定制需求。
+
+如果你需要一套“本地前后端源码运行 + Docker 数据库/缓存 + 发布前再按生产方式确认”的工作流，请直接参考 `docs/ENVIRONMENTS_CN.md`。
 
 #### 前置条件
 
