@@ -26,7 +26,7 @@
 - `docker-compose.local.yml`
   - 原始本地目录部署配置，负责 PostgreSQL、Redis、数据挂载等
 - `docker-compose.local-build.yml`
-  - 覆盖 `sub2api` 服务，让应用镜像改为基于本地代码构建
+  - 覆盖 `subforai` 服务，让应用镜像改为基于本地代码构建
 - `appctl.sh`
   - 统一运维脚本
 
@@ -68,7 +68,7 @@ cd /srv/subforai/deploy
 效果：
 
 - 基于 `/srv/subforai` 当前代码构建应用镜像
-- 启动或更新 `sub2api`、`postgres`、`redis`
+- 启动或更新 `subforai`、`postgres`、`redis`
 - 保留现有数据目录
 
 ### 2. 代码更新后重新部署

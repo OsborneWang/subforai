@@ -57,7 +57,7 @@ vi.mock('vue-i18n', () => ({
   useI18n: () => ({
     t: (key: string, params?: Record<string, string | number>) => {
       if (key === 'auth.accountCreatedSuccess') {
-        return `Account created for ${params?.siteName ?? 'Sub2API'}`
+        return `Account created for ${params?.siteName ?? 'SubForAI'}`
       }
       return key
     },
@@ -116,7 +116,7 @@ describe('EmailVerifyView', () => {
     getPublicSettingsMock.mockResolvedValue({
       turnstile_enabled: false,
       turnstile_site_key: '',
-      site_name: 'Sub2API',
+      site_name: 'SubForAI',
       registration_email_suffix_whitelist: [],
     })
     sendVerifyCodeMock.mockResolvedValue({ countdown: 60 })
@@ -169,7 +169,7 @@ describe('EmailVerifyView', () => {
     getPublicSettingsMock.mockResolvedValue({
       turnstile_enabled: false,
       turnstile_site_key: '',
-      site_name: 'Sub2API',
+      site_name: 'SubForAI',
       registration_email_suffix_whitelist: ['allowed.com'],
     })
     sessionStorage.setItem(
@@ -210,7 +210,7 @@ describe('EmailVerifyView', () => {
     getPublicSettingsMock.mockResolvedValue({
       turnstile_enabled: false,
       turnstile_site_key: '',
-      site_name: 'Sub2API',
+      site_name: 'SubForAI',
       registration_email_suffix_whitelist: ['allowed.com'],
     })
     sessionStorage.setItem(
@@ -252,7 +252,7 @@ describe('EmailVerifyView', () => {
     getPublicSettingsMock.mockResolvedValue({
       turnstile_enabled: false,
       turnstile_site_key: '',
-      site_name: 'Sub2API',
+      site_name: 'SubForAI',
       registration_email_suffix_whitelist: ['allowed.com'],
     })
     sendPendingOAuthVerifyCodeMock.mockResolvedValue({
@@ -357,7 +357,7 @@ describe('EmailVerifyView', () => {
     getPublicSettingsMock.mockResolvedValue({
       turnstile_enabled: false,
       turnstile_site_key: '',
-      site_name: 'Sub2API',
+      site_name: 'SubForAI',
       registration_email_suffix_whitelist: ['allowed.com'],
     })
     sessionStorage.setItem(

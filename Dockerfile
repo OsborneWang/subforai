@@ -1,5 +1,5 @@
 # =============================================================================
-# Sub2API Multi-Stage Dockerfile
+# SubForAI Multi-Stage Dockerfile
 # =============================================================================
 # Stage 1: Build frontend
 # Stage 2: Build Go backend with embedded frontend
@@ -85,7 +85,7 @@ FROM ${ALPINE_IMAGE}
 
 # Labels
 LABEL maintainer="OsborneWang <github.com/OsborneWang>"
-LABEL description="Sub2API - AI API Gateway Platform"
+LABEL description="SubForAI - AI API Gateway Platform"
 LABEL org.opencontainers.image.source="https://github.com/OsborneWang/subforai"
 
 # Install runtime dependencies

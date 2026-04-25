@@ -6,6 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 COMPOSE_ARGS=(-f docker-compose.local.yml -f docker-compose.local-build.yml)
 BACKUP_ROOT="${SCRIPT_DIR}/backups"
+APP_SERVICE="subforai"
 LEGACY_FILES=(
   "DATAMANAGEMENTD_CN.md"
   "DOCKER.md"
@@ -202,19 +203,19 @@ doctor() {
 do_up() {
   require_cmd docker
   ensure_layout
-  compose up -d --build
+  compose up -d --build --remove-orphans
 }
 
 do_build() {
   require_cmd docker
   ensure_layout
-  compose build sub2api
+  compose build "${APP_SERVICE}"
 }
 
 do_restart() {
   require_cmd docker
   ensure_layout
-  compose restart sub2api
+  compose restart "${APP_SERVICE}"
 }
 
 do_stop() {
@@ -226,7 +227,7 @@ do_stop() {
 do_logs() {
   require_cmd docker
   ensure_layout
-  compose logs -f sub2api
+  compose logs -f "${APP_SERVICE}"
 }
 
 do_ps() {
