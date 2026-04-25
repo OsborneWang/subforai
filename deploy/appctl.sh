@@ -18,7 +18,6 @@ LEGACY_FILES=(
   "docker-compose.standalone.yml"
   "docker-compose.yml"
   "docker-deploy.sh"
-  "docker-entrypoint.sh"
   "install-datamanagementd.sh"
   "install.sh"
   "sub2api-datamanagementd.service"
