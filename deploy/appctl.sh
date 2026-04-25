@@ -67,6 +67,18 @@ require_cmd() {
   command -v "$1" >/dev/null 2>&1 || die "missing command: $1"
 }
 
+repo_user_cmd() {
+  if [ "$(id -u)" -eq 0 ] && [ -n "${SUDO_USER:-}" ]; then
+    sudo -H -u "${SUDO_USER}" "$@"
+  else
+    "$@"
+  fi
+}
+
+git_repo() {
+  repo_user_cmd git -C "${PROJECT_ROOT}" "$@"
+}
+
 compose() {
   (cd "${SCRIPT_DIR}" && docker compose "${COMPOSE_ARGS[@]}" "$@")
 }
@@ -170,8 +182,8 @@ EOF
 sync_latest() {
   require_cmd git
   log "syncing latest code from origin/main"
-  git -C "${PROJECT_ROOT}" fetch origin
-  git -C "${PROJECT_ROOT}" reset --hard origin/main
+  git_repo fetch origin
+  git_repo reset --hard origin/main
   tidy_workspace
 }
 
@@ -182,7 +194,7 @@ doctor() {
   ensure_gitignore
   log "project root: ${PROJECT_ROOT}"
   log "compose files: docker-compose.local.yml + docker-compose.local-build.yml"
-  git -C "${PROJECT_ROOT}" status --short --branch || true
+  git_repo status --short --branch || true
   compose config >/dev/null
   log "docker compose config: OK"
 }
