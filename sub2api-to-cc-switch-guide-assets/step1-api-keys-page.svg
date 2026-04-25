@@ -1,0 +1,70 @@
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="900" fill="#EEF3F8"/>
+  <rect x="40" y="40" width="1360" height="820" rx="28" fill="#FFFFFF"/>
+  <rect x="40" y="40" width="240" height="820" rx="28" fill="#162436"/>
+  <text x="78" y="105" fill="#FFFFFF" font-size="30" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">Sub2API</text>
+  <rect x="64" y="156" width="192" height="54" rx="14" fill="#1F3651"/>
+  <text x="92" y="191" fill="#BFD3E6" font-size="22" font-family="PingFang SC, Microsoft YaHei, Arial">控制台</text>
+  <rect x="64" y="226" width="192" height="54" rx="14" fill="#D8EEFF"/>
+  <text x="92" y="261" fill="#1261A0" font-size="22" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">API Keys</text>
+  <rect x="64" y="296" width="192" height="54" rx="14" fill="#1F3651"/>
+  <text x="92" y="331" fill="#BFD3E6" font-size="22" font-family="PingFang SC, Microsoft YaHei, Arial">使用统计</text>
+  <rect x="64" y="366" width="192" height="54" rx="14" fill="#1F3651"/>
+  <text x="92" y="401" fill="#BFD3E6" font-size="22" font-family="PingFang SC, Microsoft YaHei, Arial">个人资料</text>
+
+  <text x="328" y="112" fill="#0F172A" font-size="34" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">API Keys</text>
+  <text x="328" y="150" fill="#64748B" font-size="20" font-family="PingFang SC, Microsoft YaHei, Arial">先进入这个页面，再创建或导入你的 API Key。</text>
+
+  <rect x="1080" y="88" width="128" height="48" rx="14" fill="#E2FBE8"/>
+  <text x="1110" y="119" fill="#15803D" font-size="21" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">刷新</text>
+  <rect x="1224" y="88" width="132" height="48" rx="14" fill="#1D4ED8"/>
+  <text x="1258" y="119" fill="#FFFFFF" font-size="21" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">创建密钥</text>
+
+  <rect x="320" y="188" width="1048" height="88" rx="18" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/>
+  <text x="350" y="228" fill="#334155" font-size="20" font-family="PingFang SC, Microsoft YaHei, Arial">搜索名称 / 密钥</text>
+  <rect x="1038" y="206" width="144" height="50" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="1086" y="238" fill="#475569" font-size="20" font-family="PingFang SC, Microsoft YaHei, Arial">全部状态</text>
+  <rect x="1198" y="206" width="144" height="50" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="1246" y="238" fill="#475569" font-size="20" font-family="PingFang SC, Microsoft YaHei, Arial">全部分组</text>
+
+  <rect x="320" y="304" width="1048" height="460" rx="22" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <rect x="320" y="304" width="1048" height="66" rx="22" fill="#F8FAFC"/>
+  <text x="354" y="345" fill="#475569" font-size="19" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">名称</text>
+  <text x="532" y="345" fill="#475569" font-size="19" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">API 密钥</text>
+  <text x="760" y="345" fill="#475569" font-size="19" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">分组</text>
+  <text x="918" y="345" fill="#475569" font-size="19" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">状态</text>
+  <text x="1088" y="345" fill="#475569" font-size="19" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">操作</text>
+
+  <rect x="344" y="394" width="1000" height="116" rx="18" fill="#FDFEFE" stroke="#EDF2F7" stroke-width="2"/>
+  <text x="370" y="438" fill="#0F172A" font-size="24" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">我的第一个密钥</text>
+  <text x="370" y="470" fill="#64748B" font-size="18" font-family="PingFang SC, Microsoft YaHei, Arial">创建时间：2026-04-25 10:30</text>
+  <text x="532" y="442" fill="#111827" font-size="22" font-family="SFMono-Regular, Menlo, Consolas, monospace">sk-sub2api-***********</text>
+  <rect x="744" y="412" width="126" height="38" rx="12" fill="#E0F2FE"/>
+  <text x="775" y="438" fill="#0369A1" font-size="18" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">Anthropic</text>
+  <rect x="908" y="412" width="88" height="38" rx="12" fill="#DCFCE7"/>
+  <text x="936" y="438" fill="#15803D" font-size="18" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">正常</text>
+
+  <rect x="1058" y="402" width="82" height="82" rx="18" fill="#F0FDF4"/>
+  <text x="1076" y="435" fill="#15803D" font-size="16" font-family="PingFang SC, Microsoft YaHei, Arial">使用</text>
+  <text x="1070" y="460" fill="#15803D" font-size="16" font-family="PingFang SC, Microsoft YaHei, Arial">密钥</text>
+  <rect x="1154" y="396" width="104" height="94" rx="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="4"/>
+  <text x="1176" y="435" fill="#1D4ED8" font-size="16" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">导入到</text>
+  <text x="1184" y="461" fill="#1D4ED8" font-size="16" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">CCS</text>
+  <rect x="1274" y="402" width="52" height="82" rx="16" fill="#F8FAFC"/>
+
+  <circle cx="1288" cy="118" r="26" fill="#F97316"/>
+  <text x="1280" y="126" fill="#FFFFFF" font-size="24" font-family="Arial" font-weight="700">1</text>
+  <path d="M1270 142C1256 170 1244 184 1222 200" stroke="#F97316" stroke-width="6" stroke-linecap="round"/>
+  <rect x="930" y="150" width="290" height="64" rx="18" fill="#FFF7ED"/>
+  <text x="956" y="189" fill="#9A3412" font-size="20" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">如果还没有密钥，先点“创建密钥”</text>
+
+  <circle cx="1308" cy="534" r="26" fill="#2563EB"/>
+  <text x="1300" y="542" fill="#FFFFFF" font-size="24" font-family="Arial" font-weight="700">2</text>
+  <path d="M1284 524C1268 514 1266 494 1248 480" stroke="#2563EB" stroke-width="6" stroke-linecap="round"/>
+  <rect x="1008" y="520" width="296" height="92" rx="18" fill="#EFF6FF"/>
+  <text x="1032" y="558" fill="#1D4ED8" font-size="20" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">找到要使用的那一行</text>
+  <text x="1032" y="588" fill="#1D4ED8" font-size="20" font-family="PingFang SC, Microsoft YaHei, Arial" font-weight="700">点击“导入到 CCS”</text>
+
+  <rect x="320" y="790" width="1048" height="40" rx="12" fill="#F8FAFC"/>
+  <text x="354" y="817" fill="#64748B" font-size="18" font-family="PingFang SC, Microsoft YaHei, Arial">示意截图：按钮名称与操作位置按当前版本整理，便于对照点击。</text>
+</svg>
