@@ -2,8 +2,8 @@
 
 这份文档对应当前服务器上的这套部署方式：
 
-- 代码目录：`/srv/sub2api`
-- 部署目录：`/srv/sub2api/deploy`
+- 代码目录：`/srv/subforai`
+- 部署目录：`/srv/subforai/deploy`
 - 数据目录：
   - `deploy/data`
   - `deploy/postgres_data`
@@ -56,7 +56,7 @@
 先进入部署目录：
 
 ```bash
-cd /srv/sub2api/deploy
+cd /srv/subforai/deploy
 ```
 
 ### 1. 首次启动或常规启动
@@ -67,7 +67,7 @@ cd /srv/sub2api/deploy
 
 效果：
 
-- 基于 `/srv/sub2api` 当前代码构建应用镜像
+- 基于 `/srv/subforai` 当前代码构建应用镜像
 - 启动或更新 `sub2api`、`postgres`、`redis`
 - 保留现有数据目录
 
@@ -127,10 +127,10 @@ cd /srv/sub2api/deploy
 建议用下面这套流程：
 
 ```bash
-cd /srv/sub2api
+cd /srv/subforai
 git pull --ff-only origin main
 
-cd /srv/sub2api/deploy
+cd /srv/subforai/deploy
 ./appctl.sh upgrade
 ```
 
@@ -150,7 +150,7 @@ cd /srv/sub2api/deploy
 执行：
 
 ```bash
-cd /srv/sub2api/deploy
+cd /srv/subforai/deploy
 ./appctl.sh backup
 ```
 
@@ -213,12 +213,12 @@ cd /srv/sub2api/deploy
 
 1. 先在旧机器执行 `./appctl.sh backup`
 2. 复制下面这些内容到新机器：
-   - `/srv/sub2api`
+   - `/srv/subforai`
    - 或至少复制 `deploy/.env`、`deploy/data`、`deploy/postgres_data`、`deploy/redis_data`
 3. 在新机器上执行：
 
 ```bash
-cd /srv/sub2api/deploy
+cd /srv/subforai/deploy
 ./appctl.sh up
 ```
 
@@ -245,10 +245,10 @@ cd /srv/sub2api/deploy
 处理顺序：
 
 ```bash
-cd /srv/sub2api
+cd /srv/subforai
 git log --oneline -n 1
 
-cd /srv/sub2api/deploy
+cd /srv/subforai/deploy
 ./appctl.sh deploy
 ```
 
@@ -336,9 +336,9 @@ rm -rf data postgres_data redis_data
 
 ```bash
 docker compose -f docker-compose.local.yml -f docker-compose.local-build.yml down -v
-rm -rf /srv/sub2api/deploy/data
-rm -rf /srv/sub2api/deploy/postgres_data
-rm -rf /srv/sub2api/deploy/redis_data
+rm -rf /srv/subforai/deploy/data
+rm -rf /srv/subforai/deploy/postgres_data
+rm -rf /srv/subforai/deploy/redis_data
 ```
 
 ## 推荐日常操作清单
@@ -346,30 +346,30 @@ rm -rf /srv/sub2api/deploy/redis_data
 ### 日常发布
 
 ```bash
-cd /srv/sub2api
+cd /srv/subforai
 git pull --ff-only origin main
-cd /srv/sub2api/deploy
+cd /srv/subforai/deploy
 ./appctl.sh upgrade
 ```
 
 ### 只重启服务
 
 ```bash
-cd /srv/sub2api/deploy
+cd /srv/subforai/deploy
 ./appctl.sh restart
 ```
 
 ### 看日志排错
 
 ```bash
-cd /srv/sub2api/deploy
+cd /srv/subforai/deploy
 ./appctl.sh logs
 ```
 
 ### 升级前先备份
 
 ```bash
-cd /srv/sub2api/deploy
+cd /srv/subforai/deploy
 ./appctl.sh backup
 ./appctl.sh deploy
 ```
