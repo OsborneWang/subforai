@@ -37,6 +37,24 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    path: '/help-docs',
+    name: 'HelpDocs',
+    component: () => import('@/views/HelpDocsView.vue'),
+    meta: {
+      requiresAuth: false,
+      title: 'Help Docs'
+    }
+  },
+  {
+    path: '/help-docs/:index',
+    name: 'HelpDocDetail',
+    component: () => import('@/views/HelpDocDetailView.vue'),
+    meta: {
+      requiresAuth: false,
+      title: 'Help Doc'
+    }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/LoginView.vue'),

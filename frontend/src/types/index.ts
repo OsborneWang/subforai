@@ -174,6 +174,20 @@ export interface CustomEndpoint {
   description: string
 }
 
+export interface XianyuShop {
+  name: string
+  description: string
+  url: string
+  qr_code: string
+}
+
+export interface HelpDocItem {
+  title: string
+  summary: string
+  url: string
+  category: string
+}
+
 export interface PublicSettings {
   registration_enabled: boolean
   email_verify_enabled: boolean
@@ -191,6 +205,14 @@ export interface PublicSettings {
   contact_info: string
   doc_url: string
   home_content: string
+  qq_group_number?: string
+  qq_group_link?: string
+  qq_group_qr_code?: string
+  xianyu_shop_name?: string
+  xianyu_shop_link?: string
+  xianyu_shop_qr_code?: string
+  xianyu_shops?: XianyuShop[]
+  help_docs?: HelpDocItem[]
   hide_ccs_import_button: boolean
   payment_enabled: boolean
   table_default_page_size: number

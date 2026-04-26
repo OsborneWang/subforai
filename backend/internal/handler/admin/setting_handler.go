@@ -176,6 +176,14 @@ func (h *SettingHandler) GetSettings(c *gin.Context) {
 		ContactInfo:                            settings.ContactInfo,
 		DocURL:                                 settings.DocURL,
 		HomeContent:                            settings.HomeContent,
+		QQGroupNumber:                          settings.QQGroupNumber,
+		QQGroupLink:                            settings.QQGroupLink,
+		QQGroupQRCode:                          settings.QQGroupQRCode,
+		XianyuShopName:                         settings.XianyuShopName,
+		XianyuShopLink:                         settings.XianyuShopLink,
+		XianyuShopQRCode:                       settings.XianyuShopQRCode,
+		XianyuShops:                            dto.ParseXianyuShops(settings.XianyuShops),
+		HelpDocs:                               dto.ParseHelpDocs(settings.HelpDocs),
 		HideCcsImportButton:                    settings.HideCcsImportButton,
 		PurchaseSubscriptionEnabled:            settings.PurchaseSubscriptionEnabled,
 		PurchaseSubscriptionURL:                settings.PurchaseSubscriptionURL,
@@ -328,6 +336,14 @@ type UpdateSettingsRequest struct {
 	ContactInfo                 string                `json:"contact_info"`
 	DocURL                      string                `json:"doc_url"`
 	HomeContent                 string                `json:"home_content"`
+	QQGroupNumber               string                `json:"qq_group_number"`
+	QQGroupLink                 string                `json:"qq_group_link"`
+	QQGroupQRCode               string                `json:"qq_group_qr_code"`
+	XianyuShopName              string                `json:"xianyu_shop_name"`
+	XianyuShopLink              string                `json:"xianyu_shop_link"`
+	XianyuShopQRCode            string                `json:"xianyu_shop_qr_code"`
+	XianyuShops                 *[]dto.XianyuShop     `json:"xianyu_shops"`
+	HelpDocs                    *[]dto.HelpDocItem    `json:"help_docs"`
 	HideCcsImportButton         bool                  `json:"hide_ccs_import_button"`
 	PurchaseSubscriptionEnabled *bool                 `json:"purchase_subscription_enabled"`
 	PurchaseSubscriptionURL     *string               `json:"purchase_subscription_url"`
@@ -1011,6 +1027,94 @@ func (h *SettingHandler) UpdateSettings(c *gin.Context) {
 		customEndpointsJSON = string(endpointBytes)
 	}
 
+	const (
+		maxXianyuShops         = 12
+		maxXianyuNameLen       = 80
+		maxXianyuDescLen       = 200
+		maxHelpDocs            = 30
+		maxHelpDocTitleLen     = 120
+		maxHelpDocSummaryLen   = 300
+		maxHelpDocCategoryLen  = 40
+	)
+
+	xianyuShopsJSON := previousSettings.XianyuShops
+	if req.XianyuShops != nil {
+		shops := *req.XianyuShops
+		if len(shops) > maxXianyuShops {
+			response.BadRequest(c, "Too many Xianyu shops (max 12)")
+			return
+		}
+		for _, shop := range shops {
+			if strings.TrimSpace(shop.Name) == "" {
+				response.BadRequest(c, "Xianyu shop name is required")
+				return
+			}
+			if len(shop.Name) > maxXianyuNameLen {
+				response.BadRequest(c, "Xianyu shop name is too long (max 80 characters)")
+				return
+			}
+			if len(shop.Description) > maxXianyuDescLen {
+				response.BadRequest(c, "Xianyu shop description is too long (max 200 characters)")
+				return
+			}
+			if strings.TrimSpace(shop.URL) == "" {
+				response.BadRequest(c, "Xianyu shop URL is required")
+				return
+			}
+			if err := config.ValidateAbsoluteHTTPURL(strings.TrimSpace(shop.URL)); err != nil {
+				response.BadRequest(c, "Xianyu shop URL must be an absolute http(s) URL")
+				return
+			}
+		}
+		shopBytes, err := json.Marshal(shops)
+		if err != nil {
+			response.BadRequest(c, "Failed to serialize Xianyu shops")
+			return
+		}
+		xianyuShopsJSON = string(shopBytes)
+	}
+
+	helpDocsJSON := previousSettings.HelpDocs
+	if req.HelpDocs != nil {
+		docs := *req.HelpDocs
+		if len(docs) > maxHelpDocs {
+			response.BadRequest(c, "Too many help docs (max 30)")
+			return
+		}
+		for _, doc := range docs {
+			if strings.TrimSpace(doc.Title) == "" {
+				response.BadRequest(c, "Help doc title is required")
+				return
+			}
+			if len(doc.Title) > maxHelpDocTitleLen {
+				response.BadRequest(c, "Help doc title is too long (max 120 characters)")
+				return
+			}
+			if len(doc.Summary) > maxHelpDocSummaryLen {
+				response.BadRequest(c, "Help doc summary is too long (max 300 characters)")
+				return
+			}
+			if len(doc.Category) > maxHelpDocCategoryLen {
+				response.BadRequest(c, "Help doc category is too long (max 40 characters)")
+				return
+			}
+			if strings.TrimSpace(doc.URL) == "" {
+				response.BadRequest(c, "Help doc URL is required")
+				return
+			}
+			if err := config.ValidateAbsoluteHTTPURL(strings.TrimSpace(doc.URL)); err != nil {
+				response.BadRequest(c, "Help doc URL must be an absolute http(s) URL")
+				return
+			}
+		}
+		docBytes, err := json.Marshal(docs)
+		if err != nil {
+			response.BadRequest(c, "Failed to serialize help docs")
+			return
+		}
+		helpDocsJSON = string(docBytes)
+	}
+
 	// Ops metrics collector interval validation (seconds).
 	if req.OpsMetricsIntervalSeconds != nil {
 		v := *req.OpsMetricsIntervalSeconds
@@ -1122,6 +1226,14 @@ func (h *SettingHandler) UpdateSettings(c *gin.Context) {
 		ContactInfo:                      req.ContactInfo,
 		DocURL:                           req.DocURL,
 		HomeContent:                      req.HomeContent,
+		QQGroupNumber:                    req.QQGroupNumber,
+		QQGroupLink:                      req.QQGroupLink,
+		QQGroupQRCode:                    req.QQGroupQRCode,
+		XianyuShopName:                   req.XianyuShopName,
+		XianyuShopLink:                   req.XianyuShopLink,
+		XianyuShopQRCode:                 req.XianyuShopQRCode,
+		XianyuShops:                      xianyuShopsJSON,
+		HelpDocs:                         helpDocsJSON,
 		HideCcsImportButton:              req.HideCcsImportButton,
 		PurchaseSubscriptionEnabled:      purchaseEnabled,
 		PurchaseSubscriptionURL:          purchaseURL,
@@ -1437,6 +1549,14 @@ func (h *SettingHandler) UpdateSettings(c *gin.Context) {
 		ContactInfo:                            updatedSettings.ContactInfo,
 		DocURL:                                 updatedSettings.DocURL,
 		HomeContent:                            updatedSettings.HomeContent,
+		QQGroupNumber:                          updatedSettings.QQGroupNumber,
+		QQGroupLink:                            updatedSettings.QQGroupLink,
+		QQGroupQRCode:                          updatedSettings.QQGroupQRCode,
+		XianyuShopName:                         updatedSettings.XianyuShopName,
+		XianyuShopLink:                         updatedSettings.XianyuShopLink,
+		XianyuShopQRCode:                       updatedSettings.XianyuShopQRCode,
+		XianyuShops:                            dto.ParseXianyuShops(updatedSettings.XianyuShops),
+		HelpDocs:                               dto.ParseHelpDocs(updatedSettings.HelpDocs),
 		HideCcsImportButton:                    updatedSettings.HideCcsImportButton,
 		PurchaseSubscriptionEnabled:            updatedSettings.PurchaseSubscriptionEnabled,
 		PurchaseSubscriptionURL:                updatedSettings.PurchaseSubscriptionURL,
@@ -1742,6 +1862,30 @@ func diffSettings(before *service.SystemSettings, after *service.SystemSettings,
 	}
 	if before.HomeContent != after.HomeContent {
 		changed = append(changed, "home_content")
+	}
+	if before.QQGroupNumber != after.QQGroupNumber {
+		changed = append(changed, "qq_group_number")
+	}
+	if before.QQGroupLink != after.QQGroupLink {
+		changed = append(changed, "qq_group_link")
+	}
+	if before.QQGroupQRCode != after.QQGroupQRCode {
+		changed = append(changed, "qq_group_qr_code")
+	}
+	if before.XianyuShopName != after.XianyuShopName {
+		changed = append(changed, "xianyu_shop_name")
+	}
+	if before.XianyuShopLink != after.XianyuShopLink {
+		changed = append(changed, "xianyu_shop_link")
+	}
+	if before.XianyuShopQRCode != after.XianyuShopQRCode {
+		changed = append(changed, "xianyu_shop_qr_code")
+	}
+	if before.XianyuShops != after.XianyuShops {
+		changed = append(changed, "xianyu_shops")
+	}
+	if before.HelpDocs != after.HelpDocs {
+		changed = append(changed, "help_docs")
 	}
 	if before.HideCcsImportButton != after.HideCcsImportButton {
 		changed = append(changed, "hide_ccs_import_button")

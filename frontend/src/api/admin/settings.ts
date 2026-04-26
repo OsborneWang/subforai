@@ -4,7 +4,13 @@
  */
 
 import { apiClient } from "../client";
-import type { CustomMenuItem, CustomEndpoint, NotifyEmailEntry } from "@/types";
+import type {
+  CustomMenuItem,
+  CustomEndpoint,
+  NotifyEmailEntry,
+  XianyuShop,
+  HelpDocItem,
+} from "@/types";
 
 export interface DefaultSubscriptionSetting {
   group_id: number;
@@ -341,6 +347,14 @@ export interface SystemSettings {
   contact_info: string;
   doc_url: string;
   home_content: string;
+  qq_group_number: string;
+  qq_group_link: string;
+  qq_group_qr_code: string;
+  xianyu_shop_name: string;
+  xianyu_shop_link: string;
+  xianyu_shop_qr_code: string;
+  xianyu_shops: XianyuShop[];
+  help_docs: HelpDocItem[];
   hide_ccs_import_button: boolean;
   table_default_page_size: number;
   table_page_size_options: number[];
@@ -522,6 +536,14 @@ export interface UpdateSettingsRequest {
   contact_info?: string;
   doc_url?: string;
   home_content?: string;
+  qq_group_number?: string;
+  qq_group_link?: string;
+  qq_group_qr_code?: string;
+  xianyu_shop_name?: string;
+  xianyu_shop_link?: string;
+  xianyu_shop_qr_code?: string;
+  xianyu_shops?: XianyuShop[];
+  help_docs?: HelpDocItem[];
   hide_ccs_import_button?: boolean;
   table_default_page_size?: number;
   table_page_size_options?: number[];

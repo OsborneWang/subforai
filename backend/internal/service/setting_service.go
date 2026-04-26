@@ -419,6 +419,14 @@ func (s *SettingService) GetPublicSettings(ctx context.Context) (*PublicSettings
 		SettingKeyContactInfo,
 		SettingKeyDocURL,
 		SettingKeyHomeContent,
+		SettingKeyQQGroupNumber,
+		SettingKeyQQGroupLink,
+		SettingKeyQQGroupQRCode,
+		SettingKeyXianyuShopName,
+		SettingKeyXianyuShopLink,
+		SettingKeyXianyuShopQRCode,
+		SettingKeyXianyuShops,
+		SettingKeyHelpDocs,
 		SettingKeyHideCcsImportButton,
 		SettingKeyPurchaseSubscriptionEnabled,
 		SettingKeyPurchaseSubscriptionURL,
@@ -516,6 +524,14 @@ func (s *SettingService) GetPublicSettings(ctx context.Context) (*PublicSettings
 		ContactInfo:                      settings[SettingKeyContactInfo],
 		DocURL:                           settings[SettingKeyDocURL],
 		HomeContent:                      settings[SettingKeyHomeContent],
+		QQGroupNumber:                    settings[SettingKeyQQGroupNumber],
+		QQGroupLink:                      strings.TrimSpace(settings[SettingKeyQQGroupLink]),
+		QQGroupQRCode:                    settings[SettingKeyQQGroupQRCode],
+		XianyuShopName:                   settings[SettingKeyXianyuShopName],
+		XianyuShopLink:                   strings.TrimSpace(settings[SettingKeyXianyuShopLink]),
+		XianyuShopQRCode:                 settings[SettingKeyXianyuShopQRCode],
+		XianyuShops:                      settings[SettingKeyXianyuShops],
+		HelpDocs:                         settings[SettingKeyHelpDocs],
 		HideCcsImportButton:              settings[SettingKeyHideCcsImportButton] == "true",
 		PurchaseSubscriptionEnabled:      settings[SettingKeyPurchaseSubscriptionEnabled] == "true",
 		PurchaseSubscriptionURL:          strings.TrimSpace(settings[SettingKeyPurchaseSubscriptionURL]),
@@ -659,6 +675,14 @@ type PublicSettingsInjectionPayload struct {
 	ContactInfo                      string          `json:"contact_info"`
 	DocURL                           string          `json:"doc_url"`
 	HomeContent                      string          `json:"home_content"`
+	QQGroupNumber                    string          `json:"qq_group_number"`
+	QQGroupLink                      string          `json:"qq_group_link"`
+	QQGroupQRCode                    string          `json:"qq_group_qr_code"`
+	XianyuShopName                   string          `json:"xianyu_shop_name"`
+	XianyuShopLink                   string          `json:"xianyu_shop_link"`
+	XianyuShopQRCode                 string          `json:"xianyu_shop_qr_code"`
+	XianyuShops                      json.RawMessage `json:"xianyu_shops"`
+	HelpDocs                         json.RawMessage `json:"help_docs"`
 	HideCcsImportButton              bool            `json:"hide_ccs_import_button"`
 	PurchaseSubscriptionEnabled      bool            `json:"purchase_subscription_enabled"`
 	PurchaseSubscriptionURL          string          `json:"purchase_subscription_url"`
@@ -714,6 +738,14 @@ func (s *SettingService) GetPublicSettingsForInjection(ctx context.Context) (any
 		ContactInfo:                      settings.ContactInfo,
 		DocURL:                           settings.DocURL,
 		HomeContent:                      settings.HomeContent,
+		QQGroupNumber:                    settings.QQGroupNumber,
+		QQGroupLink:                      settings.QQGroupLink,
+		QQGroupQRCode:                    settings.QQGroupQRCode,
+		XianyuShopName:                   settings.XianyuShopName,
+		XianyuShopLink:                   settings.XianyuShopLink,
+		XianyuShopQRCode:                 settings.XianyuShopQRCode,
+		XianyuShops:                      safeRawJSONArray(settings.XianyuShops),
+		HelpDocs:                         safeRawJSONArray(settings.HelpDocs),
 		HideCcsImportButton:              settings.HideCcsImportButton,
 		PurchaseSubscriptionEnabled:      settings.PurchaseSubscriptionEnabled,
 		PurchaseSubscriptionURL:          settings.PurchaseSubscriptionURL,
@@ -849,7 +881,8 @@ func safeRawJSONArray(raw string) json.RawMessage {
 }
 
 // GetFrameSrcOrigins returns deduplicated http(s) origins from home_content URL,
-// purchase_subscription_url, and all custom_menu_items URLs. Used by the router layer for CSP frame-src injection.
+// purchase_subscription_url, custom iframe pages, and help docs. Used by the
+// router layer for CSP frame-src injection.
 func (s *SettingService) GetFrameSrcOrigins(ctx context.Context) ([]string, error) {
 	settings, err := s.GetPublicSettings(ctx)
 	if err != nil {
@@ -881,6 +914,11 @@ func (s *SettingService) GetFrameSrcOrigins(ctx context.Context) ([]string, erro
 		addOrigin(item)
 	}
 
+	// help docs iframe origins
+	for _, item := range parseHelpDocURLs(settings.HelpDocs) {
+		addOrigin(item)
+	}
+
 	return origins, nil
 }
 
@@ -903,6 +941,26 @@ func extractOriginFromURL(rawURL string) string {
 
 // parseCustomMenuItemURLs extracts URLs from a raw JSON array of custom menu items.
 func parseCustomMenuItemURLs(raw string) []string {
+	raw = strings.TrimSpace(raw)
+	if raw == "" || raw == "[]" {
+		return nil
+	}
+	var items []struct {
+		URL string `json:"url"`
+	}
+	if err := json.Unmarshal([]byte(raw), &items); err != nil {
+		return nil
+	}
+	urls := make([]string, 0, len(items))
+	for _, item := range items {
+		if item.URL != "" {
+			urls = append(urls, item.URL)
+		}
+	}
+	return urls
+}
+
+func parseHelpDocURLs(raw string) []string {
 	raw = strings.TrimSpace(raw)
 	if raw == "" || raw == "[]" {
 		return nil
@@ -1149,6 +1207,14 @@ func (s *SettingService) buildSystemSettingsUpdates(ctx context.Context, setting
 	updates[SettingKeyContactInfo] = settings.ContactInfo
 	updates[SettingKeyDocURL] = settings.DocURL
 	updates[SettingKeyHomeContent] = settings.HomeContent
+	updates[SettingKeyQQGroupNumber] = strings.TrimSpace(settings.QQGroupNumber)
+	updates[SettingKeyQQGroupLink] = strings.TrimSpace(settings.QQGroupLink)
+	updates[SettingKeyQQGroupQRCode] = settings.QQGroupQRCode
+	updates[SettingKeyXianyuShopName] = strings.TrimSpace(settings.XianyuShopName)
+	updates[SettingKeyXianyuShopLink] = strings.TrimSpace(settings.XianyuShopLink)
+	updates[SettingKeyXianyuShopQRCode] = settings.XianyuShopQRCode
+	updates[SettingKeyXianyuShops] = settings.XianyuShops
+	updates[SettingKeyHelpDocs] = settings.HelpDocs
 	updates[SettingKeyHideCcsImportButton] = strconv.FormatBool(settings.HideCcsImportButton)
 	updates[SettingKeyPurchaseSubscriptionEnabled] = strconv.FormatBool(settings.PurchaseSubscriptionEnabled)
 	updates[SettingKeyPurchaseSubscriptionURL] = strings.TrimSpace(settings.PurchaseSubscriptionURL)
@@ -1676,6 +1742,20 @@ func (s *SettingService) InitializeDefaultSettings(ctx context.Context) error {
 		SettingKeyPromoCodeEnabled:                         "true", // 默认启用优惠码功能
 		SettingKeySiteName:                                 "SubForAI",
 		SettingKeySiteLogo:                                 "",
+		SettingKeySiteSubtitle:                             "Subscription to API Conversion Platform",
+		SettingKeyAPIBaseURL:                               "",
+		SettingKeyContactInfo:                              "",
+		SettingKeyDocURL:                                   "",
+		SettingKeyHomeContent:                              "",
+		SettingKeyQQGroupNumber:                            "",
+		SettingKeyQQGroupLink:                              "",
+		SettingKeyQQGroupQRCode:                            "",
+		SettingKeyXianyuShopName:                           "",
+		SettingKeyXianyuShopLink:                           "",
+		SettingKeyXianyuShopQRCode:                         "",
+		SettingKeyXianyuShops:                              "[]",
+		SettingKeyHelpDocs:                                 "[]",
+		SettingKeyHideCcsImportButton:                      "false",
 		SettingKeyPurchaseSubscriptionEnabled:              "false",
 		SettingKeyPurchaseSubscriptionURL:                  "",
 		SettingKeyTableDefaultPageSize:                     "20",
@@ -1815,6 +1895,14 @@ func (s *SettingService) parseSettings(settings map[string]string) *SystemSettin
 		ContactInfo:                      settings[SettingKeyContactInfo],
 		DocURL:                           settings[SettingKeyDocURL],
 		HomeContent:                      settings[SettingKeyHomeContent],
+		QQGroupNumber:                    settings[SettingKeyQQGroupNumber],
+		QQGroupLink:                      strings.TrimSpace(settings[SettingKeyQQGroupLink]),
+		QQGroupQRCode:                    settings[SettingKeyQQGroupQRCode],
+		XianyuShopName:                   settings[SettingKeyXianyuShopName],
+		XianyuShopLink:                   strings.TrimSpace(settings[SettingKeyXianyuShopLink]),
+		XianyuShopQRCode:                 settings[SettingKeyXianyuShopQRCode],
+		XianyuShops:                      settings[SettingKeyXianyuShops],
+		HelpDocs:                         settings[SettingKeyHelpDocs],
 		HideCcsImportButton:              settings[SettingKeyHideCcsImportButton] == "true",
 		PurchaseSubscriptionEnabled:      settings[SettingKeyPurchaseSubscriptionEnabled] == "true",
 		PurchaseSubscriptionURL:          strings.TrimSpace(settings[SettingKeyPurchaseSubscriptionURL]),

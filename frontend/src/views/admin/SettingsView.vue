@@ -3582,6 +3582,249 @@
                 </p>
               </div>
 
+              <div
+                class="rounded-2xl border border-gray-200/80 bg-gray-50/70 p-5 dark:border-dark-600 dark:bg-dark-800/60"
+              >
+                <div class="mb-4">
+                  <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+                    {{ t("admin.settings.site.officialEntrancesTitle") }}
+                  </h3>
+                  <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    {{ t("admin.settings.site.officialEntrancesHint") }}
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+                  <div
+                    class="rounded-xl border border-white/70 bg-white/80 p-4 shadow-sm dark:border-dark-500 dark:bg-dark-700/60"
+                  >
+                    <div class="mb-4">
+                      <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
+                        {{ t("admin.settings.site.qqGroupTitle") }}
+                      </h4>
+                      <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        {{ t("admin.settings.site.qqGroupHint") }}
+                      </p>
+                    </div>
+                    <div class="space-y-4">
+                      <div>
+                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {{ t("admin.settings.site.qqGroupNumber") }}
+                        </label>
+                        <input
+                          v-model="form.qq_group_number"
+                          type="text"
+                          class="input"
+                          :placeholder="t('admin.settings.site.qqGroupNumberPlaceholder')"
+                        />
+                      </div>
+                      <div>
+                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {{ t("admin.settings.site.qqGroupLink") }}
+                        </label>
+                        <input
+                          v-model="form.qq_group_link"
+                          type="url"
+                          class="input font-mono text-sm"
+                          :placeholder="t('admin.settings.site.qqGroupLinkPlaceholder')"
+                        />
+                      </div>
+                      <div>
+                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {{ t("admin.settings.site.qqGroupQrCode") }}
+                        </label>
+                        <ImageUpload
+                          v-model="form.qq_group_qr_code"
+                          mode="image"
+                          :upload-label="t('admin.settings.site.uploadImage')"
+                          :remove-label="t('admin.settings.site.remove')"
+                          :hint="t('admin.settings.site.qqGroupQrCodeHint')"
+                          :max-size="500 * 1024"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="rounded-xl border border-white/70 bg-white/80 p-4 shadow-sm dark:border-dark-500 dark:bg-dark-700/60"
+                  >
+                    <div class="mb-4">
+                      <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
+                        {{ t("admin.settings.site.xianyuShopsTitle") }}
+                      </h4>
+                      <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        {{ t("admin.settings.site.xianyuShopsHint") }}
+                      </p>
+                    </div>
+                    <div class="space-y-4">
+                      <div
+                        v-for="(shop, index) in form.xianyu_shops"
+                        :key="index"
+                        class="rounded-xl border border-gray-200 p-4 dark:border-dark-600"
+                      >
+                        <div class="mb-3 flex items-center justify-between">
+                          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            {{ t("admin.settings.site.xianyuShopItem", { n: index + 1 }) }}
+                          </span>
+                          <button
+                            type="button"
+                            class="rounded p-1 text-red-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20"
+                            @click="removeXianyuShop(index)"
+                          >
+                            <Icon name="trash" size="sm" />
+                          </button>
+                        </div>
+                        <div class="space-y-4">
+                          <div>
+                            <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                              {{ t("admin.settings.site.xianyuShopName") }}
+                            </label>
+                            <input
+                              v-model="shop.name"
+                              type="text"
+                              class="input"
+                              :placeholder="t('admin.settings.site.xianyuShopNamePlaceholder')"
+                            />
+                          </div>
+                          <div>
+                            <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                              {{ t("admin.settings.site.xianyuShopDescription") }}
+                            </label>
+                            <input
+                              v-model="shop.description"
+                              type="text"
+                              class="input"
+                              :placeholder="t('admin.settings.site.xianyuShopDescriptionPlaceholder')"
+                            />
+                          </div>
+                          <div>
+                            <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                              {{ t("admin.settings.site.xianyuShopLink") }}
+                            </label>
+                            <input
+                              v-model="shop.url"
+                              type="url"
+                              class="input font-mono text-sm"
+                              :placeholder="t('admin.settings.site.xianyuShopLinkPlaceholder')"
+                            />
+                          </div>
+                          <div>
+                            <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                              {{ t("admin.settings.site.xianyuShopQrCode") }}
+                            </label>
+                            <ImageUpload
+                              v-model="shop.qr_code"
+                              mode="image"
+                              :upload-label="t('admin.settings.site.uploadImage')"
+                              :remove-label="t('admin.settings.site.remove')"
+                              :hint="t('admin.settings.site.xianyuShopQrCodeHint')"
+                              :max-size="500 * 1024"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        class="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 transition-colors hover:border-primary-400 hover:text-primary-600 dark:border-dark-600 dark:text-gray-400 dark:hover:border-primary-500 dark:hover:text-primary-400"
+                        @click="addXianyuShop"
+                      >
+                        <Icon name="plus" size="sm" />
+                        {{ t("admin.settings.site.addXianyuShop") }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="mt-4 rounded-xl border border-white/70 bg-white/80 p-4 shadow-sm dark:border-dark-500 dark:bg-dark-700/60"
+                >
+                  <div class="mb-4">
+                    <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
+                      {{ t("admin.settings.site.helpDocsTitle") }}
+                    </h4>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                      {{ t("admin.settings.site.helpDocsHint") }}
+                    </p>
+                  </div>
+                  <div class="space-y-4">
+                    <div
+                      v-for="(doc, index) in form.help_docs"
+                      :key="index"
+                      class="rounded-xl border border-gray-200 p-4 dark:border-dark-600"
+                    >
+                      <div class="mb-3 flex items-center justify-between">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {{ t("admin.settings.site.helpDocItem", { n: index + 1 }) }}
+                        </span>
+                        <button
+                          type="button"
+                          class="rounded p-1 text-red-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20"
+                          @click="removeHelpDoc(index)"
+                        >
+                          <Icon name="trash" size="sm" />
+                        </button>
+                      </div>
+                      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div>
+                          <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            {{ t("admin.settings.site.helpDocTitle") }}
+                          </label>
+                          <input
+                            v-model="doc.title"
+                            type="text"
+                            class="input"
+                            :placeholder="t('admin.settings.site.helpDocTitlePlaceholder')"
+                          />
+                        </div>
+                        <div>
+                          <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            {{ t("admin.settings.site.helpDocCategory") }}
+                          </label>
+                          <input
+                            v-model="doc.category"
+                            type="text"
+                            class="input"
+                            :placeholder="t('admin.settings.site.helpDocCategoryPlaceholder')"
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            {{ t("admin.settings.site.helpDocSummary") }}
+                          </label>
+                          <input
+                            v-model="doc.summary"
+                            type="text"
+                            class="input"
+                            :placeholder="t('admin.settings.site.helpDocSummaryPlaceholder')"
+                          />
+                        </div>
+                        <div class="md:col-span-2">
+                          <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            {{ t("admin.settings.site.helpDocUrl") }}
+                          </label>
+                          <input
+                            v-model="doc.url"
+                            type="url"
+                            class="input font-mono text-sm"
+                            :placeholder="t('admin.settings.site.helpDocUrlPlaceholder')"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      class="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 transition-colors hover:border-primary-400 hover:text-primary-600 dark:border-dark-600 dark:text-gray-400 dark:hover:border-primary-500 dark:hover:text-primary-400"
+                      @click="addHelpDoc"
+                    >
+                      <Icon name="plus" size="sm" />
+                      {{ t("admin.settings.site.addHelpDoc") }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <!-- Hide CCS Import Button -->
               <div
                 class="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-dark-700"
@@ -5009,6 +5252,14 @@ const form = reactive<SettingsForm>({
   contact_info: "",
   doc_url: "",
   home_content: "",
+  qq_group_number: "",
+  qq_group_link: "",
+  qq_group_qr_code: "",
+  xianyu_shop_name: "",
+  xianyu_shop_link: "",
+  xianyu_shop_qr_code: "",
+  xianyu_shops: [],
+  help_docs: [],
   backend_mode_enabled: false,
   hide_ccs_import_button: false,
   payment_enabled: false,
@@ -5606,6 +5857,32 @@ function removeEndpoint(index: number) {
   form.custom_endpoints.splice(index, 1);
 }
 
+function addXianyuShop() {
+  form.xianyu_shops.push({
+    name: "",
+    description: "",
+    url: "",
+    qr_code: "",
+  });
+}
+
+function removeXianyuShop(index: number) {
+  form.xianyu_shops.splice(index, 1);
+}
+
+function addHelpDoc() {
+  form.help_docs.push({
+    title: "",
+    summary: "",
+    url: "",
+    category: "",
+  });
+}
+
+function removeHelpDoc(index: number) {
+  form.help_docs.splice(index, 1);
+}
+
 function formatTablePageSizeOptions(options: number[]): string {
   return options.join(", ");
 }
@@ -5649,6 +5926,24 @@ async function loadSettings() {
       if (value !== null && value !== undefined) {
         (form as Record<string, unknown>)[key] = value;
       }
+    }
+    if (
+      (!Array.isArray(form.xianyu_shops) || form.xianyu_shops.length === 0) &&
+      (String(settings.xianyu_shop_name || "").trim() ||
+        String(settings.xianyu_shop_link || "").trim() ||
+        String(settings.xianyu_shop_qr_code || "").trim())
+    ) {
+      form.xianyu_shops = [
+        {
+          name: String(settings.xianyu_shop_name || "").trim(),
+          description: "",
+          url: String(settings.xianyu_shop_link || "").trim(),
+          qr_code: String(settings.xianyu_shop_qr_code || "").trim(),
+        },
+      ];
+    }
+    if (!Array.isArray(form.help_docs)) {
+      form.help_docs = [];
     }
     Object.assign(authSourceDefaults, buildAuthSourceDefaultsState(settings));
     form.backend_mode_enabled = settings.backend_mode_enabled;
@@ -5900,6 +6195,16 @@ async function saveSettings() {
     // Optional URL fields: auto-clear invalid values so they don't cause backend 400 errors
     if (!isValidHttpUrl(form.frontend_url)) form.frontend_url = "";
     if (!isValidHttpUrl(form.doc_url)) form.doc_url = "";
+    if (!isValidHttpUrl(form.qq_group_link)) form.qq_group_link = "";
+    if (!isValidHttpUrl(form.xianyu_shop_link)) form.xianyu_shop_link = "";
+    form.xianyu_shops = form.xianyu_shops.map((shop) => ({
+      ...shop,
+      url: isValidHttpUrl(shop.url) ? shop.url : "",
+    }));
+    form.help_docs = form.help_docs.map((doc) => ({
+      ...doc,
+      url: isValidHttpUrl(doc.url) ? doc.url : "",
+    }));
     syncWeChatConnectMode();
     const wechatStoredMode = deriveWeChatConnectStoredMode(
       form.wechat_connect_open_enabled,
@@ -5935,6 +6240,14 @@ async function saveSettings() {
       contact_info: form.contact_info,
       doc_url: form.doc_url,
       home_content: form.home_content,
+      qq_group_number: form.qq_group_number,
+      qq_group_link: form.qq_group_link,
+      qq_group_qr_code: form.qq_group_qr_code,
+      xianyu_shop_name: form.xianyu_shop_name,
+      xianyu_shop_link: form.xianyu_shop_link,
+      xianyu_shop_qr_code: form.xianyu_shop_qr_code,
+      xianyu_shops: form.xianyu_shops,
+      help_docs: form.help_docs,
       backend_mode_enabled: form.backend_mode_enabled,
       hide_ccs_import_button: form.hide_ccs_import_button,
       table_default_page_size: form.table_default_page_size,

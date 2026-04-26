@@ -169,6 +169,14 @@ const (
 	SettingKeyContactInfo                 = "contact_info"                  // 客服联系方式
 	SettingKeyDocURL                      = "doc_url"                       // 文档链接
 	SettingKeyHomeContent                 = "home_content"                  // 首页内容（支持 Markdown/HTML，或 URL 作为 iframe src）
+	SettingKeyQQGroupNumber               = "qq_group_number"               // 首页 QQ 群号
+	SettingKeyQQGroupLink                 = "qq_group_link"                 // 首页 QQ 群链接
+	SettingKeyQQGroupQRCode               = "qq_group_qr_code"              // 首页 QQ 群二维码
+	SettingKeyXianyuShopName              = "xianyu_shop_name"              // 首页闲鱼店铺名称
+	SettingKeyXianyuShopLink              = "xianyu_shop_link"              // 首页闲鱼店铺链接
+	SettingKeyXianyuShopQRCode            = "xianyu_shop_qr_code"           // 首页闲鱼店铺二维码
+	SettingKeyXianyuShops                 = "xianyu_shops"                  // 首页闲鱼店铺列表（JSON 数组）
+	SettingKeyHelpDocs                    = "help_docs"                     // 帮助文档列表（JSON 数组）
 	SettingKeyHideCcsImportButton         = "hide_ccs_import_button"        // 是否隐藏 API Keys 页面的导入 CCS 按钮
 	SettingKeyPurchaseSubscriptionEnabled = "purchase_subscription_enabled" // 是否展示"购买订阅"页面入口
 	SettingKeyPurchaseSubscriptionURL     = "purchase_subscription_url"     // "购买订阅"页面 URL（作为 iframe src）

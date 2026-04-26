@@ -297,7 +297,7 @@ export const useAppStore = defineStore('app', () => {
     siteVersion.value = config.version || ''
     contactInfo.value = config.contact_info || ''
     apiBaseUrl.value = config.api_base_url || ''
-    docUrl.value = config.doc_url || ''
+    docUrl.value = (config.help_docs?.length ?? 0) > 0 ? '/help-docs' : (config.doc_url || '')
     publicSettingsLoaded.value = true
   }
 
@@ -334,6 +334,14 @@ export const useAppStore = defineStore('app', () => {
         contact_info: contactInfo.value,
         doc_url: docUrl.value,
         home_content: '',
+        qq_group_number: '',
+        qq_group_link: '',
+        qq_group_qr_code: '',
+        xianyu_shop_name: '',
+        xianyu_shop_link: '',
+        xianyu_shop_qr_code: '',
+        xianyu_shops: [],
+        help_docs: [],
         hide_ccs_import_button: false,
         payment_enabled: false,
         table_default_page_size: 20,

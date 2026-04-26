@@ -96,6 +96,14 @@ type SystemSettings struct {
 	ContactInfo                 string
 	DocURL                      string
 	HomeContent                 string
+	QQGroupNumber               string
+	QQGroupLink                 string
+	QQGroupQRCode               string
+	XianyuShopName              string
+	XianyuShopLink              string
+	XianyuShopQRCode            string
+	XianyuShops                 string
+	HelpDocs                    string
 	HideCcsImportButton         bool
 	PurchaseSubscriptionEnabled bool
 	PurchaseSubscriptionURL     string
@@ -194,6 +202,14 @@ type PublicSettings struct {
 	ContactInfo                      string
 	DocURL                           string
 	HomeContent                      string
+	QQGroupNumber                    string
+	QQGroupLink                      string
+	QQGroupQRCode                    string
+	XianyuShopName                   string
+	XianyuShopLink                   string
+	XianyuShopQRCode                 string
+	XianyuShops                      string
+	HelpDocs                         string
 	HideCcsImportButton              bool
 
 	PurchaseSubscriptionEnabled bool

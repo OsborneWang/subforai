@@ -22,6 +22,22 @@ type CustomEndpoint struct {
 	Description string `json:"description"`
 }
 
+// XianyuShop represents a public Xianyu shop entry shown on the landing page.
+type XianyuShop struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	URL         string `json:"url"`
+	QRCode      string `json:"qr_code"`
+}
+
+// HelpDocItem represents one help document entry in the public docs center.
+type HelpDocItem struct {
+	Title    string `json:"title"`
+	Summary  string `json:"summary"`
+	URL      string `json:"url"`
+	Category string `json:"category"`
+}
+
 // SystemSettings represents the admin settings API response payload.
 type SystemSettings struct {
 	RegistrationEnabled              bool     `json:"registration_enabled"`
@@ -98,6 +114,14 @@ type SystemSettings struct {
 	ContactInfo                 string           `json:"contact_info"`
 	DocURL                      string           `json:"doc_url"`
 	HomeContent                 string           `json:"home_content"`
+	QQGroupNumber               string           `json:"qq_group_number"`
+	QQGroupLink                 string           `json:"qq_group_link"`
+	QQGroupQRCode               string           `json:"qq_group_qr_code"`
+	XianyuShopName              string           `json:"xianyu_shop_name"`
+	XianyuShopLink              string           `json:"xianyu_shop_link"`
+	XianyuShopQRCode            string           `json:"xianyu_shop_qr_code"`
+	XianyuShops                 []XianyuShop     `json:"xianyu_shops"`
+	HelpDocs                    []HelpDocItem    `json:"help_docs"`
 	HideCcsImportButton         bool             `json:"hide_ccs_import_button"`
 	PurchaseSubscriptionEnabled bool             `json:"purchase_subscription_enabled"`
 	PurchaseSubscriptionURL     string           `json:"purchase_subscription_url"`
@@ -217,6 +241,14 @@ type PublicSettings struct {
 	ContactInfo                      string           `json:"contact_info"`
 	DocURL                           string           `json:"doc_url"`
 	HomeContent                      string           `json:"home_content"`
+	QQGroupNumber                    string           `json:"qq_group_number"`
+	QQGroupLink                      string           `json:"qq_group_link"`
+	QQGroupQRCode                    string           `json:"qq_group_qr_code"`
+	XianyuShopName                   string           `json:"xianyu_shop_name"`
+	XianyuShopLink                   string           `json:"xianyu_shop_link"`
+	XianyuShopQRCode                 string           `json:"xianyu_shop_qr_code"`
+	XianyuShops                      []XianyuShop     `json:"xianyu_shops"`
+	HelpDocs                         []HelpDocItem    `json:"help_docs"`
 	HideCcsImportButton              bool             `json:"hide_ccs_import_button"`
 	PurchaseSubscriptionEnabled      bool             `json:"purchase_subscription_enabled"`
 	PurchaseSubscriptionURL          string           `json:"purchase_subscription_url"`
@@ -322,6 +354,32 @@ func ParseCustomEndpoints(raw string) []CustomEndpoint {
 	var items []CustomEndpoint
 	if err := json.Unmarshal([]byte(raw), &items); err != nil {
 		return []CustomEndpoint{}
+	}
+	return items
+}
+
+// ParseXianyuShops parses a JSON string into a slice of XianyuShop.
+func ParseXianyuShops(raw string) []XianyuShop {
+	raw = strings.TrimSpace(raw)
+	if raw == "" || raw == "[]" {
+		return []XianyuShop{}
+	}
+	var items []XianyuShop
+	if err := json.Unmarshal([]byte(raw), &items); err != nil {
+		return []XianyuShop{}
+	}
+	return items
+}
+
+// ParseHelpDocs parses a JSON string into a slice of HelpDocItem.
+func ParseHelpDocs(raw string) []HelpDocItem {
+	raw = strings.TrimSpace(raw)
+	if raw == "" || raw == "[]" {
+		return []HelpDocItem{}
+	}
+	var items []HelpDocItem
+	if err := json.Unmarshal([]byte(raw), &items); err != nil {
+		return []HelpDocItem{}
 	}
 	return items
 }
