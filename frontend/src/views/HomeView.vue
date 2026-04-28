@@ -11,291 +11,134 @@
 
   <div
     v-else
-    class="relative flex min-h-screen flex-col overflow-hidden bg-gradient-to-br from-gray-50 via-primary-50/30 to-gray-100 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950"
+    class="landing-shell"
+    :class="{ 'landing-shell--expanded': hasOfficialEntries }"
   >
-    <div class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div class="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-primary-400/20 blur-3xl"></div>
-      <div class="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-primary-500/15 blur-3xl"></div>
-      <div class="absolute left-1/3 top-1/4 h-72 w-72 rounded-full bg-primary-300/10 blur-3xl"></div>
-      <div class="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-primary-400/10 blur-3xl"></div>
-      <div class="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.03)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
+    <div class="landing-bg">
+      <span class="bg-orb orb-a"></span>
+      <span class="bg-orb orb-b"></span>
+      <span class="bg-orb orb-c"></span>
     </div>
 
-    <header class="relative z-20 px-6 py-4">
-      <nav class="mx-auto flex max-w-6xl items-center justify-between">
-        <router-link :to="homePath" class="flex min-w-0 items-center gap-3">
-          <div class="h-10 w-10 overflow-hidden rounded-xl shadow-md">
-            <img :src="siteLogo || '/logo.png'" alt="Logo" class="h-full w-full object-contain" />
-          </div>
-          <span class="truncate text-lg font-semibold tracking-tight text-gray-900 dark:text-white">{{ siteName }}</span>
+    <header class="landing-header">
+      <nav class="header-actions">
+        <a
+          v-if="docsHref"
+          :href="docsHref"
+          :target="hasHelpDocs ? '_self' : '_blank'"
+          rel="noopener noreferrer"
+          class="nav-btn nav-link"
+        >
+          <Icon name="book" size="sm" />
+          <span>{{ t('home.docs') }}</span>
+        </a>
+        <router-link
+          v-if="isAuthenticated"
+          :to="dashboardPath"
+          class="nav-btn nav-dashboard"
+        >
+          <span class="user-dot">{{ userInitial }}</span>
+          <span>{{ t('home.dashboard') }}</span>
         </router-link>
-
-        <div class="flex items-center gap-3">
-          <LocaleSwitcher />
-          <a
-            v-if="docsHref"
-            :href="docsHref"
-            :target="hasHelpDocs ? '_self' : '_blank'"
-            rel="noopener noreferrer"
-            class="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-dark-400 dark:hover:bg-dark-800 dark:hover:text-white"
-            :title="t('home.viewDocs')"
-          >
-            <Icon name="book" size="md" />
-          </a>
-          <button
-            type="button"
-            class="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-dark-400 dark:hover:bg-dark-800 dark:hover:text-white"
-            :title="isDark ? t('home.switchToLight') : t('home.switchToDark')"
-            @click="toggleTheme"
-          >
-            <Icon v-if="isDark" name="sun" size="md" />
-            <Icon v-else name="moon" size="md" />
-          </button>
-          <router-link
-            v-if="isAuthenticated"
-            :to="dashboardPath"
-            class="inline-flex items-center gap-1.5 rounded-full bg-gray-900 py-1 pl-1 pr-2.5 transition-colors hover:bg-gray-800 dark:bg-dark-800 dark:hover:bg-dark-700"
-          >
-            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-primary-400 to-primary-600 text-[10px] font-semibold text-white">
-              {{ userInitial }}
-            </span>
-            <span class="text-xs font-medium text-white">{{ t('home.dashboard') }}</span>
-            <svg class="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-            </svg>
-          </router-link>
-          <router-link
-            v-else
-            to="/login"
-            class="inline-flex items-center rounded-full bg-gray-900 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-gray-800 dark:bg-dark-800 dark:hover:bg-dark-700"
-          >
-            {{ t('home.login') }}
-          </router-link>
-        </div>
+        <router-link v-else to="/login" class="nav-btn nav-login">
+          {{ t('home.login') }}
+        </router-link>
       </nav>
     </header>
 
-    <main class="relative z-10 flex-1 px-6 py-16">
-      <div class="mx-auto max-w-6xl">
-        <section class="mb-12 flex flex-col items-center justify-between gap-12 lg:flex-row lg:gap-16">
-          <div class="flex-1 text-center lg:text-left">
-            <p class="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-primary-600 dark:text-primary-400">
-              {{ heroEyebrow }}
-            </p>
-            <h1 class="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-              {{ siteName }}
-            </h1>
-            <p class="mb-4 text-2xl font-semibold text-gray-800 dark:text-gray-100 md:text-3xl">
-              {{ heroSubtitle }}
-            </p>
-            <p class="mb-8 max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-dark-300 md:text-xl lg:mx-0 lg:max-w-xl">
-              {{ heroDescription }}
-            </p>
-            <router-link
-              :to="isAuthenticated ? dashboardPath : '/login'"
-              class="btn btn-primary px-8 py-3 text-base shadow-lg shadow-primary-500/30"
-            >
-              {{ ctaText }}
-            </router-link>
-          </div>
+    <main class="landing-main">
+      <section class="hero">
+        <p class="hero-kicker">{{ isZh ? '企业级网关' : 'Enterprise Gateway' }}</p>
+        <h1 class="brand-title">{{ heroTitle }}</h1>
+        <p class="hero-subtitle">{{ heroSubtitle }}</p>
+        <p class="hero-description">{{ heroDescription }}</p>
+        <div class="hero-tags">
+          <span v-for="tag in heroTags" :key="tag" class="hero-tag">{{ tag }}</span>
+        </div>
+        <router-link :to="isAuthenticated ? dashboardPath : '/login'" class="hero-cta">
+          {{ ctaText }}
+        </router-link>
+      </section>
 
-          <div class="flex flex-1 justify-center lg:justify-end">
-            <div class="terminal-container">
-              <div class="terminal-window">
-                <div class="terminal-header">
-                  <div class="terminal-buttons">
-                    <span class="btn-close"></span>
-                    <span class="btn-minimize"></span>
-                    <span class="btn-maximize"></span>
-                  </div>
-                  <span class="terminal-title">terminal</span>
-                </div>
-                <div class="terminal-body">
-                  <div v-for="line in terminalLines" :key="line.text" class="code-line" :class="line.className">
-                    <template v-if="line.type === 'command'">
-                      <span class="code-prompt">$</span>
-                      <span class="code-cmd">{{ line.text }}</span>
-                    </template>
-                    <template v-else-if="line.type === 'comment'">
-                      <span class="code-comment">{{ line.text }}</span>
-                    </template>
-                    <template v-else>
-                      <span class="code-success">{{ line.prefix }}</span>
-                      <span class="code-response">{{ line.text }}</span>
-                    </template>
-                  </div>
-                  <div class="code-line line-4">
-                    <span class="code-prompt">$</span>
-                    <span class="cursor"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <section class="feature-grid feature-grid--primary">
+        <article v-for="item in primaryFeatureCards" :key="item.title" class="feature-card feature-card--primary">
+          <div class="feature-icon">
+            <Icon :name="item.icon" size="md" />
           </div>
-        </section>
+          <h3 class="feature-title">{{ item.title }}</h3>
+          <p class="feature-desc">{{ item.desc }}</p>
+        </article>
+      </section>
 
-        <section class="mb-12 flex flex-wrap items-center justify-center gap-4 md:gap-6">
-          <div
-            v-for="tag in heroTags"
-            :key="tag.label"
-            class="inline-flex items-center gap-2.5 rounded-full border border-gray-200/50 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/80"
-          >
-            <Icon :name="tag.icon" size="sm" class="text-primary-500" />
-            <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ tag.label }}</span>
+      <section class="feature-grid feature-grid--secondary">
+        <article v-for="item in secondaryFeatureCards" :key="item.title" class="feature-card feature-card--secondary">
+          <div class="feature-icon">
+            <Icon :name="item.icon" size="md" />
           </div>
-        </section>
+          <h3 class="feature-title">{{ item.title }}</h3>
+          <p class="feature-desc">{{ item.desc }}</p>
+        </article>
+      </section>
 
-        <section class="mb-8 grid gap-6 md:grid-cols-3">
+      <section v-if="officialEntries.length" class="entrance-section">
+        <div class="section-heading">
+          <p class="section-kicker">{{ t('home.officialEntrances.title') }}</p>
+          <h2 class="section-title">{{ t('home.officialEntrances.subtitle') }}</h2>
+        </div>
+        <div class="entrance-grid">
           <article
-            v-for="(feature, index) in featureCards"
-            :key="feature.title"
-            class="group rounded-2xl border border-gray-200/50 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-500/10 dark:border-dark-700/50 dark:bg-dark-800/60"
+            v-for="entry in officialEntries"
+            :key="entry.key"
+            class="entrance-card"
           >
-            <div
-              class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-transform group-hover:scale-110"
-              :class="featureIconClass(index)"
-            >
-              <Icon :name="feature.icon" size="lg" class="text-white" />
-            </div>
-            <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">{{ feature.title }}</h3>
-            <p class="text-sm leading-relaxed text-gray-600 dark:text-dark-400">{{ feature.desc }}</p>
-          </article>
-        </section>
-
-        <section class="mb-16 text-center">
-          <div class="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
-            {{ t('home.providers.title') }}
-          </div>
-          <p class="text-sm text-gray-600 dark:text-dark-400">
-            {{ t('home.providers.description') }}
-          </p>
-          <div class="mt-6 flex flex-wrap items-center justify-center gap-4">
-            <div
-              v-for="provider in providers"
-              :key="provider.name"
-              class="flex items-center gap-2 rounded-xl px-5 py-3 backdrop-blur-sm"
-              :class="provider.enabled
-                ? 'border border-primary-200 bg-white/60 ring-1 ring-primary-500/20 dark:border-primary-800 dark:bg-dark-800/60'
-                : 'border border-gray-200/50 bg-white/40 opacity-60 dark:border-dark-700/50 dark:bg-dark-800/40'"
-            >
-              <div
-                class="flex h-8 w-8 items-center justify-center rounded-lg text-xs font-bold text-white"
-                :class="provider.badgeClass"
-              >
-                {{ provider.initial }}
+            <div class="entrance-copy">
+              <div class="entrance-badge">
+                <Icon :name="entry.icon" size="sm" />
+                <span>{{ entry.badge }}</span>
               </div>
-              <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ provider.name }}</span>
-              <span
-                class="rounded px-1.5 py-0.5 text-[10px] font-medium"
-                :class="provider.enabled
-                  ? 'bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400'
-                  : 'bg-gray-100 text-gray-500 dark:bg-dark-700 dark:text-dark-400'"
-              >
-                {{ provider.enabled ? t('home.providers.supported') : t('home.providers.soon') }}
-              </span>
-            </div>
-          </div>
-        </section>
-
-        <section v-if="officialEntries.length" class="mb-10">
-          <div class="mb-5">
-            <p class="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary-600 dark:text-primary-400">
-              {{ t('home.officialEntrances.title') }}
-            </p>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-              {{ t('home.officialEntrances.subtitle') }}
-            </h2>
-          </div>
-
-          <div class="grid gap-5 xl:grid-cols-2">
-            <article
-              v-for="entry in officialEntries"
-              :key="entry.key"
-              class="grid items-center gap-5 rounded-2xl border border-gray-200/50 bg-white/70 p-5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/60 md:grid-cols-[minmax(0,1fr)_156px]"
-            >
-              <div class="flex flex-col items-start gap-3">
-                <div class="inline-flex items-center gap-2 rounded-full bg-primary-100 px-3 py-1.5 text-xs font-semibold text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
-                  <Icon :name="entry.icon" size="sm" />
-                  <span>{{ entry.badge }}</span>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ entry.title }}</h3>
-                <p class="text-sm leading-7 text-gray-600 dark:text-dark-400">{{ entry.description }}</p>
-                <p v-if="entry.meta" class="text-sm text-gray-500 dark:text-dark-400">
-                  {{ t('home.officialEntrances.qqGroupNumber') }}
-                  <strong class="ml-2 text-gray-900 dark:text-white">{{ entry.meta }}</strong>
-                </p>
-                <a
-                  v-if="entry.link"
-                  :href="entry.link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900"
-                >
-                  <span>{{ entry.actionLabel }}</span>
-                  <Icon name="externalLink" size="sm" />
-                </a>
-              </div>
-
-              <div class="flex flex-col items-center gap-3">
-                <div
-                  v-if="entry.qrCode"
-                  class="flex h-[156px] w-[156px] items-center justify-center rounded-2xl border border-white/70 bg-white p-3 shadow-sm dark:border-white/10 dark:bg-dark-900"
-                >
-                  <img :src="entry.qrCode" :alt="entry.qrAlt" class="h-full w-full rounded-xl object-contain" />
-                </div>
-                <div
-                  v-else
-                  class="flex h-[156px] w-[156px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-gray-300 bg-white/70 text-sm text-gray-500 dark:border-dark-700 dark:bg-dark-900 dark:text-dark-400"
-                >
-                  <Icon name="grid" size="lg" />
-                  <span>{{ t('home.officialEntrances.missing') }}</span>
-                </div>
-                <p class="text-xs text-gray-500 dark:text-dark-400">{{ t('home.officialEntrances.qrCaption') }}</p>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <footer class="border-t border-gray-200/50 px-2 py-8 dark:border-dark-800/50">
-          <div class="mx-auto flex max-w-6xl flex-col items-center justify-center gap-4 text-center sm:flex-row sm:text-left">
-            <p class="text-sm text-gray-500 dark:text-dark-400">
-              © {{ currentYear }} {{ siteName }}. {{ t('home.footer.allRightsReserved') }}
-            </p>
-            <div class="flex items-center gap-4">
+              <h3 class="entrance-title">{{ entry.title }}</h3>
+              <p class="entrance-desc">{{ entry.description }}</p>
+              <p v-if="entry.meta" class="entrance-meta">
+                <span>{{ t('home.officialEntrances.qqGroupNumber') }}</span>
+                <strong>{{ entry.meta }}</strong>
+              </p>
               <a
-                v-if="docsHref"
-                :href="docsHref"
-                :target="hasHelpDocs ? '_self' : '_blank'"
-                rel="noopener noreferrer"
-                class="text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-dark-400 dark:hover:text-white"
-              >
-                {{ t('home.docs') }}
-              </a>
-              <a
-                href="https://github.com/Wei-Shaw/sub2api"
+                v-if="entry.link"
+                :href="entry.link"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-dark-400 dark:hover:text-white"
+                class="entrance-action"
               >
-                GitHub
+                <span>{{ entry.actionLabel }}</span>
+                <Icon name="externalLink" size="sm" />
               </a>
             </div>
-          </div>
-        </footer>
-      </div>
+
+            <div class="entrance-qr">
+              <div v-if="entry.qrCode" class="entrance-qr-shell">
+                <img :src="entry.qrCode" :alt="entry.qrAlt" class="entrance-qr-image" />
+              </div>
+              <div v-else class="entrance-qr-empty">
+                <Icon name="grid" size="lg" />
+                <span>{{ t('home.officialEntrances.missing') }}</span>
+              </div>
+              <p class="entrance-qr-caption">{{ t('home.officialEntrances.qrCaption') }}</p>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore, useAppStore } from '@/stores'
-import LocaleSwitcher from '@/components/common/LocaleSwitcher.vue'
 import Icon from '@/components/icons/Icon.vue'
 
 type FeatureCard = {
-  icon: 'server' | 'users' | 'dollar'
+  icon: 'shield' | 'dollar' | 'calculator' | 'sparkles' | 'grid' | 'bolt'
   title: string
   desc: string
 }
@@ -313,29 +156,18 @@ type OfficialEntry = {
   qrAlt: string
 }
 
-type TerminalLine = {
-  type: 'command' | 'comment' | 'success'
-  prefix?: string
-  text: string
-  className: string
-}
-
 const { locale, t } = useI18n()
 
 const authStore = useAuthStore()
 const appStore = useAppStore()
 
-const isDark = ref(document.documentElement.classList.contains('dark'))
-
-const homePath = computed(() => '/home')
-const siteName = computed(() => appStore.cachedPublicSettings?.site_name || appStore.siteName || 'SubForAI')
-const siteLogo = computed(() => appStore.cachedPublicSettings?.site_logo || appStore.siteLogo || '')
-const siteSubtitle = computed(() => appStore.cachedPublicSettings?.site_subtitle || 'AI API Gateway Platform')
+const siteName = computed(() => appStore.cachedPublicSettings?.site_name || appStore.siteName || 'Right Code')
 const docUrl = computed(() => appStore.cachedPublicSettings?.doc_url || appStore.docUrl || '')
 const helpDocs = computed(() => appStore.cachedPublicSettings?.help_docs ?? [])
 const hasHelpDocs = computed(() => helpDocs.value.length > 0)
 const docsHref = computed(() => (hasHelpDocs.value ? '/help-docs' : docUrl.value))
 const homeContent = computed(() => appStore.cachedPublicSettings?.home_content || '')
+const heroTitle = computed(() => siteName.value.trim() || 'SubForAI')
 
 const isHomeContentUrl = computed(() => {
   const content = homeContent.value.trim()
@@ -351,9 +183,15 @@ const userInitial = computed(() => {
   return email ? email.charAt(0).toUpperCase() : 'U'
 })
 
-const heroEyebrow = computed(() => (isZh.value ? '企业级网关' : 'Enterprise Gateway'))
-const heroSubtitle = computed(() => siteSubtitle.value)
+const heroSubtitle = computed(() =>
+  isZh.value ? '企业级 AI Agent 分发平台' : 'Enterprise AI Agent distribution platform'
+)
 const heroDescription = computed(() => t('home.heroDescription'))
+const heroTags = computed(() => [
+  t('home.tags.subscriptionToApi'),
+  t('home.tags.stickySession'),
+  t('home.tags.realtimeBilling')
+])
 
 const ctaText = computed(() => {
   if (isAuthenticated.value) {
@@ -361,54 +199,6 @@ const ctaText = computed(() => {
   }
   return isZh.value ? '立即开始' : 'Get Started'
 })
-
-const heroTags = computed(() => [
-  { icon: 'swap' as const, label: t('home.tags.subscriptionToApi') },
-  { icon: 'shield' as const, label: t('home.tags.stickySession') },
-  { icon: 'chart' as const, label: t('home.tags.realtimeBilling') },
-])
-
-const terminalLines = computed<TerminalLine[]>(() => {
-  if (isZh.value) {
-    return [
-      { type: 'command', text: 'curl -X POST /v1/messages', className: 'line-1' },
-      { type: 'comment', text: '# Routing to upstream...', className: 'line-2' },
-      { type: 'success', prefix: '200 OK', text: '{ "content": "Hello!" }', className: 'line-3' },
-    ]
-  }
-
-  return [
-    { type: 'command', text: 'curl -X POST /v1/messages', className: 'line-1' },
-    { type: 'comment', text: '# Routing to upstream...', className: 'line-2' },
-    { type: 'success', prefix: '200 OK', text: '{ "content": "Hello!" }', className: 'line-3' },
-  ]
-})
-
-const featureCards = computed<FeatureCard[]>(() => [
-  {
-    icon: 'server',
-    title: t('home.features.unifiedGateway'),
-    desc: t('home.features.unifiedGatewayDesc'),
-  },
-  {
-    icon: 'users',
-    title: t('home.features.multiAccount'),
-    desc: t('home.features.multiAccountDesc'),
-  },
-  {
-    icon: 'dollar',
-    title: t('home.features.balanceQuota'),
-    desc: t('home.features.balanceQuotaDesc'),
-  },
-])
-
-const providers = computed(() => [
-  { initial: 'C', name: t('home.providers.claude'), enabled: true, badgeClass: 'bg-gradient-to-br from-orange-400 to-orange-500' },
-  { initial: 'G', name: 'GPT', enabled: true, badgeClass: 'bg-gradient-to-br from-green-500 to-green-600' },
-  { initial: 'G', name: t('home.providers.gemini'), enabled: true, badgeClass: 'bg-gradient-to-br from-blue-500 to-blue-600' },
-  { initial: 'A', name: t('home.providers.antigravity'), enabled: true, badgeClass: 'bg-gradient-to-br from-rose-500 to-pink-600' },
-  { initial: '+', name: t('home.providers.more'), enabled: false, badgeClass: 'bg-gradient-to-br from-gray-500 to-gray-600' },
-])
 
 const officialEntries = computed<OfficialEntry[]>(() => {
   const settings = appStore.cachedPublicSettings
@@ -431,7 +221,7 @@ const officialEntries = computed<OfficialEntry[]>(() => {
       link: settings.qq_group_link?.trim() || '',
       actionLabel: t('home.officialEntrances.qqGroupOpen'),
       qrCode: settings.qq_group_qr_code || '',
-      qrAlt: `${t('home.officialEntrances.qqGroup')} QR`,
+      qrAlt: `${t('home.officialEntrances.qqGroup')} QR`
     })
   }
 
@@ -447,7 +237,7 @@ const officialEntries = computed<OfficialEntry[]>(() => {
           name: settings.xianyu_shop_name?.trim() || t('home.officialEntrances.xianyuShop'),
           description: '',
           url: settings.xianyu_shop_link?.trim() || '',
-          qr_code: settings.xianyu_shop_qr_code || '',
+          qr_code: settings.xianyu_shop_qr_code || ''
         }]
       : []
 
@@ -461,42 +251,89 @@ const officialEntries = computed<OfficialEntry[]>(() => {
       link: shop.url?.trim() || '',
       actionLabel: t('home.officialEntrances.xianyuShopOpen'),
       qrCode: shop.qr_code || '',
-      qrAlt: `${t('home.officialEntrances.xianyuShop')} QR`,
+      qrAlt: `${t('home.officialEntrances.xianyuShop')} QR`
     })
   }
 
   return entries
 })
 
-const currentYear = computed(() => new Date().getFullYear())
+const hasOfficialEntries = computed(() => officialEntries.value.length > 0)
 
-function toggleTheme() {
-  isDark.value = !isDark.value
-  document.documentElement.classList.toggle('dark', isDark.value)
-  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
-}
-
-function initTheme() {
-  const savedTheme = localStorage.getItem('theme')
-  if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    isDark.value = true
-    document.documentElement.classList.add('dark')
-  } else {
-    isDark.value = false
-    document.documentElement.classList.remove('dark')
+const featureCards = computed<FeatureCard[]>(() => {
+  if (isZh.value) {
+    return [
+      {
+        icon: 'shield',
+        title: '稳定优先',
+        desc: '独家网关，确保号池稳定，可用率达 99.5%'
+      },
+      {
+        icon: 'dollar',
+        title: '高性价比',
+        desc: '可选按量/包月计费，使用成本仅官网十分之一'
+      },
+      {
+        icon: 'calculator',
+        title: '透明计费',
+        desc: '实时监控用量，无任何隐藏扣费'
+      },
+      {
+        icon: 'sparkles',
+        title: '简单易用',
+        desc: '一键创建 API Key，快速接入各大模型服务'
+      },
+      {
+        icon: 'grid',
+        title: '多种渠道',
+        desc: 'Codex、Claude Max、Droid 等号池多渠道聚合'
+      },
+      {
+        icon: 'bolt',
+        title: '专业客服',
+        desc: '专业客服团队，极速响应，解决你的任何疑问'
+      }
+    ]
   }
-}
 
-function featureIconClass(index: number): string {
   return [
-    'bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-500/30',
-    'bg-gradient-to-br from-primary-500 to-primary-600 shadow-primary-500/30',
-    'bg-gradient-to-br from-purple-500 to-purple-600 shadow-purple-500/30',
-  ][index] || 'bg-gradient-to-br from-primary-500 to-primary-600 shadow-primary-500/30'
-}
+    {
+      icon: 'shield',
+      title: 'Stability First',
+      desc: 'Exclusive gateway routing with a 99.5% service availability target.'
+    },
+    {
+      icon: 'dollar',
+      title: 'Cost Efficient',
+      desc: 'Usage-based and monthly plans with significantly lower model access cost.'
+    },
+    {
+      icon: 'calculator',
+      title: 'Transparent Billing',
+      desc: 'Real-time usage tracking with clear pricing and no hidden deductions.'
+    },
+    {
+      icon: 'sparkles',
+      title: 'Easy to Launch',
+      desc: 'Create API keys in one click and integrate mainstream models in minutes.'
+    },
+    {
+      icon: 'grid',
+      title: 'Multi-Channel',
+      desc: 'Aggregate Codex, Claude Max, Droid, and more channels in one panel.'
+    },
+    {
+      icon: 'bolt',
+      title: 'Expert Support',
+      desc: 'Fast-response support team ready to resolve integration and billing issues.'
+    }
+  ]
+})
+
+const primaryFeatureCards = computed(() => featureCards.value.slice(0, 3))
+const secondaryFeatureCards = computed(() => featureCards.value.slice(3))
 
 onMounted(() => {
-  initTheme()
   authStore.checkAuth()
   if (!appStore.publicSettingsLoaded) {
     appStore.fetchPublicSettings()
@@ -505,154 +342,751 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.terminal-container {
-  width: 100%;
-  max-width: 480px;
-}
+.landing-shell {
+  --bg-a: #f4c9bf;
+  --bg-b: #f2c2cf;
+  --bg-c: #c2d3f4;
+  --text-main: #1d2430;
+  --text-sub: #4a5260;
+  --card-bg: rgba(255, 255, 255, 0.66);
+  --card-border: rgba(236, 236, 239, 0.9);
+  --accent: #c7643f;
+  --accent-strong: #b45433;
 
-.terminal-window {
+  position: relative;
+  min-height: 100vh;
   overflow: hidden;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 28px;
-  background:
-    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9)),
-    rgba(15, 23, 42, 0.94);
-  box-shadow:
-    0 30px 80px -35px rgba(15, 23, 42, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f2d3cc 0%, #f2d9cf 34%, #d7dff5 100%);
 }
 
-.terminal-header {
+:global(.dark) .landing-shell {
+  --bg-a: #3c2f3a;
+  --bg-b: #382d42;
+  --bg-c: #2a3350;
+  --text-main: #edf2fb;
+  --text-sub: #c8d0dc;
+  --card-bg: rgba(28, 32, 41, 0.68);
+  --card-border: rgba(92, 102, 120, 0.4);
+  --accent: #d37d53;
+  --accent-strong: #e08b60;
+  background: linear-gradient(135deg, #2a2f42 0%, #31263d 40%, #22314a 100%);
+}
+
+.landing-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.8;
+  animation: drift 12s ease-in-out infinite;
+}
+
+.orb-a {
+  top: -120px;
+  left: -130px;
+  width: 440px;
+  height: 440px;
+  background: var(--bg-a);
+}
+
+.orb-b {
+  top: 80px;
+  left: 35%;
+  width: 460px;
+  height: 460px;
+  background: var(--bg-b);
+  animation-delay: -3s;
+}
+
+.orb-c {
+  top: -60px;
+  right: -120px;
+  width: 530px;
+  height: 530px;
+  background: var(--bg-c);
+  animation-delay: -6s;
+}
+
+.landing-main {
+  position: relative;
+  z-index: 10;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 56px 24px 100px;
+}
+
+.landing-header {
+  position: relative;
+  z-index: 12;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 18px 24px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+  gap: 10px;
 }
 
-.terminal-buttons {
-  display: flex;
-  gap: 0.45rem;
-}
-
-.btn-close,
-.btn-minimize,
-.btn-maximize {
-  width: 0.7rem;
-  height: 0.7rem;
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
   border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+  transition: 180ms ease;
 }
 
-.btn-close {
-  background: #fb7185;
+.nav-link {
+  padding: 0 13px;
+  color: #4b5666;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  background: rgba(255, 255, 255, 0.42);
 }
 
-.btn-minimize {
-  background: #fbbf24;
+.nav-login,
+.nav-dashboard {
+  padding: 0 15px;
+  color: #fff8f0;
+  border: 1px solid rgba(177, 91, 58, 0.3);
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+  box-shadow:
+    0 10px 25px rgba(181, 92, 58, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.btn-maximize {
-  background: #34d399;
+.nav-btn:hover {
+  transform: translateY(-1px);
 }
 
-.terminal-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: rgba(226, 232, 240, 0.72);
+.user-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #f36d43;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff3ec;
+}
+
+:global(.dark) .nav-link {
+  color: #dde6f4;
+  border-color: rgba(151, 161, 183, 0.34);
+  background: rgba(19, 23, 31, 0.52);
+}
+
+:global(.dark) .nav-login,
+:global(.dark) .nav-dashboard {
+  border-color: rgba(224, 139, 96, 0.42);
+}
+
+.hero {
+  text-align: center;
+  margin: 0 auto 76px;
+  max-width: 860px;
+  animation: fade-up 0.7s ease both;
+}
+
+.hero-kicker {
+  margin: 0 0 14px;
+  color: var(--accent);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
 }
 
-.terminal-body {
-  padding: 1.25rem 1.1rem 1.35rem;
+.brand-title {
+  margin: 0;
+  font-size: clamp(2.7rem, 8vw, 5rem);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  font-weight: 800;
+  color: var(--accent);
   font-family:
-    'SFMono-Regular',
-    'Cascadia Code',
+    'Courier New',
+    'Cascadia Mono',
     'JetBrains Mono',
     ui-monospace,
     monospace;
-  font-size: 0.88rem;
-  line-height: 1.8;
+  text-shadow:
+    -1px -1px 0 rgba(0, 0, 0, 0.03),
+    1px -1px 0 rgba(0, 0, 0, 0.03),
+    -1px 1px 0 rgba(0, 0, 0, 0.03),
+    1px 1px 0 rgba(0, 0, 0, 0.03);
 }
 
-.code-line {
+.hero-subtitle {
+  margin: 18px auto 18px;
+  color: var(--text-sub);
+  font-size: clamp(1.25rem, 2.6vw, 2.9rem);
+  font-weight: 600;
+}
+
+.hero-description {
+  margin: 0 auto 24px;
+  max-width: 680px;
+  color: var(--text-sub);
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.hero-tags {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.hero-tag {
+  display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  min-height: 1.75rem;
-  animation: fade-up 0.65s ease both;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  background: rgba(255, 255, 255, 0.42);
+  color: #556071;
+  font-size: 0.88rem;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-.line-2 {
-  animation-delay: 0.1s;
+:global(.dark) .hero-tag {
+  color: #dde6f4;
+  border-color: rgba(151, 161, 183, 0.3);
+  background: rgba(19, 23, 31, 0.42);
 }
 
-.line-3 {
-  animation-delay: 0.2s;
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 56px;
+  border-radius: 22px;
+  border: 0;
+  color: #fff8f0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+  box-shadow:
+    0 16px 36px rgba(181, 92, 58, 0.33),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
-.line-4 {
-  animation-delay: 0.3s;
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 34px rgba(181, 92, 58, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.code-prompt {
-  color: #34d399;
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  animation: fade-up 0.75s ease 0.08s both;
 }
 
-.code-cmd {
-  color: #f8fafc;
+.feature-grid--primary {
+  margin-bottom: 18px;
 }
 
-.code-comment {
-  color: rgba(148, 163, 184, 0.85);
+.feature-grid--secondary {
+  margin-bottom: 44px;
 }
 
-.code-success {
-  color: #fbbf24;
+.entrance-section {
+  margin: 0 auto 20px;
+  padding-top: 6px;
+  animation: fade-up 0.82s ease 0.12s both;
+}
+
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.section-kicker {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  margin: 0;
+  max-width: 760px;
+  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  line-height: 1.1;
   font-weight: 700;
 }
 
-.code-response {
-  color: rgba(226, 232, 240, 0.9);
+.entrance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 
-.cursor {
+.entrance-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 156px;
+  gap: 20px;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid var(--card-border);
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.5)),
+    var(--card-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 12px 26px rgba(89, 96, 125, 0.12);
+}
+
+.entrance-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.entrance-badge {
   display: inline-flex;
-  width: 0.62rem;
-  height: 1rem;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #34d399 0%, #2dd4bf 100%);
-  animation: blink 1s steps(2, start) infinite;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: var(--accent);
+  background: rgba(199, 100, 63, 0.1);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.entrance-title {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.entrance-desc {
+  margin: 0;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+
+.entrance-meta {
+  margin: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.92rem;
+  color: var(--text-sub);
+}
+
+.entrance-meta strong {
+  color: var(--text-main);
+}
+
+.entrance-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 15px;
+  border-radius: 16px;
+  text-decoration: none;
+  font-weight: 700;
+  color: #fff8f0;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+  box-shadow: 0 10px 20px rgba(181, 92, 58, 0.2);
+}
+
+.entrance-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.entrance-qr-shell,
+.entrance-qr-empty {
+  width: 156px;
+  height: 156px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.entrance-qr-image {
+  width: 132px;
+  height: 132px;
+  object-fit: contain;
+  border-radius: 18px;
+}
+
+.entrance-qr-empty {
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-sub);
+  font-size: 0.85rem;
+}
+
+.entrance-qr-caption {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-sub);
+}
+
+.feature-card {
+  border-radius: 20px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 26px 26px 24px;
+  box-shadow: 0 18px 44px rgba(89, 96, 125, 0.13);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.feature-card--primary {
+  padding-top: 30px;
+}
+
+.feature-card--secondary {
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 42px rgba(89, 96, 125, 0.18);
+}
+
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  color: #6e7482;
+  background: rgba(255, 255, 255, 0.6);
+  margin-bottom: 12px;
+}
+
+:global(.dark) .feature-icon {
+  color: #d0d6e1;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.feature-title {
+  margin: 0 0 10px;
+  font-size: 2rem;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  font-weight: 800;
+}
+
+.feature-desc {
+  margin: 0;
+  color: var(--text-sub);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* Laptop-fit mode: reduce scroll while keeping vertical balance */
+@media (max-height: 920px) and (min-width: 900px) {
+  .landing-shell:not(.landing-shell--expanded) {
+    height: 100svh;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .landing-header {
+    padding-top: 12px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .landing-main {
+    min-height: calc(100svh - 56px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(24px, 4vh, 48px);
+    padding: clamp(20px, 3.8vh, 34px) 22px clamp(24px, 4.4vh, 42px);
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .hero {
+    margin: 0 auto;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .hero-subtitle {
+    margin: 14px auto 26px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .hero-description {
+    margin-bottom: 18px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .hero-tags {
+    margin-bottom: 22px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .feature-grid {
+    gap: 16px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .feature-card {
+    padding: 22px 22px 20px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .feature-title {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .feature-desc {
+    font-size: 0.97rem;
+    line-height: 1.48;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 900px) {
+  .landing-shell:not(.landing-shell--expanded) .landing-main {
+    gap: 16px;
+    padding: 14px 18px 18px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .brand-title {
+    font-size: clamp(2.15rem, 5vw, 3.7rem);
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .hero-subtitle {
+    margin-top: 8px;
+    margin-bottom: 18px;
+    font-size: clamp(1rem, 2vw, 1.6rem);
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .hero-description {
+    margin-bottom: 16px;
+    font-size: 0.96rem;
+    line-height: 1.55;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .hero-tags {
+    margin-bottom: 18px;
+    gap: 8px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .hero-tag {
+    min-height: 30px;
+    padding: 0 12px;
+    font-size: 0.8rem;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .hero-cta {
+    padding: 9px 30px;
+    border-radius: 18px;
+    font-size: 0.92rem;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .feature-grid {
+    gap: 12px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .feature-card {
+    padding: 16px 16px 14px;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .feature-title {
+    margin-bottom: 6px;
+    font-size: 1.52rem;
+  }
+
+  .landing-shell:not(.landing-shell--expanded) .feature-desc {
+    font-size: 0.9rem;
+    line-height: 1.38;
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(10px, -18px, 0) scale(1.03);
+  }
 }
 
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes blink {
-  0%,
-  49% {
-    opacity: 1;
+@media (max-width: 1100px) {
+  .landing-main {
+    max-width: 930px;
   }
 
-  50%,
-  100% {
-    opacity: 0.2;
+  .feature-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 920px) {
+  .entrance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feature-grid--secondary {
+    margin-bottom: 34px;
   }
 }
 
 @media (max-width: 640px) {
-  .terminal-container {
-    max-width: 100%;
+  .landing-header {
+    padding: 12px 12px 0;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .nav-btn {
+    height: 34px;
+    font-size: 12px;
+  }
+
+  .nav-link {
+    padding: 0 10px;
+  }
+
+  .nav-link span {
+    display: none;
+  }
+
+  .nav-login,
+  .nav-dashboard {
+    padding: 0 12px;
+  }
+
+  .landing-main {
+    padding: 40px 14px 86px;
+  }
+
+  .hero {
+    margin-bottom: 34px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.8rem;
+    margin-bottom: 14px;
+  }
+
+  .hero-description {
+    margin-bottom: 18px;
+    font-size: 0.98rem;
+    line-height: 1.62;
+  }
+
+  .hero-tags {
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .hero-tag {
+    min-height: 30px;
+    padding: 0 12px;
+    font-size: 0.78rem;
+  }
+
+  .hero-cta {
+    width: min(100%, 280px);
+    padding: 13px 22px;
+  }
+
+  .entrance-section {
+    margin-bottom: 18px;
+  }
+
+  .entrance-card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 18px;
+  }
+
+  .entrance-copy {
+    gap: 10px;
+  }
+
+  .entrance-title {
+    font-size: 1.35rem;
+  }
+
+  .entrance-action {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .entrance-qr-shell,
+  .entrance-qr-empty {
+    width: min(100%, 180px);
+    height: min(calc(100vw - 120px), 180px);
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .feature-grid--secondary {
+    margin-bottom: 28px;
+  }
+
+  .feature-card {
+    padding: 22px 18px;
+  }
+
+  .feature-title {
+    font-size: 1.65rem;
   }
 }
 </style>
