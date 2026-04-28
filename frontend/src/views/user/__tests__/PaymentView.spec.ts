@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { flushPromises, shallowMount } from '@vue/test-utils'
+import { flushPromises, mount, shallowMount } from '@vue/test-utils'
 import PaymentView from '../PaymentView.vue'
 import { PAYMENT_RECOVERY_STORAGE_KEY } from '@/components/payment/paymentFlow'
 
@@ -100,6 +100,8 @@ function checkoutInfoFixture() {
       },
       global_min: 0,
       global_max: 0,
+      min_amount: 0,
+      max_amount: 0,
       plans: [],
       balance_disabled: false,
       balance_recharge_multiplier: 1,
@@ -410,5 +412,42 @@ describe('PaymentView WeChat JSAPI flow', () => {
     expect(showWarning).toHaveBeenCalledWith('payment.errors.mobilePaymentFallbackToQr')
     expect(showError).not.toHaveBeenCalled()
     expect(window.localStorage.getItem(PAYMENT_RECOVERY_STORAGE_KEY)).toContain('weixin://wxpay/bizpayurl?pr=fallback-native')
+  })
+
+  it('uses configured payment min/max for recharge amount validation', async () => {
+    routeState.query = {}
+    getCheckoutInfo.mockResolvedValue({
+      data: {
+        ...checkoutInfoFixture().data,
+        min_amount: 10,
+        max_amount: 100,
+      },
+    })
+
+    const wrapper = mount(PaymentView, {
+      global: {
+        stubs: {
+          AppLayout: { template: '<div><slot /></div>' },
+          PaymentMethodSelector: { template: '<div class="payment-method-selector-stub"></div>' },
+          PaymentStatusPanel: { template: '<div class="payment-status-panel-stub"></div>' },
+          SubscriptionPlanCard: { template: '<div class="subscription-plan-card-stub"></div>' },
+          Icon: { template: '<span class="icon-stub"></span>' },
+          Teleport: true,
+          Transition: false,
+        },
+      },
+    })
+    await flushPromises()
+
+    const amountInput = wrapper.findComponent({ name: 'AmountInput' })
+    expect(amountInput.exists()).toBe(true)
+    expect(amountInput.props('min')).toBe(10)
+    expect(amountInput.props('max')).toBe(100)
+
+    await wrapper.find('input').setValue('9')
+    await flushPromises()
+
+    expect(wrapper.html()).toContain('payment.amountTooLow')
+    expect(wrapper.find('button.btn').attributes('disabled')).toBeDefined()
   })
 })

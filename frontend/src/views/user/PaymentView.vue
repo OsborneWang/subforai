@@ -44,8 +44,8 @@
               <AmountInput
                 v-model="amount"
                 :amounts="[10, 20, 50, 100, 200, 500, 1000, 2000, 5000]"
-                :min="globalMinAmount"
-                :max="globalMaxAmount"
+                :min="configuredMinAmount"
+                :max="configuredMaxAmount"
               />
               <p v-if="amountError" class="mt-2 text-xs text-amber-600 dark:text-amber-300">{{ amountError }}</p>
             </div>
@@ -471,6 +471,7 @@ function onPaymentSettled() {
 // All checkout data from single API call
 const checkout = ref<CheckoutInfoResponse>({
   methods: {}, global_min: 0, global_max: 0,
+  min_amount: 0, max_amount: 0,
   plans: [], balance_disabled: false, balance_recharge_multiplier: 1, recharge_fee_rate: 0, help_text: '', help_image_url: '', stripe_publishable_key: '',
 })
 
@@ -507,19 +508,15 @@ function amountFitsMethod(amt: number, methodType: string): boolean {
   return true
 }
 
-// Visible methods decide the amount range shown to users.
-const globalMinAmount = computed(() => {
-  const limits = Object.values(visibleMethods.value)
-  if (limits.length === 0) return 0
-  if (limits.some(limit => limit.single_min <= 0)) return 0
-  return Math.min(...limits.map(limit => limit.single_min))
-})
-const globalMaxAmount = computed(() => {
-  const limits = Object.values(visibleMethods.value)
-  if (limits.length === 0) return 0
-  if (limits.some(limit => limit.single_max <= 0)) return 0
-  return Math.max(...limits.map(limit => limit.single_max))
-})
+const configuredMinAmount = computed(() => checkout.value.min_amount > 0 ? checkout.value.min_amount : 0)
+const configuredMaxAmount = computed(() => checkout.value.max_amount > 0 ? checkout.value.max_amount : 0)
+
+function amountFitsConfiguredRange(amt: number): boolean {
+  if (amt <= 0) return true
+  if (configuredMinAmount.value > 0 && amt < configuredMinAmount.value) return false
+  if (configuredMaxAmount.value > 0 && amt > configuredMaxAmount.value) return false
+  return true
+}
 
 // Selected method's limits (for validation and error messages)
 const selectedLimit = computed(() => visibleMethods.value[selectedMethod.value])
@@ -549,6 +546,12 @@ const totalAmount = computed(() =>
 
 const amountError = computed(() => {
   if (validAmount.value <= 0) return ''
+  if (configuredMinAmount.value > 0 && validAmount.value < configuredMinAmount.value) {
+    return t('payment.amountTooLow', { min: configuredMinAmount.value })
+  }
+  if (configuredMaxAmount.value > 0 && validAmount.value > configuredMaxAmount.value) {
+    return t('payment.amountTooHigh', { max: configuredMaxAmount.value })
+  }
   // No method can handle this amount
   if (!enabledMethods.value.some((m) => amountFitsMethod(validAmount.value, m))) {
     return t('payment.amountNoMethod')
@@ -564,6 +567,7 @@ const amountError = computed(() => {
 
 const canSubmit = computed(() =>
   validAmount.value > 0
+    && amountFitsConfiguredRange(validAmount.value)
     && amountFitsMethod(validAmount.value, selectedMethod.value)
     && selectedLimit.value?.available !== false
 )
