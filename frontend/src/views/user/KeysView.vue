@@ -1702,6 +1702,7 @@ const importToCcswitch = (row: ApiKey) => {
 
 const executeCcsImport = (row: ApiKey, clientType: 'claude' | 'gemini') => {
   const baseUrl = publicSettings.value?.api_base_url || window.location.origin
+  const homepage = window.location.origin
   const platform = row.group?.platform || 'anthropic'
 
   // Determine app name and endpoint based on platform and client type
@@ -1750,7 +1751,7 @@ const executeCcsImport = (row: ApiKey, clientType: 'claude' | 'gemini') => {
     resource: 'provider',
     app: app,
     name: providerName,
-    homepage: baseUrl,
+    homepage: homepage,
     endpoint: endpoint,
     apiKey: row.key,
     configFormat: 'json',
