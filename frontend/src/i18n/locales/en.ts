@@ -5088,7 +5088,10 @@ export default {
         helpDocUrlPlaceholder: 'https://docs.example.com/quick-start',
         addHelpDoc: 'Add Help Doc',
         hideCcsImportButton: 'Hide CCS Import Button',
-        hideCcsImportButtonHint: 'When enabled, the "Import to CCS" button will be hidden on the API Keys page'
+        hideCcsImportButtonHint: 'When enabled, the "Import to CCS" button will be hidden on the API Keys page',
+        ccsImportDefaultModelOpenai: 'Default OpenAI Model for CCS Import',
+        ccsImportDefaultModelOpenaiHint: 'Used as the default model when importing a Codex/OpenAI provider into CCS. Leave blank to let CCS decide.',
+        ccsImportDefaultModelOpenaiPlaceholder: 'e.g. gpt-5.4'
       },
       purchase: {
         title: 'Recharge / Subscription Page',

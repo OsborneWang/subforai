@@ -356,6 +356,7 @@ export interface SystemSettings {
   xianyu_shops: XianyuShop[];
   help_docs: HelpDocItem[];
   hide_ccs_import_button: boolean;
+  ccs_import_default_model_openai: string;
   table_default_page_size: number;
   table_page_size_options: number[];
   backend_mode_enabled: boolean;
@@ -545,6 +546,7 @@ export interface UpdateSettingsRequest {
   xianyu_shops?: XianyuShop[];
   help_docs?: HelpDocItem[];
   hide_ccs_import_button?: boolean;
+  ccs_import_default_model_openai?: string;
   table_default_page_size?: number;
   table_page_size_options?: number[];
   backend_mode_enabled?: boolean;

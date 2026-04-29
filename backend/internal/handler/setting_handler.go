@@ -58,6 +58,7 @@ func (h *SettingHandler) GetPublicSettings(c *gin.Context) {
 		XianyuShops:                      dto.ParseXianyuShops(settings.XianyuShops),
 		HelpDocs:                         dto.ParseHelpDocs(settings.HelpDocs),
 		HideCcsImportButton:              settings.HideCcsImportButton,
+		CcsImportDefaultModelOpenAI:      settings.CcsImportDefaultModelOpenAI,
 		PurchaseSubscriptionEnabled:      settings.PurchaseSubscriptionEnabled,
 		PurchaseSubscriptionURL:          settings.PurchaseSubscriptionURL,
 		TableDefaultPageSize:             settings.TableDefaultPageSize,

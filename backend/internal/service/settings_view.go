@@ -105,6 +105,7 @@ type SystemSettings struct {
 	XianyuShops                 string
 	HelpDocs                    string
 	HideCcsImportButton         bool
+	CcsImportDefaultModelOpenAI string
 	PurchaseSubscriptionEnabled bool
 	PurchaseSubscriptionURL     string
 	TableDefaultPageSize        int
@@ -211,6 +212,7 @@ type PublicSettings struct {
 	XianyuShops                      string
 	HelpDocs                         string
 	HideCcsImportButton              bool
+	CcsImportDefaultModelOpenAI      string
 
 	PurchaseSubscriptionEnabled bool
 	PurchaseSubscriptionURL     string

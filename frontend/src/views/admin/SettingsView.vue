@@ -3839,6 +3839,23 @@
                 </div>
                 <Toggle v-model="form.hide_ccs_import_button" />
               </div>
+
+              <div class="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 dark:border-dark-700">
+                <div>
+                  <label class="mb-2 block font-medium text-gray-900 dark:text-white">{{
+                    t("admin.settings.site.ccsImportDefaultModelOpenai")
+                  }}</label>
+                  <input
+                    v-model="form.ccs_import_default_model_openai"
+                    type="text"
+                    class="input"
+                    :placeholder="t('admin.settings.site.ccsImportDefaultModelOpenaiPlaceholder')"
+                  />
+                  <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    {{ t("admin.settings.site.ccsImportDefaultModelOpenaiHint") }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -5262,6 +5279,7 @@ const form = reactive<SettingsForm>({
   help_docs: [],
   backend_mode_enabled: false,
   hide_ccs_import_button: false,
+  ccs_import_default_model_openai: "gpt-5.4",
   payment_enabled: false,
   payment_min_amount: 1,
   payment_max_amount: 10000,
@@ -6250,6 +6268,7 @@ async function saveSettings() {
       help_docs: form.help_docs,
       backend_mode_enabled: form.backend_mode_enabled,
       hide_ccs_import_button: form.hide_ccs_import_button,
+      ccs_import_default_model_openai: form.ccs_import_default_model_openai,
       table_default_page_size: form.table_default_page_size,
       table_page_size_options: form.table_page_size_options,
       custom_menu_items: form.custom_menu_items,

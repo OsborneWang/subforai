@@ -343,6 +343,7 @@ export const useAppStore = defineStore('app', () => {
         xianyu_shops: [],
         help_docs: [],
         hide_ccs_import_button: false,
+        ccs_import_default_model_openai: 'gpt-5.4',
         payment_enabled: false,
         table_default_page_size: 20,
         table_page_size_options: [10, 20, 50, 100],

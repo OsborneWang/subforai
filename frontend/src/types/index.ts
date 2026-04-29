@@ -214,6 +214,7 @@ export interface PublicSettings {
   xianyu_shops?: XianyuShop[]
   help_docs?: HelpDocItem[]
   hide_ccs_import_button: boolean
+  ccs_import_default_model_openai?: string
   payment_enabled: boolean
   table_default_page_size: number
   table_page_size_options: number[]

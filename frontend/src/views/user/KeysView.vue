@@ -1746,6 +1746,7 @@ const executeCcsImport = (row: ApiKey, clientType: 'claude' | 'gemini') => {
     }
   })`
   const providerName = (publicSettings.value?.site_name || 'subforai').trim() || 'subforai'
+  const openaiDefaultModel = (publicSettings.value?.ccs_import_default_model_openai || '').trim()
 
   const params = new URLSearchParams({
     resource: 'provider',
@@ -1759,6 +1760,20 @@ const executeCcsImport = (row: ApiKey, clientType: 'claude' | 'gemini') => {
     usageScript: btoa(usageScript),
     usageAutoInterval: '30'
   })
+  if (app === 'codex' && openaiDefaultModel) {
+    const codexConfig = {
+      auth: {
+        OPENAI_API_KEY: row.key
+      },
+      config: `[model_providers.openai]
+base_url = "${endpoint}"
+
+[general]
+model = "${openaiDefaultModel}"`
+    }
+    params.set('model', openaiDefaultModel)
+    params.set('config', btoa(JSON.stringify(codexConfig)))
+  }
   const deeplink = `ccswitch://v1/import?${params.toString()}`
 
   try {

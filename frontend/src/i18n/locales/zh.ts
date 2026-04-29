@@ -5249,7 +5249,10 @@ export default {
         helpDocUrlPlaceholder: 'https://docs.example.com/quick-start',
         addHelpDoc: '添加帮助文档',
         hideCcsImportButton: '隐藏 CCS 导入按钮',
-        hideCcsImportButtonHint: '启用后将在 API Keys 页面隐藏"导入 CCS"按钮'
+        hideCcsImportButtonHint: '启用后将在 API Keys 页面隐藏"导入 CCS"按钮',
+        ccsImportDefaultModelOpenai: 'CCS 导入默认 OpenAI 模型',
+        ccsImportDefaultModelOpenaiHint: '用于导入到 CCS 的 Codex/OpenAI provider 默认模型；留空则交给 CCS 自己决定。',
+        ccsImportDefaultModelOpenaiPlaceholder: '例如：gpt-5.4'
       },
       purchase: {
         title: '充值/订阅页面',

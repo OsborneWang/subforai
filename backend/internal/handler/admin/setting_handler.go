@@ -185,6 +185,7 @@ func (h *SettingHandler) GetSettings(c *gin.Context) {
 		XianyuShops:                            dto.ParseXianyuShops(settings.XianyuShops),
 		HelpDocs:                               dto.ParseHelpDocs(settings.HelpDocs),
 		HideCcsImportButton:                    settings.HideCcsImportButton,
+		CcsImportDefaultModelOpenAI:            settings.CcsImportDefaultModelOpenAI,
 		PurchaseSubscriptionEnabled:            settings.PurchaseSubscriptionEnabled,
 		PurchaseSubscriptionURL:                settings.PurchaseSubscriptionURL,
 		TableDefaultPageSize:                   settings.TableDefaultPageSize,
@@ -345,6 +346,7 @@ type UpdateSettingsRequest struct {
 	XianyuShops                 *[]dto.XianyuShop     `json:"xianyu_shops"`
 	HelpDocs                    *[]dto.HelpDocItem    `json:"help_docs"`
 	HideCcsImportButton         bool                  `json:"hide_ccs_import_button"`
+	CcsImportDefaultModelOpenAI string                `json:"ccs_import_default_model_openai"`
 	PurchaseSubscriptionEnabled *bool                 `json:"purchase_subscription_enabled"`
 	PurchaseSubscriptionURL     *string               `json:"purchase_subscription_url"`
 	TableDefaultPageSize        int                   `json:"table_default_page_size"`
@@ -1028,13 +1030,13 @@ func (h *SettingHandler) UpdateSettings(c *gin.Context) {
 	}
 
 	const (
-		maxXianyuShops         = 12
-		maxXianyuNameLen       = 80
-		maxXianyuDescLen       = 200
-		maxHelpDocs            = 30
-		maxHelpDocTitleLen     = 120
-		maxHelpDocSummaryLen   = 300
-		maxHelpDocCategoryLen  = 40
+		maxXianyuShops        = 12
+		maxXianyuNameLen      = 80
+		maxXianyuDescLen      = 200
+		maxHelpDocs           = 30
+		maxHelpDocTitleLen    = 120
+		maxHelpDocSummaryLen  = 300
+		maxHelpDocCategoryLen = 40
 	)
 
 	xianyuShopsJSON := previousSettings.XianyuShops
@@ -1235,6 +1237,7 @@ func (h *SettingHandler) UpdateSettings(c *gin.Context) {
 		XianyuShops:                      xianyuShopsJSON,
 		HelpDocs:                         helpDocsJSON,
 		HideCcsImportButton:              req.HideCcsImportButton,
+		CcsImportDefaultModelOpenAI:      req.CcsImportDefaultModelOpenAI,
 		PurchaseSubscriptionEnabled:      purchaseEnabled,
 		PurchaseSubscriptionURL:          purchaseURL,
 		TableDefaultPageSize:             req.TableDefaultPageSize,
@@ -1558,6 +1561,7 @@ func (h *SettingHandler) UpdateSettings(c *gin.Context) {
 		XianyuShops:                            dto.ParseXianyuShops(updatedSettings.XianyuShops),
 		HelpDocs:                               dto.ParseHelpDocs(updatedSettings.HelpDocs),
 		HideCcsImportButton:                    updatedSettings.HideCcsImportButton,
+		CcsImportDefaultModelOpenAI:            updatedSettings.CcsImportDefaultModelOpenAI,
 		PurchaseSubscriptionEnabled:            updatedSettings.PurchaseSubscriptionEnabled,
 		PurchaseSubscriptionURL:                updatedSettings.PurchaseSubscriptionURL,
 		TableDefaultPageSize:                   updatedSettings.TableDefaultPageSize,
@@ -1889,6 +1893,9 @@ func diffSettings(before *service.SystemSettings, after *service.SystemSettings,
 	}
 	if before.HideCcsImportButton != after.HideCcsImportButton {
 		changed = append(changed, "hide_ccs_import_button")
+	}
+	if before.CcsImportDefaultModelOpenAI != after.CcsImportDefaultModelOpenAI {
+		changed = append(changed, "ccs_import_default_model_openai")
 	}
 	if before.DefaultConcurrency != after.DefaultConcurrency {
 		changed = append(changed, "default_concurrency")

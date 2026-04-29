@@ -428,6 +428,7 @@ func (s *SettingService) GetPublicSettings(ctx context.Context) (*PublicSettings
 		SettingKeyXianyuShops,
 		SettingKeyHelpDocs,
 		SettingKeyHideCcsImportButton,
+		SettingKeyCcsImportDefaultModelOpenAI,
 		SettingKeyPurchaseSubscriptionEnabled,
 		SettingKeyPurchaseSubscriptionURL,
 		SettingKeyTableDefaultPageSize,
@@ -533,6 +534,7 @@ func (s *SettingService) GetPublicSettings(ctx context.Context) (*PublicSettings
 		XianyuShops:                      settings[SettingKeyXianyuShops],
 		HelpDocs:                         settings[SettingKeyHelpDocs],
 		HideCcsImportButton:              settings[SettingKeyHideCcsImportButton] == "true",
+		CcsImportDefaultModelOpenAI:      strings.TrimSpace(settings[SettingKeyCcsImportDefaultModelOpenAI]),
 		PurchaseSubscriptionEnabled:      settings[SettingKeyPurchaseSubscriptionEnabled] == "true",
 		PurchaseSubscriptionURL:          strings.TrimSpace(settings[SettingKeyPurchaseSubscriptionURL]),
 		TableDefaultPageSize:             tableDefaultPageSize,
@@ -684,6 +686,7 @@ type PublicSettingsInjectionPayload struct {
 	XianyuShops                      json.RawMessage `json:"xianyu_shops"`
 	HelpDocs                         json.RawMessage `json:"help_docs"`
 	HideCcsImportButton              bool            `json:"hide_ccs_import_button"`
+	CcsImportDefaultModelOpenAI      string          `json:"ccs_import_default_model_openai"`
 	PurchaseSubscriptionEnabled      bool            `json:"purchase_subscription_enabled"`
 	PurchaseSubscriptionURL          string          `json:"purchase_subscription_url"`
 	TableDefaultPageSize             int             `json:"table_default_page_size"`
@@ -747,6 +750,7 @@ func (s *SettingService) GetPublicSettingsForInjection(ctx context.Context) (any
 		XianyuShops:                      safeRawJSONArray(settings.XianyuShops),
 		HelpDocs:                         safeRawJSONArray(settings.HelpDocs),
 		HideCcsImportButton:              settings.HideCcsImportButton,
+		CcsImportDefaultModelOpenAI:      settings.CcsImportDefaultModelOpenAI,
 		PurchaseSubscriptionEnabled:      settings.PurchaseSubscriptionEnabled,
 		PurchaseSubscriptionURL:          settings.PurchaseSubscriptionURL,
 		TableDefaultPageSize:             settings.TableDefaultPageSize,
@@ -1216,6 +1220,7 @@ func (s *SettingService) buildSystemSettingsUpdates(ctx context.Context, setting
 	updates[SettingKeyXianyuShops] = settings.XianyuShops
 	updates[SettingKeyHelpDocs] = settings.HelpDocs
 	updates[SettingKeyHideCcsImportButton] = strconv.FormatBool(settings.HideCcsImportButton)
+	updates[SettingKeyCcsImportDefaultModelOpenAI] = strings.TrimSpace(settings.CcsImportDefaultModelOpenAI)
 	updates[SettingKeyPurchaseSubscriptionEnabled] = strconv.FormatBool(settings.PurchaseSubscriptionEnabled)
 	updates[SettingKeyPurchaseSubscriptionURL] = strings.TrimSpace(settings.PurchaseSubscriptionURL)
 	tableDefaultPageSize, tablePageSizeOptions := normalizeTablePreferences(
@@ -1756,6 +1761,7 @@ func (s *SettingService) InitializeDefaultSettings(ctx context.Context) error {
 		SettingKeyXianyuShops:                              "[]",
 		SettingKeyHelpDocs:                                 "[]",
 		SettingKeyHideCcsImportButton:                      "false",
+		SettingKeyCcsImportDefaultModelOpenAI:              "gpt-5.4",
 		SettingKeyPurchaseSubscriptionEnabled:              "false",
 		SettingKeyPurchaseSubscriptionURL:                  "",
 		SettingKeyTableDefaultPageSize:                     "20",
@@ -1904,6 +1910,7 @@ func (s *SettingService) parseSettings(settings map[string]string) *SystemSettin
 		XianyuShops:                      settings[SettingKeyXianyuShops],
 		HelpDocs:                         settings[SettingKeyHelpDocs],
 		HideCcsImportButton:              settings[SettingKeyHideCcsImportButton] == "true",
+		CcsImportDefaultModelOpenAI:      strings.TrimSpace(settings[SettingKeyCcsImportDefaultModelOpenAI]),
 		PurchaseSubscriptionEnabled:      settings[SettingKeyPurchaseSubscriptionEnabled] == "true",
 		PurchaseSubscriptionURL:          strings.TrimSpace(settings[SettingKeyPurchaseSubscriptionURL]),
 		CustomMenuItems:                  settings[SettingKeyCustomMenuItems],

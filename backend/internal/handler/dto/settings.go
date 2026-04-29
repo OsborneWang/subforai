@@ -123,6 +123,7 @@ type SystemSettings struct {
 	XianyuShops                 []XianyuShop     `json:"xianyu_shops"`
 	HelpDocs                    []HelpDocItem    `json:"help_docs"`
 	HideCcsImportButton         bool             `json:"hide_ccs_import_button"`
+	CcsImportDefaultModelOpenAI string           `json:"ccs_import_default_model_openai"`
 	PurchaseSubscriptionEnabled bool             `json:"purchase_subscription_enabled"`
 	PurchaseSubscriptionURL     string           `json:"purchase_subscription_url"`
 	TableDefaultPageSize        int              `json:"table_default_page_size"`
@@ -250,6 +251,7 @@ type PublicSettings struct {
 	XianyuShops                      []XianyuShop     `json:"xianyu_shops"`
 	HelpDocs                         []HelpDocItem    `json:"help_docs"`
 	HideCcsImportButton              bool             `json:"hide_ccs_import_button"`
+	CcsImportDefaultModelOpenAI      string           `json:"ccs_import_default_model_openai"`
 	PurchaseSubscriptionEnabled      bool             `json:"purchase_subscription_enabled"`
 	PurchaseSubscriptionURL          string           `json:"purchase_subscription_url"`
 	TableDefaultPageSize             int              `json:"table_default_page_size"`
