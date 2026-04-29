@@ -1094,7 +1094,7 @@ onMounted(() => {
   font-weight: 700;
 }
 
-.endpoint-mini code,
+.command-card .endpoint-mini code,
 .endpoint-card code {
   color: var(--accent);
   font-size: 0.88rem;
