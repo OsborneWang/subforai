@@ -1073,6 +1073,7 @@ import type { Column } from '@/components/common/types'
 import type { BatchApiKeyUsageStats } from '@/api/usage'
 import { formatDateTime } from '@/utils/format'
 import { maskApiKey } from '@/utils/maskApiKey'
+import { buildCcsUsageScript, normalizeCcsBaseUrl } from '@/utils/ccswitch'
 
 // Helper to format date for datetime-local input
 const formatDateTimeLocal = (isoDate: string): string => {
@@ -1701,7 +1702,7 @@ const importToCcswitch = (row: ApiKey) => {
 }
 
 const executeCcsImport = (row: ApiKey, clientType: 'claude' | 'gemini') => {
-  const baseUrl = publicSettings.value?.api_base_url || window.location.origin
+  const baseUrl = normalizeCcsBaseUrl(publicSettings.value?.api_base_url || window.location.origin)
   const homepage = window.location.origin
   const platform = row.group?.platform || 'anthropic'
 
@@ -1729,22 +1730,7 @@ const executeCcsImport = (row: ApiKey, clientType: 'claude' | 'gemini') => {
     }
   }
 
-  const usageScript = `({
-    request: {
-      url: "{{baseUrl}}/v1/usage",
-      method: "GET",
-      headers: { "Authorization": "Bearer {{apiKey}}" }
-    },
-    extractor: function(response) {
-      const remaining = response?.remaining ?? response?.quota?.remaining ?? response?.balance;
-      const unit = response?.unit ?? response?.quota?.unit ?? "USD";
-      return {
-        isValid: response?.is_active ?? response?.isValid ?? true,
-        remaining,
-        unit
-      };
-    }
-  })`
+  const usageScript = buildCcsUsageScript()
   const providerName = (publicSettings.value?.site_name || 'subforai').trim() || 'subforai'
   const openaiDefaultModel = (publicSettings.value?.ccs_import_default_model_openai || '').trim()
 
