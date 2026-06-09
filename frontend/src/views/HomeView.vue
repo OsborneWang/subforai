@@ -29,7 +29,6 @@
       <nav class="nav-links" :aria-label="isZh ? '页面导航' : 'Page navigation'">
         <a href="#overview">{{ isZh ? '说明' : 'Notice' }}</a>
         <a href="#guides">{{ isZh ? '资料' : 'Resources' }}</a>
-        <a href="#access">{{ isZh ? '交流' : 'Exchange' }}</a>
       </nav>
 
       <div class="nav-actions">
@@ -209,30 +208,6 @@
         </div>
       </section>
 
-      <section id="access" class="pricing-section">
-        <div class="section-inner">
-          <div class="section-heading">
-            <span>{{ isZh ? 'Exchange Map' : 'Exchange Map' }}</span>
-            <h2>{{ isZh ? '内部交流学习范围' : 'Internal learning exchange scope' }}</h2>
-            <p>{{ isZh ? '不展示价格和套餐，不面向公众销售；这里仅说明内部可讨论的工具、资料和协作方式。' : 'No pricing or plans are shown, and this is not sold to the public. This section only describes tools, resources, and collaboration methods for internal discussion.' }}</p>
-          </div>
-
-          <div class="pricing-grid">
-            <article
-              v-for="column in accessColumns"
-              :key="column.title"
-              class="price-column"
-            >
-              <h3>{{ column.title }}</h3>
-              <div v-for="row in column.rows" :key="row.label">
-                <span>{{ row.label }}</span>
-                <strong>{{ row.value }}</strong>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
       <section v-if="hasOfficialSection" id="official" class="official-section">
         <div class="section-inner">
           <div class="section-heading">
@@ -333,14 +308,6 @@ type FeatureCard = {
   title: string
   desc: string
   visualClass: 'model-cloud' | 'route-visual' | 'chart-visual' | 'shield-visual'
-}
-
-type AccessColumn = {
-  title: string
-  rows: Array<{
-    label: string
-    value: string
-  }>
 }
 
 type OfficialEntry = {
@@ -540,48 +507,6 @@ const quickSteps = computed(() => {
     { index: '1', label: 'Confirm internal access' },
     { index: '2', label: 'Read shared resources' },
     { index: '3', label: 'Test and record notes' }
-  ]
-})
-
-const accessColumns = computed<AccessColumn[]>(() => {
-  if (isZh.value) {
-    return [
-      {
-        title: '学习工具',
-        rows: [
-          { label: 'Claude Code', value: '终端配置练习' },
-          { label: 'Codex CLI', value: 'Base URL 记录' },
-          { label: 'Cursor / Cline', value: '图形化配置参考' }
-        ]
-      },
-      {
-        title: '交流范围',
-        rows: [
-          { label: '内部学习', value: '工具配置与模型认知' },
-          { label: '成员交流', value: '经验分享与问题反馈' },
-          { label: '资料沉淀', value: '测试记录和流程说明' }
-        ]
-      }
-    ]
-  }
-
-  return [
-    {
-      title: 'Learning tools',
-      rows: [
-        { label: 'Claude Code', value: 'terminal setup practice' },
-        { label: 'Codex CLI', value: 'base URL notes' },
-        { label: 'Cursor / Cline', value: 'GUI setup reference' }
-      ]
-    },
-    {
-      title: 'Exchange scope',
-      rows: [
-        { label: 'Internal learning', value: 'tool setup and model literacy' },
-        { label: 'Member discussion', value: 'experience sharing and feedback' },
-        { label: 'Resource notes', value: 'test records and process docs' }
-      ]
-    }
   ]
 })
 

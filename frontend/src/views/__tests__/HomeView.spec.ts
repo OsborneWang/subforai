@@ -72,6 +72,7 @@ describe('HomeView', () => {
     expect(text).toContain('仅供内部交流学习使用')
     expect(text).toContain('不面向公众销售')
     expect(text).toContain('内部资料')
+    expect(text).not.toContain('内部交流学习范围')
     expect(text).not.toContain('立即开始')
     expect(text).not.toContain('购买')
     expect(text).not.toContain('店铺')
