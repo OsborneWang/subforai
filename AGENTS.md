@@ -49,7 +49,6 @@ SubForAI is a full-stack AI API gateway that distributes and manages API quotas 
 | `deploy/` | Docker Compose, Caddy, entrypoint scripts, config examples |
 | `docs/` | Payment docs, environment docs, API docs |
 | `tools/` | Dev helper scripts (env setup, secret scan, audit) |
-| `.github/workflows/` | CI: backend-ci, release, security-scan, CLA |
 | `Makefile` | Top-level build/test/dev commands |
 | `.goreleaser.yaml` | Release automation config |
 
@@ -294,15 +293,6 @@ Uses Google Wire: `backend/internal/config/wire.go`, `backend/internal/handler/w
 - i18n: vue-i18n (en/zh)
 - Charts: Chart.js via vue-chartjs
 - Tests: Vitest + @vue/test-utils
-
-### CI/CD
-
-| Workflow | Trigger | Purpose |
-|----------|---------|---------|
-| `backend-ci.yml` | Push/PR | Go build, test, lint |
-| `release.yml` | Tag | GoReleaser build + Docker publish |
-| `security-scan.yml` | Scheduled | Dependency vulnerability scanning |
-| `cla.yml` | PR | CLA signature check |
 
 ### Deployment
 

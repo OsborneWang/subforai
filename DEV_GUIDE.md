@@ -84,20 +84,12 @@ go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.7
 npm install -g pnpm
 ```
 
-## 三、CI/CD 流水线
+## 三、本地构建与检查
 
-### GitHub Actions Workflows
-
-| Workflow | 触发条件 | 检查内容 |
-|----------|----------|----------|
-| **backend-ci.yml** | push, pull_request | 单元测试 + 集成测试 + golangci-lint v2.7 |
-| **security-scan.yml** | push, pull_request, 每周一 | govulncheck + gosec + pnpm audit |
-| **release.yml** | tag `v*` | 构建发布（PR 不触发） |
-
-### CI 要求
+### 开发要求
 
 - Go 版本必须是 **1.25.7**
-- 前端使用 `pnpm install --frozen-lockfile`，必须提交 `pnpm-lock.yaml`
+- 前端使用 `pnpm`，修改依赖后必须同步提交 `pnpm-lock.yaml`
 
 ### 本地测试命令
 
@@ -119,9 +111,9 @@ cd frontend && pnpm install
 
 ### 坑 1：pnpm-lock.yaml 必须同步提交
 
-**问题**：`package.json` 新增依赖后，CI 的 `pnpm install --frozen-lockfile` 失败。
+**问题**：`package.json` 新增依赖后，其他环境安装依赖时可能因为 lock 文件不同步而失败。
 
-**原因**：上游 CI 使用 pnpm，lock 文件不同步会报错。
+**原因**：项目统一使用 pnpm，依赖变更后需要同步更新 lock 文件。
 
 **解决**：
 ```bash
@@ -226,7 +218,7 @@ grep -r "type.*Mock.*struct" internal/
 
 ### 坑 8：Windows 没有 make 命令
 
-**问题**：CI 里用 `make test-unit`，本地 Windows 没有 make。
+**问题**：文档或脚本里常用 `make test-unit`，本地 Windows 可能没有 make。
 
 **解决**：直接用 Makefile 里的原始命令：
 ```bash

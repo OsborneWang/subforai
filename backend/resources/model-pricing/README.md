@@ -3,7 +3,7 @@
 This directory contains a local copy of the mirrored model pricing data as a fallback mechanism.
 
 ## Source
-The original file is maintained by the LiteLLM project and mirrored into the `price-mirror` branch of this repository via GitHub Actions:
+The original file is maintained by the LiteLLM project and mirrored into the `price-mirror` branch of this repository:
 - Mirror branch (configurable via `PRICE_MIRROR_REPO`): https://raw.githubusercontent.com/<your-repo>/price-mirror/model_prices_and_context_window.json
 - Upstream source: https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json
 
