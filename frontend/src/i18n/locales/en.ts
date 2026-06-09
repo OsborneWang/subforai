@@ -8,84 +8,84 @@ export default {
     switchToDark: 'Switch to Dark Mode',
     dashboard: 'Dashboard',
     login: 'Login',
-    getStarted: 'Get Started',
+    getStarted: 'Internal Login',
     goToDashboard: 'Go to Dashboard',
     // User-focused value proposition
-    heroSubtitle: 'One Key, All AI Models',
-    heroDescription: 'No need to manage multiple subscriptions. Access Claude, GPT, Gemini and more with a single API key',
+    heroSubtitle: 'For internal learning exchange only',
+    heroDescription: 'For internal members to study model access, tool setup, and usage records. Not for public sale.',
     tags: {
-      subscriptionToApi: 'Subscription to API',
-      stickySession: 'Session Persistence',
-      realtimeBilling: 'Pay As You Go'
+      subscriptionToApi: 'Internal access notes',
+      stickySession: 'Session records',
+      realtimeBilling: 'Usage observation'
     },
     // Pain points section
     painPoints: {
-      title: 'Sound Familiar?',
+      title: 'Internal learning focus',
       items: {
         expensive: {
-          title: 'High Subscription Costs',
-          desc: 'Paying for multiple AI subscriptions that add up every month'
+          title: 'Scattered resources',
+          desc: 'Model and tool setup notes are spread across places and hard to study together'
         },
         complex: {
-          title: 'Account Chaos',
-          desc: 'Managing scattered accounts and API keys across different platforms'
+          title: 'Complex setup paths',
+          desc: 'Endpoints, keys, and tool parameters need shared records for member review'
         },
         unstable: {
-          title: 'Service Interruptions',
-          desc: 'Single accounts hitting rate limits and disrupting your workflow'
+          title: 'Test behavior needs observation',
+          desc: 'Different models and tools need ongoing test notes and discussion'
         },
         noControl: {
-          title: 'No Usage Control',
-          desc: "Can't track where your money goes or limit team member usage"
+          title: 'Usage needs records',
+          desc: 'Internal tests should keep usage paths and notes for later learning summaries'
         }
       }
     },
     // Solutions section
     solutions: {
-      title: 'We Solve These Problems',
-      subtitle: 'Three simple steps to stress-free AI access'
+      title: 'Internal learning notes',
+      subtitle: 'Follow internal agreements to read resources, configure tools, and record tests'
     },
     features: {
-      unifiedGateway: 'One-Click Access',
-      unifiedGatewayDesc: 'Get a single API key to call all connected AI models. No separate applications needed.',
-      multiAccount: 'Always Reliable',
-      multiAccountDesc: 'Smart routing across multiple upstream accounts with automatic failover. Say goodbye to errors.',
-      balanceQuota: 'Pay What You Use',
-      balanceQuotaDesc: 'Usage-based billing with quota limits. Full visibility into team consumption.'
+      unifiedGateway: 'Internal access reference',
+      unifiedGatewayDesc: 'Collects internal endpoints, keys, and tool setup methods for member learning and validation.',
+      multiAccount: 'Test records',
+      multiAccountDesc: 'Records model and tool route behavior for discussion and review.',
+      balanceQuota: 'Visible usage',
+      balanceQuotaDesc: 'Keeps internal usage records for learning summaries and troubleshooting.'
     },
     // Comparison section
     comparison: {
-      title: 'Why Choose Us?',
+      title: 'Internal learning method',
       headers: {
-        feature: 'Comparison',
-        official: 'Official Subscriptions',
-        us: 'Our Platform'
+        feature: 'Focus',
+        official: 'Scattered notes',
+        us: 'Internal organization'
       },
       items: {
         pricing: {
-          feature: 'Pricing',
-          official: 'Fixed monthly fee, pay even if unused',
-          us: 'Pay only for what you use'
+          feature: 'Resource access',
+          official: 'Search manually',
+          us: 'Unified records'
         },
         models: {
-          feature: 'Model Selection',
-          official: 'Single provider only',
-          us: 'Switch between models freely'
+          feature: 'Model selection',
+          official: 'Single provider',
+          us: 'Multi-model learning reference'
         },
         management: {
-          feature: 'Account Management',
-          official: 'Manage each service separately',
-          us: 'Unified key, one dashboard'
+          feature: 'Setup management',
+          official: 'Each tool separately',
+          us: 'Shared instructions'
         },
         stability: {
-          feature: 'Stability',
-          official: 'Single account rate limits',
-          us: 'Multi-account pool, auto-failover'
+          feature: 'Test behavior',
+          official: 'Scattered feedback',
+          us: 'Central review'
         },
         control: {
-          feature: 'Usage Control',
-          official: 'Not available',
-          us: 'Quotas & detailed analytics'
+          feature: 'Usage records',
+          official: 'Hard to review',
+          us: 'Searchable records'
         }
       }
     },
@@ -100,22 +100,22 @@ export default {
       more: 'More'
     },
     officialEntrances: {
-      title: 'Official Entrances',
-      subtitle: 'Join the community group or jump straight to the Xianyu shop',
-      qqGroup: 'QQ Group',
-      qqGroupDesc: 'Best for support questions, updates, and daily discussion',
+      title: 'Internal Entrances',
+      subtitle: 'Join the discussion group or view internal resources',
+      qqGroup: 'Internal Discussion Group',
+      qqGroupDesc: 'Best for internal feedback, resource updates, and learning exchange',
       qqGroupNumber: 'Group Number',
-      qqGroupOpen: 'Join Group',
-      xianyuShop: 'Xianyu Shop',
-      xianyuShops: 'Xianyu Shops',
-      xianyuShopDesc: 'Great for mobile users who want to scan and open the shop directly',
-      xianyuShopOpen: 'Open Shop',
-      qrCaption: 'Scan to open',
+      qqGroupOpen: 'View Discussion Entry',
+      xianyuShop: 'Internal Resource Entry',
+      xianyuShops: 'Internal Resource Entries',
+      xianyuShopDesc: 'Use this to view internal learning resources, setup notes, and test records',
+      xianyuShopOpen: 'View Resources',
+      qrCaption: 'Scan to view',
       missing: 'Not configured'
     },
     helpDocs: {
       title: 'Help Docs',
-      subtitle: 'Find onboarding, purchase, configuration, and FAQ guides',
+      subtitle: 'Find internal access, configuration, and FAQ guides',
       open: 'View Doc',
       openExternal: 'Open in New Tab',
       empty: 'No help docs configured yet',
@@ -125,9 +125,9 @@ export default {
     },
     // CTA section
     cta: {
-      title: 'Ready to Get Started?',
-      description: 'Sign up now and get free trial credits to experience seamless AI access',
-      button: 'Sign Up Free'
+      title: 'View internal resources',
+      description: 'Log in, study, and test according to internal agreements. This is not a public service entry.',
+      button: 'Internal Login'
     },
     footer: {
       allRightsReserved: 'All rights reserved.'
@@ -5051,8 +5051,8 @@ export default {
         homeContentPlaceholder: 'Enter custom content for the home page. Supports Markdown & HTML. If a URL is entered, it will be displayed as an iframe.',
         homeContentHint: 'Customize the home page content. Supports Markdown/HTML. If you enter a URL (starting with http:// or https://), it will be used as an iframe src to embed an external page. When set, the default status information will no longer be displayed.',
         homeContentIframeWarning: '⚠️ iframe mode note: Some websites have X-Frame-Options or CSP security policies that prevent embedding in iframes. If the page appears blank or shows an error, please verify the target website allows embedding, or consider using HTML mode to build your own content.',
-        officialEntrancesTitle: 'Home Page Official Entrances',
-        officialEntrancesHint: 'Once configured, QQ group and Xianyu shop cards will be shown on the default home page.',
+        officialEntrancesTitle: 'Home Page Internal Entrances',
+        officialEntrancesHint: 'Once configured, QQ group and internal resource cards will be shown on the default home page.',
         qqGroupTitle: 'QQ Group',
         qqGroupHint: 'Configure at least the group number or join link. QR code can be uploaded as an image.',
         qqGroupNumber: 'Group Number',
@@ -5061,20 +5061,20 @@ export default {
         qqGroupLinkPlaceholder: 'https://qm.qq.com/...',
         qqGroupQrCode: 'QR Code',
         qqGroupQrCodeHint: 'PNG/JPG supported. Use a clear square QR code image.',
-        xianyuShopTitle: 'Xianyu Shop',
-        xianyuShopHint: 'Used for the home page shop entrance and mobile QR access.',
-        xianyuShopName: 'Shop Name',
-        xianyuShopNamePlaceholder: 'e.g. Official Xianyu Shop',
-        xianyuShopDescription: 'Description',
-        xianyuShopDescriptionPlaceholder: 'e.g. Best for fast activation and after-sales support',
-        xianyuShopLink: 'Shop Link',
-        xianyuShopLinkPlaceholder: 'https://m.tb.cn/...',
-        xianyuShopQrCode: 'Shop QR Code',
+        xianyuShopTitle: 'Internal Resource Entry',
+        xianyuShopHint: 'Used for the home page internal resource entrance and mobile QR access.',
+        xianyuShopName: 'Entry Name',
+        xianyuShopNamePlaceholder: 'e.g. Internal Resource Library',
+        xianyuShopDescription: 'Entry Description',
+        xianyuShopDescriptionPlaceholder: 'e.g. Model setup notes and test records',
+        xianyuShopLink: 'Resource Link',
+        xianyuShopLinkPlaceholder: 'https://docs.example.com/...',
+        xianyuShopQrCode: 'Resource QR Code',
         xianyuShopQrCodeHint: 'PNG/JPG supported. Upload a QR code optimized for mobile scanning.',
-        xianyuShopsTitle: 'Multiple Xianyu Shops',
-        xianyuShopsHint: 'You can configure multiple shops and show them all on the home page.',
-        xianyuShopItem: 'Shop #{n}',
-        addXianyuShop: 'Add Xianyu Shop',
+        xianyuShopsTitle: 'Multiple Internal Resource Entries',
+        xianyuShopsHint: 'You can configure multiple entries and show them all on the home page.',
+        xianyuShopItem: 'Resource Entry #{n}',
+        addXianyuShop: 'Add Resource Entry',
         helpDocsTitle: 'Help Docs Center',
         helpDocsHint: 'When help docs are configured, the top "Docs" button will point to the built-in docs center page.',
         helpDocItem: 'Doc #{n}',
@@ -5083,7 +5083,7 @@ export default {
         helpDocCategory: 'Category',
         helpDocCategoryPlaceholder: 'e.g. Integration Guide',
         helpDocSummary: 'Summary',
-        helpDocSummaryPlaceholder: 'e.g. Covers signup, purchase, and API key creation',
+        helpDocSummaryPlaceholder: 'e.g. Covers internal accounts, setup, and API key creation',
         helpDocUrl: 'Doc URL',
         helpDocUrlPlaceholder: 'https://docs.example.com/quick-start',
         addHelpDoc: 'Add Help Doc',

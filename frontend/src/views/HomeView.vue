@@ -27,9 +27,9 @@
       </a>
 
       <nav class="nav-links" :aria-label="isZh ? '页面导航' : 'Page navigation'">
-        <a href="#overview">{{ isZh ? '能力' : 'Overview' }}</a>
-        <a href="#guides">{{ isZh ? '教程' : 'Guides' }}</a>
-        <a href="#access">{{ isZh ? '接入' : 'Access' }}</a>
+        <a href="#overview">{{ isZh ? '说明' : 'Notice' }}</a>
+        <a href="#guides">{{ isZh ? '资料' : 'Resources' }}</a>
+        <a href="#access">{{ isZh ? '交流' : 'Exchange' }}</a>
       </nav>
 
       <div class="nav-actions">
@@ -40,7 +40,7 @@
           rel="noopener noreferrer"
           class="ghost-link"
         >
-          {{ isZh ? '帮助文档' : 'Docs' }}
+          {{ isZh ? '学习资料' : 'Resources' }}
         </a>
         <router-link
           v-if="isAuthenticated"
@@ -50,7 +50,7 @@
           {{ isZh ? '进入控制台' : 'Open Dashboard' }}
         </router-link>
         <router-link v-else to="/login" class="primary-action">
-          {{ isZh ? '立即开始' : 'Get Started' }}
+          {{ isZh ? '内部登录' : 'Internal Login' }}
         </router-link>
       </div>
     </header>
@@ -126,9 +126,9 @@
       <section id="overview" class="feature-section">
         <div class="section-inner">
           <div class="section-heading">
-            <span>{{ isZh ? 'Unified Access' : 'Unified Access' }}</span>
-            <h2>{{ isZh ? '一个入口，稳定承接高频 AI 调用' : 'One gateway built for stable, high-frequency AI access' }}</h2>
-            <p>{{ isZh ? '我们把主流模型接入、稳定路由、透明用量和官方群支持集中到同一个平台，让个人开发与团队协作都能更快上线。' : 'Mainstream model access, resilient routing, transparent usage, and official support are brought into one platform so both solo builders and teams can ship faster.' }}</p>
+            <span>{{ isZh ? 'Internal Notice' : 'Internal Notice' }}</span>
+            <h2>{{ isZh ? '仅供内部交流学习使用' : 'For internal learning exchange only' }}</h2>
+            <p>{{ isZh ? '页面内容用于内部成员了解模型接入、工具配置和使用记录，不作为公开销售、推广或商业承诺。' : 'This page is for internal members to understand model access, tool setup, and usage records. It is not public sales material, promotion, or a commercial commitment.' }}</p>
           </div>
 
           <div class="feature-grid">
@@ -169,9 +169,9 @@
       <section id="guides" class="docs-preview-section">
         <div class="section-inner docs-preview">
           <div class="section-heading left">
-            <span>{{ isZh ? 'Getting Started' : 'Getting Started' }}</span>
-            <h2>{{ isZh ? '三步完成接入，快速开始调用' : 'Go live in three steps and start calling fast' }}</h2>
-            <p>{{ isZh ? '默认端点可直接复制，文档集中说明注册、创建 API Key 与工具配置流程。新用户按步骤完成即可开始调用。' : 'Copy the default endpoint directly, then follow the docs for signup, API key creation, and tool configuration. New users can start calling by following the guided steps.' }}</p>
+            <span>{{ isZh ? 'Internal Resources' : 'Internal Resources' }}</span>
+            <h2>{{ isZh ? '内部资料与配置记录' : 'Internal resources and setup notes' }}</h2>
+            <p>{{ isZh ? '默认端点和配置步骤仅供内部测试、学习和交流时参考，请按内部约定申请账号、创建 Key 并完成工具配置。' : 'Default endpoints and setup steps are references for internal testing, learning, and discussion. Request accounts, create keys, and configure tools according to internal agreements.' }}</p>
           </div>
 
           <div class="docs-preview-card">
@@ -203,7 +203,7 @@
               :target="hasHelpDocs ? '_self' : '_blank'"
               rel="noopener noreferrer"
             >
-              {{ isZh ? '打开帮助文档' : 'Open Help Docs' }}
+              {{ isZh ? '查看学习资料' : 'Open Resources' }}
             </a>
           </div>
         </div>
@@ -212,9 +212,9 @@
       <section id="access" class="pricing-section">
         <div class="section-inner">
           <div class="section-heading">
-            <span>{{ isZh ? 'Access Map' : 'Access Map' }}</span>
-            <h2>{{ isZh ? '把目标站的“价目列”改造成更通用的接入总览' : 'A source-style column layout, adapted into a broader access overview' }}</h2>
-            <p>{{ isZh ? '不伪造真实价格，改用工具、场景和协作方式来承接这一段的视觉结构。' : 'Instead of inventing prices, this section uses tools, scenarios, and collaboration paths to occupy the same visual role.' }}</p>
+            <span>{{ isZh ? 'Exchange Map' : 'Exchange Map' }}</span>
+            <h2>{{ isZh ? '内部交流学习范围' : 'Internal learning exchange scope' }}</h2>
+            <p>{{ isZh ? '不展示价格和套餐，不面向公众销售；这里仅说明内部可讨论的工具、资料和协作方式。' : 'No pricing or plans are shown, and this is not sold to the public. This section only describes tools, resources, and collaboration methods for internal discussion.' }}</p>
           </div>
 
           <div class="pricing-grid">
@@ -236,15 +236,15 @@
       <section v-if="hasOfficialSection" id="official" class="official-section">
         <div class="section-inner">
           <div class="section-heading">
-            <span>{{ isZh ? 'Official Channels' : 'Official Channels' }}</span>
-            <h2>{{ isZh ? '官方群与服务支持入口，接入、购买、使用问题都能快速响应' : 'Official support channels for faster help with setup, purchase, and usage' }}</h2>
-            <p>{{ isZh ? '我们集中提供官方群、店铺与联络方式，方便新用户快速咨询开通流程，也方便老用户获取更新通知与售后支持。' : 'Official groups, shop links, and contact paths are kept in one place so new users can onboard faster and existing users can get updates and after-sales support efficiently.' }}</p>
+            <span>{{ isZh ? 'Internal Channels' : 'Internal Channels' }}</span>
+            <h2>{{ isZh ? '内部交流与资料入口' : 'Internal discussion and resource entries' }}</h2>
+            <p>{{ isZh ? '群组、资料链接和联络方式仅用于内部成员交流学习、问题反馈和资料同步，不作为公开服务入口。' : 'Groups, resource links, and contact paths are for internal learning exchange, feedback, and resource updates only. They are not public service entrances.' }}</p>
           </div>
 
           <div v-if="contactInfo" class="contact-banner">
             <div>
               <span class="section-label">{{ isZh ? 'Contact' : 'Contact' }}</span>
-              <h3>{{ isZh ? '公开联络方式' : 'Public contact info' }}</h3>
+              <h3>{{ isZh ? '内部联络方式' : 'Internal contact info' }}</h3>
               <p>{{ contactInfo }}</p>
             </div>
             <button
@@ -253,7 +253,7 @@
               class="secondary-action"
               @click="copyEndpoint(primaryEndpoint)"
             >
-              {{ isZh ? '复制默认端点' : 'Copy default endpoint' }}
+              {{ isZh ? '复制内部端点' : 'Copy internal endpoint' }}
             </button>
           </div>
 
@@ -368,8 +368,8 @@ const siteSubtitle = computed(() => {
   const configured = publicSettings.value?.site_subtitle?.trim()
   if (configured) return configured
   return isZh.value
-    ? '统一 AI Gateway 与分发控制台'
-    : 'Unified AI gateway and distribution console'
+    ? '仅供内部交流学习使用，不面向公众销售'
+    : 'For internal learning exchange only, not for public sale'
 })
 const docUrl = computed(() => publicSettings.value?.doc_url || appStore.docUrl || '')
 const helpDocs = computed(() => publicSettings.value?.help_docs ?? [])
@@ -392,8 +392,8 @@ const brandMark = computed(() => siteName.value.trim().slice(0, 2).toUpperCase()
 
 const heroEyebrow = computed(() =>
   isZh.value
-    ? 'Claude / GPT / Gemini / Codex · 一站式 API 中枢'
-    : 'Claude / GPT / Gemini / Codex · One gateway surface'
+    ? '内部交流学习 · 非公开销售入口'
+    : 'Internal learning exchange · Not a public sales entry'
 )
 const heroSubtitle = computed(() =>
   isZh.value
@@ -404,7 +404,7 @@ const heroSubtitle = computed(() =>
   if (isAuthenticated.value) {
     return isZh.value ? '进入控制台' : 'Open Dashboard'
   }
-  return isZh.value ? '立即开始' : 'Get Started'
+  return isZh.value ? '内部登录' : 'Internal Login'
 })
 const copyHint = computed(() =>
   isZh.value ? '点击复制此端点' : 'Click to copy this endpoint'
@@ -458,14 +458,14 @@ const sampleCommand = computed(() => {
 const metrics = computed(() => {
   if (isZh.value) {
     return [
-      { value: `${endpointCards.value.length || 1}${isZh.value ? ' 个' : ''}`, label: '公开端点' },
-      { value: officialEntries.value.length ? `${officialEntries.value.length}+` : '0', label: '官方群/店铺' }
+      { value: `${endpointCards.value.length || 1}${isZh.value ? ' 个' : ''}`, label: '内部端点' },
+      { value: officialEntries.value.length ? `${officialEntries.value.length}+` : '0', label: '交流/资料入口' }
     ]
   }
 
   return [
-    { value: `${endpointCards.value.length || 1}+`, label: 'public endpoints' },
-    { value: officialEntries.value.length ? `${officialEntries.value.length}+` : '0', label: 'official entries' }
+    { value: `${endpointCards.value.length || 1}+`, label: 'internal endpoints' },
+    { value: officialEntries.value.length ? `${officialEntries.value.length}+` : '0', label: 'exchange/resource entries' }
   ]
 })
 
@@ -475,26 +475,26 @@ const metrics = computed(() => {
       {
         icon: 'brain',
         visualClass: 'model-cloud',
-        title: '多模型统一接入',
-        desc: '一个 API Key 即可直连 Claude、GPT、Gemini、Codex 等主流模型，减少多平台切换和重复配置成本。'
+        title: '内部模型接入参考',
+        desc: '整理 Claude、GPT、Gemini、Codex 等模型的内部接入方式，便于成员学习配置流程和验证工具兼容性。'
       },
       {
         icon: 'swap',
         visualClass: 'route-visual',
-        title: '稳定路由与智能切换',
-        desc: '通过统一网关承接请求，降低单点波动带来的影响，适合高频开发、持续调试和团队日常调用。'
+        title: '测试路由与使用观察',
+        desc: '通过统一网关记录内部测试过程，帮助成员观察不同工具、模型和链路下的调用表现。'
       },
       {
         icon: 'chartBar',
         visualClass: 'chart-visual',
-        title: '透明计费与用量可见',
-        desc: '控制台内可直观看到端点、额度、Key 与使用路径，方便评估成本，也方便团队做统一管理。'
+        title: '用量记录与学习复盘',
+        desc: '控制台内可查看端点、Key 与使用路径，便于内部复盘测试过程和整理学习资料。'
       },
       {
         icon: 'users',
         visualClass: 'shield-visual',
-        title: '官方群支持与协作服务',
-        desc: '提供官方群、店铺和联络入口，遇到接入、购买或使用问题时可以更快获得支持与反馈。'
+        title: '内部交流与资料同步',
+        desc: '提供交流群、内部资料和联络入口，用于成员之间的问题反馈、经验分享和资料更新。'
       }
     ]
   }
@@ -503,26 +503,26 @@ const metrics = computed(() => {
     {
       icon: 'brain',
       visualClass: 'model-cloud',
-      title: 'Unified model access',
-      desc: 'One API key connects Claude, GPT, Gemini, Codex, and other mainstream model workflows without repeated setup.'
+      title: 'Internal model access reference',
+      desc: 'Collects internal access notes for Claude, GPT, Gemini, Codex, and related tools so members can study setup flows and compatibility.'
     },
     {
       icon: 'swap',
       visualClass: 'route-visual',
-      title: 'Resilient routing and smart switching',
-      desc: 'A unified gateway reduces single-path fragility and supports high-frequency development, testing, and team usage.'
+      title: 'Test routing and usage observation',
+      desc: 'Records internal testing through one gateway so members can observe tool, model, and route behavior.'
     },
     {
       icon: 'chartBar',
       visualClass: 'chart-visual',
-      title: 'Transparent billing and visible usage',
-      desc: 'Endpoints, balances, keys, and usage paths stay easy to inspect so cost evaluation and team management remain straightforward.'
+      title: 'Usage records for review',
+      desc: 'Endpoints, keys, and usage paths stay visible for internal review, learning summaries, and troubleshooting.'
     },
     {
       icon: 'users',
       visualClass: 'shield-visual',
-      title: 'Official support and collaboration paths',
-      desc: 'Official groups, shop links, and contact channels make onboarding, purchasing, and troubleshooting faster.'
+      title: 'Internal discussion and resources',
+      desc: 'Discussion groups, internal resources, and contact paths are used for feedback, learning exchange, and resource updates.'
     }
   ]
 })
@@ -530,16 +530,16 @@ const metrics = computed(() => {
 const quickSteps = computed(() => {
   if (isZh.value) {
     return [
-      { index: '1', label: '注册账号' },
-      { index: '2', label: '创建 API Key' },
-      { index: '3', label: '填入工具并测试' }
+      { index: '1', label: '确认内部权限' },
+      { index: '2', label: '领取学习资料' },
+      { index: '3', label: '按约定测试记录' }
     ]
   }
 
   return [
-    { index: '1', label: 'Create account' },
-    { index: '2', label: 'Generate API key' },
-    { index: '3', label: 'Drop it into your tool' }
+    { index: '1', label: 'Confirm internal access' },
+    { index: '2', label: 'Read shared resources' },
+    { index: '3', label: 'Test and record notes' }
   ]
 })
 
@@ -547,19 +547,19 @@ const accessColumns = computed<AccessColumn[]>(() => {
   if (isZh.value) {
     return [
       {
-        title: '接入工具',
+        title: '学习工具',
         rows: [
-          { label: 'Claude Code', value: '终端直接接入' },
-          { label: 'Codex CLI', value: '统一 Base URL' },
-          { label: 'Cursor / Cline', value: '图形化配置' }
+          { label: 'Claude Code', value: '终端配置练习' },
+          { label: 'Codex CLI', value: 'Base URL 记录' },
+          { label: 'Cursor / Cline', value: '图形化配置参考' }
         ]
       },
       {
-        title: '适用场景',
+        title: '交流范围',
         rows: [
-          { label: '个人开发', value: '单人高频使用' },
-          { label: '团队协作', value: '共享额度与控制台' },
-          { label: '内部应用', value: '自建 AI 工作流' }
+          { label: '内部学习', value: '工具配置与模型认知' },
+          { label: '成员交流', value: '经验分享与问题反馈' },
+          { label: '资料沉淀', value: '测试记录和流程说明' }
         ]
       }
     ]
@@ -567,19 +567,19 @@ const accessColumns = computed<AccessColumn[]>(() => {
 
   return [
     {
-      title: 'Tooling',
+      title: 'Learning tools',
       rows: [
-        { label: 'Claude Code', value: 'terminal-first setup' },
-        { label: 'Codex CLI', value: 'shared base URL' },
-        { label: 'Cursor / Cline', value: 'GUI configuration' }
+        { label: 'Claude Code', value: 'terminal setup practice' },
+        { label: 'Codex CLI', value: 'base URL notes' },
+        { label: 'Cursor / Cline', value: 'GUI setup reference' }
       ]
     },
     {
-      title: 'Scenarios',
+      title: 'Exchange scope',
       rows: [
-        { label: 'Solo development', value: 'high-frequency usage' },
-        { label: 'Team workflows', value: 'shared quotas and console' },
-        { label: 'Internal apps', value: 'custom AI workflows' }
+        { label: 'Internal learning', value: 'tool setup and model literacy' },
+        { label: 'Member discussion', value: 'experience sharing and feedback' },
+        { label: 'Resource notes', value: 'test records and process docs' }
       ]
     }
   ]

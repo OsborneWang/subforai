@@ -8,84 +8,84 @@ export default {
     switchToDark: '切换到深色模式',
     dashboard: '控制台',
     login: '登录',
-    getStarted: '立即开始',
+    getStarted: '内部登录',
     goToDashboard: '进入控制台',
     // 新增：面向用户的价值主张
-    heroSubtitle: '一个密钥，畅用多个 AI 模型',
-    heroDescription: '无需管理多个订阅账号，一站式接入 Claude、GPT、Gemini 等主流 AI 服务',
+    heroSubtitle: '仅供内部交流学习使用',
+    heroDescription: '用于内部成员学习模型接入、工具配置和使用记录，不面向公众销售',
     tags: {
-      subscriptionToApi: '订阅转 API',
-      stickySession: '会话保持',
-      realtimeBilling: '按量计费'
+      subscriptionToApi: '内部接入参考',
+      stickySession: '会话记录',
+      realtimeBilling: '用量观察'
     },
     // 用户痛点区块
     painPoints: {
-      title: '你是否也遇到这些问题？',
+      title: '内部学习关注点',
       items: {
         expensive: {
-          title: '订阅费用高',
-          desc: '每个 AI 服务都要单独订阅，每月支出越来越多'
+          title: '资料分散',
+          desc: '不同模型和工具的配置说明分散在多处，不便于统一学习'
         },
         complex: {
-          title: '多账号难管理',
-          desc: '不同平台的账号、密钥分散各处，管理起来很麻烦'
+          title: '配置链路复杂',
+          desc: '端点、密钥和工具参数需要统一记录，便于成员复盘'
         },
         unstable: {
-          title: '服务不稳定',
-          desc: '单一账号容易触发限制，影响正常使用'
+          title: '测试表现需观察',
+          desc: '不同模型和工具在测试中的表现需要持续记录和讨论'
         },
         noControl: {
-          title: '用量无法控制',
-          desc: '不知道钱花在哪了，也无法限制团队成员的使用'
+          title: '用量需要留痕',
+          desc: '内部测试需要保留使用路径和记录，方便后续学习总结'
         }
       }
     },
     // 解决方案区块
     solutions: {
-      title: '我们帮你解决',
-      subtitle: '简单三步，开始省心使用 AI'
+      title: '内部学习说明',
+      subtitle: '按内部约定查看资料、配置工具并记录测试过程'
     },
     features: {
-      unifiedGateway: '一键接入',
-      unifiedGatewayDesc: '获取一个 API 密钥，即可调用所有已接入的 AI 模型，无需分别申请。',
-      multiAccount: '稳定可靠',
-      multiAccountDesc: '智能调度多个上游账号，自动切换和负载均衡，告别频繁报错。',
-      balanceQuota: '用多少付多少',
-      balanceQuotaDesc: '按实际使用量计费，支持设置配额上限，团队用量一目了然。'
+      unifiedGateway: '内部接入参考',
+      unifiedGatewayDesc: '整理内部端点、密钥和工具配置方式，方便成员学习验证。',
+      multiAccount: '测试记录',
+      multiAccountDesc: '记录不同模型和工具链路的测试表现，便于讨论和复盘。',
+      balanceQuota: '用量可见',
+      balanceQuotaDesc: '保留内部使用记录，方便学习总结和问题排查。'
     },
     // 优势对比
     comparison: {
-      title: '为什么选择我们？',
+      title: '内部学习方式',
       headers: {
-        feature: '对比项',
-        official: '官方订阅',
-        us: '本平台'
+        feature: '关注点',
+        official: '分散资料',
+        us: '内部整理'
       },
       items: {
         pricing: {
-          feature: '付费方式',
-          official: '固定月费，用不完也付',
-          us: '按量付费，用多少付多少'
+          feature: '资料获取',
+          official: '各处查找',
+          us: '统一记录'
         },
         models: {
           feature: '模型选择',
           official: '单一服务商',
-          us: '多模型随意切换'
+          us: '多模型学习参考'
         },
         management: {
-          feature: '账号管理',
-          official: '每个服务单独管理',
-          us: '统一密钥，一站管理'
+          feature: '配置管理',
+          official: '各工具单独记录',
+          us: '统一说明'
         },
         stability: {
-          feature: '服务稳定性',
-          official: '单账号易触发限制',
-          us: '多账号池，自动切换'
+          feature: '测试表现',
+          official: '零散反馈',
+          us: '集中复盘'
         },
         control: {
-          feature: '用量控制',
-          official: '无法限制',
-          us: '可设配额、查明细'
+          feature: '用量记录',
+          official: '难以复盘',
+          us: '可查记录'
         }
       }
     },
@@ -100,22 +100,22 @@ export default {
       more: '更多'
     },
     officialEntrances: {
-      title: '官方入口',
-      subtitle: '加入交流群，或直接前往闲鱼店铺下单咨询',
-      qqGroup: 'QQ 交流群',
-      qqGroupDesc: '适合问题咨询、更新通知和日常交流',
+      title: '内部入口',
+      subtitle: '加入交流群，或查看内部资料入口',
+      qqGroup: '内部交流群',
+      qqGroupDesc: '适合内部问题反馈、资料同步和学习交流',
       qqGroupNumber: '群号',
-      qqGroupOpen: '立即加群',
-      xianyuShop: '闲鱼店铺',
-      xianyuShops: '闲鱼店铺',
-      xianyuShopDesc: '适合移动端扫码直达店铺，下单和沟通更方便',
-      xianyuShopOpen: '打开店铺',
-      qrCaption: '扫码直达',
+      qqGroupOpen: '查看交流入口',
+      xianyuShop: '内部资料入口',
+      xianyuShops: '内部资料入口',
+      xianyuShopDesc: '适合查看内部学习资料、配置说明和测试记录',
+      xianyuShopOpen: '查看资料入口',
+      qrCaption: '扫码查看',
       missing: '暂未配置'
     },
     helpDocs: {
       title: '帮助文档',
-      subtitle: '查找接入、购买、配置与常见问题说明',
+      subtitle: '查找内部接入、配置与常见问题说明',
       open: '查看文档',
       openExternal: '新窗口打开',
       empty: '暂未配置帮助文档',
@@ -125,9 +125,9 @@ export default {
     },
     // CTA 区块
     cta: {
-      title: '准备好开始了吗？',
-      description: '注册即可获得免费试用额度，体验一站式 AI 服务',
-      button: '免费注册'
+      title: '查看内部资料',
+      description: '请按内部约定登录、学习和测试，不作为公开服务入口',
+      button: '内部登录'
     },
     footer: {
       allRightsReserved: '保留所有权利。'
@@ -5212,8 +5212,8 @@ export default {
           '自定义首页内容，支持 Markdown/HTML。如果输入的是链接（以 http:// 或 https:// 开头），则会使用该链接作为 iframe 的 src 属性，这允许你设置任意网页作为首页。设置后首页的状态信息将不再显示。',
         homeContentIframeWarning:
           '⚠️ iframe 模式提示：部分网站设置了 X-Frame-Options 或 CSP 安全策略，禁止被嵌入到 iframe 中。如果页面显示空白或报错，请确认目标网站允许被嵌入，或考虑使用 HTML 模式自行构建页面内容。',
-        officialEntrancesTitle: '首页官方入口',
-        officialEntrancesHint: '配置 QQ 群和闲鱼店铺后，首页将展示固定入口卡片。',
+        officialEntrancesTitle: '首页内部入口',
+        officialEntrancesHint: '配置 QQ 群和内部资料入口后，首页将展示固定入口卡片。',
         qqGroupTitle: 'QQ 交流群',
         qqGroupHint: '建议至少配置群号或加群链接；二维码可直接上传图片。',
         qqGroupNumber: '群号',
@@ -5222,20 +5222,20 @@ export default {
         qqGroupLinkPlaceholder: 'https://qm.qq.com/...',
         qqGroupQrCode: '群二维码',
         qqGroupQrCodeHint: '支持 PNG/JPG，建议使用清晰的正方形二维码图片。',
-        xianyuShopTitle: '闲鱼店铺',
-        xianyuShopHint: '用于首页展示店铺入口和手机扫码访问。',
-        xianyuShopName: '店铺名称',
-        xianyuShopNamePlaceholder: '例如：官方闲鱼店',
-        xianyuShopDescription: '店铺说明',
-        xianyuShopDescriptionPlaceholder: '例如：主打极速开通与售后咨询',
-        xianyuShopLink: '店铺链接',
-        xianyuShopLinkPlaceholder: 'https://m.tb.cn/...',
-        xianyuShopQrCode: '店铺二维码',
-        xianyuShopQrCodeHint: '支持 PNG/JPG，建议上传适合手机扫码的店铺二维码。',
-        xianyuShopsTitle: '多个闲鱼店铺',
-        xianyuShopsHint: '可配置多个店铺，首页会逐一展示。',
-        xianyuShopItem: '店铺 #{n}',
-        addXianyuShop: '添加闲鱼店铺',
+        xianyuShopTitle: '内部资料入口',
+        xianyuShopHint: '用于首页展示内部资料入口和手机扫码访问。',
+        xianyuShopName: '入口名称',
+        xianyuShopNamePlaceholder: '例如：内部资料库',
+        xianyuShopDescription: '入口说明',
+        xianyuShopDescriptionPlaceholder: '例如：模型配置说明与测试记录',
+        xianyuShopLink: '资料链接',
+        xianyuShopLinkPlaceholder: 'https://docs.example.com/...',
+        xianyuShopQrCode: '资料二维码',
+        xianyuShopQrCodeHint: '支持 PNG/JPG，建议上传适合手机扫码的资料二维码。',
+        xianyuShopsTitle: '多个内部资料入口',
+        xianyuShopsHint: '可配置多个入口，首页会逐一展示。',
+        xianyuShopItem: '资料入口 #{n}',
+        addXianyuShop: '添加资料入口',
         helpDocsTitle: '帮助文档中心',
         helpDocsHint: '配置多个帮助文档后，顶部“文档”按钮会跳到内置文档中心页。',
         helpDocItem: '文档 #{n}',
@@ -5244,7 +5244,7 @@ export default {
         helpDocCategory: '分类',
         helpDocCategoryPlaceholder: '例如：接入指南',
         helpDocSummary: '摘要',
-        helpDocSummaryPlaceholder: '例如：包含账号注册、充值和 API Key 创建流程',
+        helpDocSummaryPlaceholder: '例如：包含内部账号、配置和 API Key 创建流程',
         helpDocUrl: '文档链接',
         helpDocUrlPlaceholder: 'https://docs.example.com/quick-start',
         addHelpDoc: '添加帮助文档',
